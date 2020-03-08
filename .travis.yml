@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+- node
+script:
+- yarn install
+- yarn build
+deploy:
+  provider: firebase
+  project: securethebox-client
+  message: travis deployment to firebase hosting
+  skip_cleanup: true
+  token:
+    secure: jAm8DEWy3AmlHmLevk3m6lbwsgNBOSg3BJO+SYuRFIpQMpkc9ayE2xfJzIXqkdgQnGlEg3j0reeRHp+MTkuxt74cWJiLPC8Moe6uvhoG0rdDwUNW0+yApGCE47k8tFu7o5ozNZ6Hmh6aqWGRtQ9RZd8uUn1pN7jkKWeW2FAJ/OkUVn6wWxwC5yVAsHq1ie4FElhxDWCy14fIvA6LBAusdTcbrgy3gnCo+b1g48TyXWwoZQXcoY0pi1qqqBiJWYJ8/Y9dUvVqtGTLHfkJ5wmOv6N+exngWyMYe+TMJXZkpZMKLARumt85O1rW4Gg8aDw75IxQEa89KpgUb7XEmnS4QhsADfWX68wACX4Xd/Fmr9lpn3kEQbcLf4obPuEtax7tVhBxy4RMUiUFUSIKhUV0Zyk+KDVIyOzRW9hNADrPXJv9WG9sh0qrXxX9h4P8nHx4P+B/Nd5Lu3KoiZOJ4JYltaHlVBRG3eBLK/WFHgqHV6Rg3S0/oqkZVxIfreHSdTNe27vmXMy5qt0G1R+iAnHUaO9+flJGGlx6kbGG/OBaVscstpTY0dL7eTBJfxSznWUC11j44uFdGmSDAWpFkb1ub2LggyHm8FdqNN/RyIAdzUszhv8CJiKa0FjW2EGx9oUFNKUUqf3BknPgkRkto5noT1vESHBzN1AuVRejOgOreDI=
+env:
+  global:
+  - secure: jAm8DEWy3AmlHmLevk3m6lbwsgNBOSg3BJO+SYuRFIpQMpkc9ayE2xfJzIXqkdgQnGlEg3j0reeRHp+MTkuxt74cWJiLPC8Moe6uvhoG0rdDwUNW0+yApGCE47k8tFu7o5ozNZ6Hmh6aqWGRtQ9RZd8uUn1pN7jkKWeW2FAJ/OkUVn6wWxwC5yVAsHq1ie4FElhxDWCy14fIvA6LBAusdTcbrgy3gnCo+b1g48TyXWwoZQXcoY0pi1qqqBiJWYJ8/Y9dUvVqtGTLHfkJ5wmOv6N+exngWyMYe+TMJXZkpZMKLARumt85O1rW4Gg8aDw75IxQEa89KpgUb7XEmnS4QhsADfWX68wACX4Xd/Fmr9lpn3kEQbcLf4obPuEtax7tVhBxy4RMUiUFUSIKhUV0Zyk+KDVIyOzRW9hNADrPXJv9WG9sh0qrXxX9h4P8nHx4P+B/Nd5Lu3KoiZOJ4JYltaHlVBRG3eBLK/WFHgqHV6Rg3S0/oqkZVxIfreHSdTNe27vmXMy5qt0G1R+iAnHUaO9+flJGGlx6kbGG/OBaVscstpTY0dL7eTBJfxSznWUC11j44uFdGmSDAWpFkb1ub2LggyHm8FdqNN/RyIAdzUszhv8CJiKa0FjW2EGx9oUFNKUUqf3BknPgkRkto5noT1vESHBzN1AuVRejOgOreDI=
+before_install:
+- cd ./src/secrets
+- openssl aes-256-cbc -K $encrypted_9026052cd7fc_key -iv $encrypted_9026052cd7fc_iv
+  -in key.js.enc -out ./key.js -d
+install:
+- cd ../..

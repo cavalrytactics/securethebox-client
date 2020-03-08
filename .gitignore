@@ -1,5 +1,12 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
+/src/secrets/key*.js
+/src/secrets/*.json
+.history/*
+.history/
+.pytest_cache
+.firebase
+
 # dependencies
 /node_modules
 /.yarn

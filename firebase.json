@@ -1,0 +1,38 @@
+{
+  "hosting": {
+    "site": "stb-site-prod",
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "securethebox-server",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/graphql**",
+        "run": {
+          "serviceId": "securethebox-server",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "/graphql/**",
+        "run": {
+          "serviceId": "securethebox-server",
+          "region": "us-central1"
+        }
+      },
+      {
+        "source": "!/api/**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
