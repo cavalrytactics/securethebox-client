@@ -95,7 +95,7 @@ export function setUserData(user) {
 		// }
 
 		history.location.state = {
-		    redirectUrl: '/apps/academy/courses' // for example 'apps/academy'
+		    redirectUrl: '/categories' // for example 'apps/academy'
 		}
 
 		/*
