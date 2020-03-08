@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 9e8256bb75d5c79710fecae3570b398b
+ * @relayHash 884cd437bd958238b46d1df5a37485f1
  */
 
 /* eslint-disable */
@@ -9,23 +9,23 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type categoriesListQueryVariables = {||};
-export type categoriesListQueryResponse = {|
+export type wizardQueryVariables = {||};
+export type wizardQueryResponse = {|
   +categoriesList: ?$ReadOnlyArray<?{|
     +value: ?string,
     +label: ?string,
     +color: ?string,
   |}>
 |};
-export type categoriesListQuery = {|
-  variables: categoriesListQueryVariables,
-  response: categoriesListQueryResponse,
+export type wizardQuery = {|
+  variables: wizardQueryVariables,
+  response: wizardQueryResponse,
 |};
 */
 
 
 /*
-query categoriesListQuery {
+query wizardQuery {
   categoriesList {
     value
     label
@@ -61,7 +61,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "categoriesListQuery",
+    "name": "wizardQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -84,7 +84,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "categoriesListQuery",
+    "name": "wizardQuery",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -112,14 +112,14 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "categoriesListQuery",
+    "name": "wizardQuery",
     "id": null,
-    "text": "query categoriesListQuery {\n  categoriesList {\n    value\n    label\n    color\n    id\n  }\n}\n",
+    "text": "query wizardQuery {\n  categoriesList {\n    value\n    label\n    color\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '1804a3345d31082046fb971f84575e97';
+(node/*: any*/).hash = 'cd20c808a759ab255007cbbc51d9de57';
 
 module.exports = node;

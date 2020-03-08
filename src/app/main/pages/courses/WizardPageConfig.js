@@ -1,7 +1,7 @@
 import React from 'react';
 import { authRoles } from 'app/auth';
 
-const categoriesListPageConfig = {
+const wizardPageConfig = {
 	settings: {
         layout: {
 			style: 'layout1',
@@ -37,10 +37,10 @@ const categoriesListPageConfig = {
     auth: authRoles.user,
 	routes: [
 		{
-			path: '/categories',
-			component: React.lazy(() => import('./categoriesList'))
+			path: '/wizard',
+			component: React.lazy(() => import('./wizard'))
 		}
 	]
 };
 
-export default categoriesListPageConfig;
+export default wizardPageConfig;

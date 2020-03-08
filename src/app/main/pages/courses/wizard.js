@@ -10,6 +10,7 @@ import {
 } from 'relay-runtime';
 import { QueryRenderer } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
+import { useForm } from 'react-hook-form';
 
 function fetchQuery(
 	operation,
@@ -34,14 +35,39 @@ const environment = new Environment({
 	store: new Store(new RecordSource()),
 });
 
-function categoriesList(props) {
+function Wizard(props) {
+	const { register, handleSubmit, errors } = useForm(); // initialise the hook
+	const onSubmit = data => {
+		console.log(data);
+	};
+
+	return (
+		<div>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<input name="firstname" ref={register} /> {/* register an input */}
+
+				<input name="lastname" ref={register({ required: true })} />
+				{errors.lastname && 'Last name is required.'}
+
+				<input name="age" ref={register({ pattern: /\d+/ })} />
+				{errors.age && 'Please enter number for age.'}
+
+				<input type="submit" />
+			</form>
+			<categoriesListGraphql/>
+		</div>
+		
+	);
+}
+
+function categoriesListGraphql(props) {
 
 	return (
 		<div>
 			<QueryRenderer
 				environment={environment}
 				query={graphql`
-				query categoriesListQuery {
+				query wizardQuery {
 					categoriesList {
 						value
 						label
@@ -72,9 +98,9 @@ function categoriesList(props) {
 
 
 function mapStateToProps({ auth }) {
-    return {
-        user: auth.user
-    }
+	return {
+		user: auth.user
+	}
 }
 
-export default withReducer('auth', reducer)((connect(mapStateToProps)(categoriesList)));
+export default withReducer('auth', reducer)((connect(mapStateToProps)(Wizard)));

@@ -1,13 +1,13 @@
 import LandingPageConfig from './landing/LandingPageConfig';
 import LoginPageConfig from './login/LoginPageConfig';
 import InvitePageConfig from './invite/InvitePageConfig';
-import CategoriesPageConfig from './courses/categoriesListPageConfig';
+import WizardPageConfig from './courses/WizardPageConfig';
 
 const pagesConfigs = [
 	LandingPageConfig,
 	LoginPageConfig,
 	InvitePageConfig,
-	CategoriesPageConfig
+	WizardPageConfig
 ];
 
 export default pagesConfigs;

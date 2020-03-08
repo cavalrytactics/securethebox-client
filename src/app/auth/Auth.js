@@ -67,7 +67,7 @@ function mapDispatchToProps(dispatch) {
 		{
 			logout: userActions.logoutUser,
 			setUserData: userActions.setUserData,
-			setUserDataAuth0: userActions.setUserDataAuth0,
+			// setUserDataAuth0: userActions.setUserDataAuth0,
 			setUserDataFirebase: userActions.setUserDataFirebase,
 			showMessage: Actions.showMessage,
 			hideMessage: Actions.hideMessage
