@@ -1,11 +1,11 @@
 import FuseScrollbars from '@fuse/core/FuseScrollbars';
 import AppBar from '@material-ui/core/AppBar';
-import Hidden from '@material-ui/core/Hidden';
-import Icon from '@material-ui/core/Icon';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Logo from 'app/fuse-layouts/shared-components/Logo';
-import NavbarFoldedToggleButton from 'app/fuse-layouts/shared-components/NavbarFoldedToggleButton';
-import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
+// import Hidden from '@material-ui/core/Hidden';
+// import Icon from '@material-ui/core/Icon';
+import { makeStyles } from '@material-ui/core/styles';
+// import Logo from 'app/fuse-layouts/shared-components/Logo';
+// import NavbarFoldedToggleButton from 'app/fuse-layouts/shared-components/NavbarFoldedToggleButton';
+// import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
 import Navigation from 'app/fuse-layouts/shared-components/Navigation';
 import UserNavbarHeader from 'app/fuse-layouts/shared-components/UserNavbarHeader';
 import clsx from 'clsx';
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 function NavbarLayout1(props) {
 	const classes = useStyles();
-	const theme = useTheme();
+	// const theme = useTheme();
 
 	return (
 		<div className={clsx('flex flex-col overflow-hidden h-full', props.className)}>
@@ -36,11 +36,11 @@ function NavbarLayout1(props) {
 				elevation={0}
 				className="flex flex-row items-center flex-shrink h-64 min-h-64 px-12"
 			>
-				<div className="flex flex-1 mx-8">
+				{/* <div className="flex flex-1 mx-8">
 					<Logo />
-				</div>
+				</div> */}
 
-				<Hidden mdDown>
+				{/* <Hidden mdDown>
 					<NavbarFoldedToggleButton className="w-40 h-40 p-0" />
 				</Hidden>
 
@@ -48,7 +48,7 @@ function NavbarLayout1(props) {
 					<NavbarMobileToggleButton className="w-40 h-40 p-0">
 						<Icon>{theme.direction === 'ltr' ? 'arrow_back' : 'arrow_forward'}"</Icon>
 					</NavbarMobileToggleButton>
-				</Hidden>
+				</Hidden> */}
 			</AppBar>
 
 			<FuseScrollbars className={clsx(classes.content)} option={{ suppressScrollX: true }}>

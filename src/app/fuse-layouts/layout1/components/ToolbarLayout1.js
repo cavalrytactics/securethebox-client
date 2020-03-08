@@ -1,23 +1,47 @@
-import FuseSearch from '@fuse/core/FuseSearch';
-import FuseShortcuts from '@fuse/core/FuseShortcuts';
+// import FuseSearch from '@fuse/core/FuseSearch';
+// import FuseShortcuts from '@fuse/core/FuseShortcuts';
 import AppBar from '@material-ui/core/AppBar';
 import Hidden from '@material-ui/core/Hidden';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
+// import ChatPanelToggleButton from 'app/fuse-layouts/shared-components/chatPanel/ChatPanelToggleButton';
 import NavbarMobileToggleButton from 'app/fuse-layouts/shared-components/NavbarMobileToggleButton';
-import QuickPanelToggleButton from 'app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton';
-import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
+// import QuickPanelToggleButton from 'app/fuse-layouts/shared-components/quickPanel/QuickPanelToggleButton';
+// import UserMenu from 'app/fuse-layouts/shared-components/UserMenu';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
+// import LanguageSwitcher from '../../shared-components/LanguageSwitcher';
+import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
 	separator: {
-		width: 1,
+		width: 15,
 		height: 64,
-		backgroundColor: theme.palette.divider
+		backgroundColor: "#1e1f1c"
 	}
 }));
+
+function LoginButton() {
+	let history = useHistory();
+	function handleClick() {
+		history.push("/login");
+	}
+	return (
+		<Button onClick={handleClick} className="w-128 h-64" style={{color:"#A6E22E", textTransform:"none", letterSpacing: '-0.5px', fontSize: '18px', fontWeight: 350, fontFamily: "Menlo,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\"" }}>Login</Button>
+	);
+}
+
+function InviteCodeButton() {
+	let history = useHistory();
+	function handleClick() {
+		history.push("/invite");
+	}
+	return (
+		<Button onClick={handleClick} className="w-200 h-64" style={{color:"#A6E22E", textTransform:"none", letterSpacing: '-0.5px', fontSize: '18px', fontWeight: 350, fontFamily: "Menlo,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\"" }}>Invite Code</Button>
+	);
+}
+
 
 function ToolbarLayout1(props) {
 	const config = useSelector(({ fuse }) => fuse.settings.current.layout.config);
@@ -31,7 +55,7 @@ function ToolbarLayout1(props) {
 				id="fuse-toolbar"
 				className="flex relative z-10"
 				color="default"
-				style={{ backgroundColor: toolbarTheme.palette.background.default }}
+				style={{ backgroundColor: "#1e1f1c", boxShadow: "0 0 0 0" }}
 			>
 				<Toolbar className="p-0">
 					{config.navbar.display && config.navbar.position === 'left' && (
@@ -42,10 +66,20 @@ function ToolbarLayout1(props) {
 					)}
 
 					<div className="flex flex-1">
+					</div>
+
+					<div className="flex">
+						<InviteCodeButton/>
+						<div className={classes.separator} />
+						<LoginButton/>
+					</div>
+
+					{/* <div className="flex flex-1">
 						<Hidden mdDown>
 							<FuseShortcuts className="px-16" />
 						</Hidden>
 					</div>
+
 
 					<div className="flex">
 						<UserMenu />
@@ -54,6 +88,12 @@ function ToolbarLayout1(props) {
 
 						<FuseSearch />
 
+						<Hidden lgUp>
+							<div className={classes.separator} />
+
+							<ChatPanelToggleButton />
+						</Hidden>
+
 						<div className={classes.separator} />
 
 						<LanguageSwitcher />
@@ -61,7 +101,7 @@ function ToolbarLayout1(props) {
 						<div className={classes.separator} />
 
 						<QuickPanelToggleButton />
-					</div>
+					</div> */}
 
 					{config.navbar.display && config.navbar.position === 'right' && (
 						<Hidden lgUp>
