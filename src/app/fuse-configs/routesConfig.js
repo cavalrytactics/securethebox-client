@@ -11,7 +11,7 @@ const routes = [
 	...FuseUtils.generateRoutesFromConfigs(routeConfigs, []),
 	{
 		path: '/',
-		component: () => <Redirect to="/categories" />
+		component: () => <Redirect to="/wizard"/>
 	}
 ];
 

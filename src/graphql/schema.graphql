@@ -58,15 +58,17 @@ type CategoryTypeEdge {
 
 input ClusterInput {
   id: ID
-  name: String
+  value: String
+  label: String
   status: String
 }
 
 type ClusterType implements Node {
   ID: ID
   id: ID!
-  name: String
+  label: String
   status: String
+  value: String
   containers(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, status: String): ContainerTypeConnection
 }
 
@@ -604,7 +606,7 @@ type Query {
   node(id: ID!): Node
   applications(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, name: String, version: String, configuration: ID): ApplicationTypeConnection
   categories(before: String, after: String, first: Int, last: Int, ID: ID, color: String, id: ID, label: String, value: String): CategoryTypeConnection
-  clusters(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, name: String, status: String): ClusterTypeConnection
+  clusters(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, status: String, value: String): ClusterTypeConnection
   companies(before: String, after: String, first: Int, last: Int, ID: ID, id: ID): CompanyTypeConnection
   competencies(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, value: String): CompetencyTypeConnection
   configurations(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, port: Int, url: String, credentals: ID): ConfigurationTypeConnection

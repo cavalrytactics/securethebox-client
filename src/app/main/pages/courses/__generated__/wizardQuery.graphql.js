@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 884cd437bd958238b46d1df5a37485f1
+ * @relayHash 30d9ab78e766814b14b33e61d9f25dda
  */
 
 /* eslint-disable */
@@ -15,7 +15,12 @@ export type wizardQueryResponse = {|
     +value: ?string,
     +label: ?string,
     +color: ?string,
-  |}>
+  |}>,
+  +clustersList: ?$ReadOnlyArray<?{|
+    +value: ?string,
+    +label: ?string,
+    +status: ?string,
+  |}>,
 |};
 export type wizardQuery = {|
   variables: wizardQueryVariables,
@@ -30,6 +35,12 @@ query wizardQuery {
     value
     label
     color
+    id
+  }
+  clustersList {
+    value
+    label
+    status
     id
   }
 }
@@ -56,6 +67,20 @@ v2 = {
   "name": "color",
   "args": null,
   "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "status",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
 };
 return {
   "kind": "Request",
@@ -79,6 +104,20 @@ return {
           (v1/*: any*/),
           (v2/*: any*/)
         ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "clustersList",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "ClusterType",
+        "plural": true,
+        "selections": [
+          (v0/*: any*/),
+          (v1/*: any*/),
+          (v3/*: any*/)
+        ]
       }
     ]
   },
@@ -99,13 +138,22 @@ return {
           (v0/*: any*/),
           (v1/*: any*/),
           (v2/*: any*/),
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "id",
-            "args": null,
-            "storageKey": null
-          }
+          (v4/*: any*/)
+        ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "clustersList",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "ClusterType",
+        "plural": true,
+        "selections": [
+          (v0/*: any*/),
+          (v1/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/)
         ]
       }
     ]
@@ -114,12 +162,12 @@ return {
     "operationKind": "query",
     "name": "wizardQuery",
     "id": null,
-    "text": "query wizardQuery {\n  categoriesList {\n    value\n    label\n    color\n    id\n  }\n}\n",
+    "text": "query wizardQuery {\n  categoriesList {\n    value\n    label\n    color\n    id\n  }\n  clustersList {\n    value\n    label\n    status\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'cd20c808a759ab255007cbbc51d9de57';
+(node/*: any*/).hash = '301a6ee834c685d305611a7aa4710874';
 
 module.exports = node;
