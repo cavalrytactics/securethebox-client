@@ -9,21 +9,62 @@ i18next.addResourceBundle('ar', 'navigation', ar);
 
 const navigationConfig = [
 	{
-		id: 'applications',
-		title: 'Applications',
-		translate: 'APPLICATIONS',
-		type: 'group',
-		icon: 'apps',
-		children: [
+		'id': 'courses',
+		'title': 'Courses',
+		'translate': 'Courses',
+		'type': 'group',
+		'icon': 'apps',
+		'children': [
 			{
-				id: 'example-component',
-				title: 'Example',
-				translate: 'EXAMPLE',
-				type: 'item',
-				icon: 'whatshot',
-				url: '/example'
+				'id': 'courses-add',
+				'title': 'Create',
+				'translate': 'CREATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/courses/create'
+			},
+			{
+				'id': 'courses-list',
+				'title': 'List',
+				'translate': 'LIST',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/courses/list'
 			}
 		]
+	},
+	{
+		'type': 'divider',
+		'id': 'divider-1'
+	},
+	{
+		'id': 'applications',
+		'title': 'Applications',
+		'translate': 'Applications',
+		'type': 'group',
+		'icon': 'apps',
+		'children': [
+			{
+				'id': 'applications-add',
+				'title': 'Create',
+				'translate': 'CREATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/applications/create'
+			},
+			{
+				'id': 'applications-list',
+				'title': 'List',
+				'translate': 'LIST',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/applications/list'
+			}
+		]
+	},
+	{
+		'type': 'divider',
+		'id': 'divider-2'
 	}
 ];
 

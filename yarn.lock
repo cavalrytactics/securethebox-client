@@ -11046,6 +11046,11 @@ react-window@1.8.5:
     "@babel/runtime" "^7.0.0"
     memoize-one ">=3.1.1 <6"
 
+react-wizard-primitive@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-wizard-primitive/-/react-wizard-primitive-2.3.0.tgz#a2791de19a9c6d048d64fe8b6f49247247411573"
+  integrity sha512-gRig0NpYm7fDeZagxXq76nCL6/t6WHHwftdrcbd4q8u1DsK9lejeC1EXqsBNlp1apH2g649ctxxpmnqUoA4nug==
+
 react@16.12.0, react@^15.6.2:
   version "16.12.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"

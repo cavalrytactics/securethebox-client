@@ -5,7 +5,7 @@ schema {
 
 input ApplicationInput {
   id: ID
-  name: String
+  value: String
   label: String
   version: String
 }
@@ -15,10 +15,11 @@ type ApplicationType implements Node {
   configuration: ConfigurationType
   id: ID!
   label: String
-  name: String
+  value: String
   version: String
   dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, id: ID, intent: String, purchases: Int): DummyTypeConnection
   questions(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, id: ID, value: String, scope: ID, solutions: ID): QuestionTypeConnection
+  vulnerabilities(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, id: ID, label: String, type: String, value: String): VulnerabilityTypeConnection
 }
 
 type ApplicationTypeConnection {
@@ -197,7 +198,6 @@ type CourseType implements Node {
   length: Int
   report: ReportType
   slug: String
-  status: String
   title: String
   totalSteps: Int
   steps(before: String, after: String, first: Int, last: Int, ID: ID, content: String, id: ID, title: String): StepTypeConnection
@@ -215,6 +215,7 @@ type CourseTypeEdge {
 
 type CreateApplicationMutation {
   application: ApplicationType
+  vulnerability: VulnerabilityType
 }
 
 type CreateCategoryMutation {
@@ -310,6 +311,10 @@ type CreateUniversityMutation {
 
 type CreateUserMutation {
   user: UserType
+}
+
+type CreateVulnerabilityMutation {
+  vulnerability: VulnerabilityType
 }
 
 input CredentialInput {
@@ -435,6 +440,10 @@ type DeleteUserMutation {
   success: Boolean
 }
 
+type DeleteVulnerabilityMutation {
+  success: Boolean
+}
+
 input DummyInput {
   id: ID
   name: String
@@ -515,7 +524,7 @@ type MetricTypeEdge {
 }
 
 type Mutations {
-  createApplication(applicationData: ApplicationInput!): CreateApplicationMutation
+  createApplication(applicationData: ApplicationInput!, vulnerabilityData: VulnerabilityInput!): CreateApplicationMutation
   createCategory(categoryData: CategoryInput!): CreateCategoryMutation
   createCluster(clusterData: ClusterInput!): CreateClusterMutation
   createCompany(companyData: CompanyInput!): CreateCompanyMutation
@@ -539,7 +548,8 @@ type Mutations {
   createTopic(topicData: TopicInput!): CreateTopicMutation
   createUniversity(universityData: UniversityInput!): CreateUniversityMutation
   createUser(userData: UserInput!): CreateUserMutation
-  updateApplication(applicationData: ApplicationInput!): UpdateApplicationMutation
+  createVulnerability(vulnerabilityData: VulnerabilityInput!): CreateVulnerabilityMutation
+  updateApplication(applicationData: ApplicationInput!, vulnerabilityData: VulnerabilityInput!): UpdateApplicationMutation
   updateCluster(clusterData: ClusterInput!): UpdateClusterMutation
   updateCompany(companyData: CompanyInput!): UpdateCompanyMutation
   updateCategory(categoryData: CategoryInput!): UpdateCategoryMutation
@@ -565,6 +575,7 @@ type Mutations {
   updateTopic(topicData: TopicInput!): UpdateTopicMutation
   updateUniversity(universityData: UniversityInput!): UpdateUniversityMutation
   updateUser(userData: UserInput!): UpdateUserMutation
+  updateVulnerability(vulnerabilityData: VulnerabilityInput!): UpdateVulnerabilityMutation
   deleteApplication(id: ID!): DeleteApplicationMutation
   deleteCategory(id: ID!): DeleteCategoryMutation
   deleteCluster(id: ID!): DeleteClusterMutation
@@ -589,6 +600,7 @@ type Mutations {
   deleteTopic(id: ID!): DeleteTopicMutation
   deleteUniversity(id: ID!): DeleteUniversityMutation
   deleteUser(id: ID!): DeleteUserMutation
+  deleteVulnerability(id: ID!): DeleteVulnerabilityMutation
 }
 
 interface Node {
@@ -604,14 +616,14 @@ type PageInfo {
 
 type Query {
   node(id: ID!): Node
-  applications(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, name: String, version: String, configuration: ID): ApplicationTypeConnection
+  applications(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, value: String, version: String, configuration: ID): ApplicationTypeConnection
   categories(before: String, after: String, first: Int, last: Int, ID: ID, color: String, id: ID, label: String, value: String): CategoryTypeConnection
   clusters(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, status: String, value: String): ClusterTypeConnection
   companies(before: String, after: String, first: Int, last: Int, ID: ID, id: ID): CompanyTypeConnection
   competencies(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, value: String): CompetencyTypeConnection
   configurations(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, port: Int, url: String, credentals: ID): ConfigurationTypeConnection
   containers(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, status: String): ContainerTypeConnection
-  courses(before: String, after: String, first: Int, last: Int, ID: ID, activeStep: Int, description: String, id: ID, length: Int, slug: String, status: String, title: String, totalSteps: Int, category: ID, cluster: ID, report: ID): CourseTypeConnection
+  courses(before: String, after: String, first: Int, last: Int, ID: ID, activeStep: Int, description: String, id: ID, length: Int, slug: String, title: String, totalSteps: Int, category: ID, cluster: ID, report: ID): CourseTypeConnection
   credentials(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, password: String, privateKey: String, publicKey: String, username: String): CredentialTypeConnection
   dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, id: ID, intent: String, purchases: Int): DummyTypeConnection
   jobs(before: String, after: String, first: Int, last: Int, ID: ID, applyEmail: String, applyLink: String, description: String, id: ID, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String): JobTypeConnection
@@ -628,6 +640,7 @@ type Query {
   topics(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, value: String, competency: ID): TopicTypeConnection
   universities(before: String, after: String, first: Int, last: Int, ID: ID, domain: String, id: ID, team: ID): UniversityTypeConnection
   users(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, id: ID, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, rank: ID, subscription: ID): UserTypeConnection
+  vulnerabilities(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, id: ID, label: String, type: String, value: String): VulnerabilityTypeConnection
   applicationsList: [ApplicationType]
   clustersList: [ClusterType]
   companiesList: [CompanyType]
@@ -652,6 +665,7 @@ type Query {
   topicsList: [TopicType]
   universitiesList: [UniversityType]
   usersList: [UserType]
+  vulnerabilitiesList: [VulnerabilityType]
 }
 
 input QuestionInput {
@@ -759,7 +773,7 @@ input ServiceInput {
 
 type ServiceType implements Node {
   ID: ID
-  applications(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, name: String, version: String, configuration: ID): ApplicationTypeConnection
+  applications(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, value: String, version: String, configuration: ID): ApplicationTypeConnection
   id: ID!
   label: String
   type: String
@@ -917,6 +931,7 @@ type UniversityTypeEdge {
 
 type UpdateApplicationMutation {
   application: ApplicationType
+  vulnerability: VulnerabilityType
 }
 
 type UpdateCategoryMutation {
@@ -1024,6 +1039,10 @@ type UpdateUserMutation {
   user: UserType
 }
 
+type UpdateVulnerabilityMutation {
+  vulnerability: VulnerabilityType
+}
+
 input UserInput {
   id: ID
   name: String
@@ -1050,5 +1069,32 @@ type UserTypeConnection {
 
 type UserTypeEdge {
   node: UserType
+  cursor: String!
+}
+
+input VulnerabilityInput {
+  id: ID
+  value: String
+  label: String
+  type: String
+  exploitDbUrl: String
+}
+
+type VulnerabilityType implements Node {
+  ID: ID
+  exploitDbUrl: String
+  id: ID!
+  label: String
+  type: String
+  value: String
+}
+
+type VulnerabilityTypeConnection {
+  pageInfo: PageInfo!
+  edges: [VulnerabilityTypeEdge]!
+}
+
+type VulnerabilityTypeEdge {
+  node: VulnerabilityType
   cursor: String!
 }

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 30d9ab78e766814b14b33e61d9f25dda
+ * @relayHash 87df0bd14f2716f57d65d84fa205596f
  */
 
 /* eslint-disable */
@@ -9,8 +9,8 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type wizardQueryVariables = {||};
-export type wizardQueryResponse = {|
+export type CreateCourseQueryVariables = {||};
+export type CreateCourseQueryResponse = {|
   +categoriesList: ?$ReadOnlyArray<?{|
     +value: ?string,
     +label: ?string,
@@ -22,15 +22,15 @@ export type wizardQueryResponse = {|
     +status: ?string,
   |}>,
 |};
-export type wizardQuery = {|
-  variables: wizardQueryVariables,
-  response: wizardQueryResponse,
+export type CreateCourseQuery = {|
+  variables: CreateCourseQueryVariables,
+  response: CreateCourseQueryResponse,
 |};
 */
 
 
 /*
-query wizardQuery {
+query CreateCourseQuery {
   categoriesList {
     value
     label
@@ -86,7 +86,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "wizardQuery",
+    "name": "CreateCourseQuery",
     "type": "Query",
     "metadata": null,
     "argumentDefinitions": [],
@@ -123,7 +123,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "wizardQuery",
+    "name": "CreateCourseQuery",
     "argumentDefinitions": [],
     "selections": [
       {
@@ -160,14 +160,14 @@ return {
   },
   "params": {
     "operationKind": "query",
-    "name": "wizardQuery",
+    "name": "CreateCourseQuery",
     "id": null,
-    "text": "query wizardQuery {\n  categoriesList {\n    value\n    label\n    color\n    id\n  }\n  clustersList {\n    value\n    label\n    status\n    id\n  }\n}\n",
+    "text": "query CreateCourseQuery {\n  categoriesList {\n    value\n    label\n    color\n    id\n  }\n  clustersList {\n    value\n    label\n    status\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '301a6ee834c685d305611a7aa4710874';
+(node/*: any*/).hash = '8f4814405e7c86019ceab08302bdb4d0';
 
 module.exports = node;

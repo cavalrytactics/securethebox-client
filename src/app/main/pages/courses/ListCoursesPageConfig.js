@@ -1,16 +1,16 @@
 import React from 'react';
 import { authRoles } from 'app/auth';
 
-const wizardPageConfig = {
+const ListCoursesPageConfig = {
 	settings: {
         layout: {
 			style: 'layout1',
             config: {
                 navbar        : {
-                    display: false
+                    display: true
                 },
                 toolbar       : {
-                    display: true,
+                    display: false,
                     style: "fixed"
                 },
                 footer        : {
@@ -37,10 +37,10 @@ const wizardPageConfig = {
     auth: authRoles.user,
 	routes: [
 		{
-			path: '/wizard',
-			component: React.lazy(() => import('./wizard'))
+			path: '/courses/list',
+			component: React.lazy(() => import('./ListCourses'))
 		}
 	]
 };
 
-export default wizardPageConfig;
+export default ListCoursesPageConfig;

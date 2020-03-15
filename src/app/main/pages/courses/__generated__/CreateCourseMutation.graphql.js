@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 98bedce110f621c6e077bd4b662f5ba1
+ * @relayHash 7d3c41208dca35d5b69e7ab9323831c7
  */
 
 /* eslint-disable */
@@ -21,7 +21,7 @@ export type ClusterInput = {|
   label?: ?string,
   status?: ?string,
 |};
-export type wizardMutationVariables = {|
+export type CreateCourseMutationVariables = {|
   title: string,
   description: string,
   length: number,
@@ -30,7 +30,7 @@ export type wizardMutationVariables = {|
   category: CategoryInput,
   cluster: ClusterInput,
 |};
-export type wizardMutationResponse = {|
+export type CreateCourseMutationResponse = {|
   +createCourse: ?{|
     +course: ?{|
       +title: ?string,
@@ -42,15 +42,15 @@ export type wizardMutationResponse = {|
     |}
   |}
 |};
-export type wizardMutation = {|
-  variables: wizardMutationVariables,
-  response: wizardMutationResponse,
+export type CreateCourseMutation = {|
+  variables: CreateCourseMutationVariables,
+  response: CreateCourseMutationResponse,
 |};
 */
 
 
 /*
-mutation wizardMutation(
+mutation CreateCourseMutation(
   $title: String!
   $description: String!
   $length: Int!
@@ -212,7 +212,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "wizardMutation",
+    "name": "CreateCourseMutation",
     "type": "Mutations",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -249,7 +249,7 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "wizardMutation",
+    "name": "CreateCourseMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
@@ -291,14 +291,14 @@ return {
   },
   "params": {
     "operationKind": "mutation",
-    "name": "wizardMutation",
+    "name": "CreateCourseMutation",
     "id": null,
-    "text": "mutation wizardMutation(\n  $title: String!\n  $description: String!\n  $length: Int!\n  $slug: String!\n  $totalSteps: Int!\n  $category: CategoryInput!\n  $cluster: ClusterInput!\n) {\n  createCourse(courseData: {title: $title, activeStep: 0, description: $description, length: $length, slug: $slug, totalSteps: $totalSteps}, categoryData: $category, clusterData: $cluster) {\n    course {\n      title\n      activeStep\n      description\n      length\n      slug\n      totalSteps\n      id\n    }\n  }\n}\n",
+    "text": "mutation CreateCourseMutation(\n  $title: String!\n  $description: String!\n  $length: Int!\n  $slug: String!\n  $totalSteps: Int!\n  $category: CategoryInput!\n  $cluster: ClusterInput!\n) {\n  createCourse(courseData: {title: $title, activeStep: 0, description: $description, length: $length, slug: $slug, totalSteps: $totalSteps}, categoryData: $category, clusterData: $cluster) {\n    course {\n      title\n      activeStep\n      description\n      length\n      slug\n      totalSteps\n      id\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a6574f33f26c4b3e93cc52174ac17ea9';
+(node/*: any*/).hash = 'ac2359cdb35bbf8f6437f95e9d1825ad';
 
 module.exports = node;
