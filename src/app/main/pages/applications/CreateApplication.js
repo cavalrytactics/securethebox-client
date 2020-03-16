@@ -63,31 +63,43 @@ function CreateApplication(props) {
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
 		const variables = data
-		
-		variables["vulnerability"].forEach(function (arrayItem) {
-			// const modifiedVariables = variables
-			// modifiedVariables["value"] = modifiedVariables["label"]
-			// modifiedVariables["vulnerability"] = arrayItem
-			// console.log(variables)
-			const mVariables = {
-				"value": variables["label"].toLowerCase(),
-				"label": variables["label"],
-				"version": variables["version"],
-				"vulnerability": arrayItem
-			}
-			console.log(mVariables)
-			commitMutation(
-				environment,
-				{
-					mutation,
-					mVariables,
-					onCompleted: (response, errors) => {
-						console.log('Response received from server.')
-					},
-					onError: err => console.error(err),
+		variables["value"] = variables["label"]
+		commitMutation(
+			environment,
+			{
+				mutation,
+				variables,
+				onCompleted: (response, errors) => {
+					console.log('Response received from server.')
 				},
-			)
-		})
+				onError: err => console.error(err),
+			},
+		)
+		
+		// variables["vulnerability"].forEach(function (arrayItem) {
+		// 	// const modifiedVariables = variables
+		// 	// modifiedVariables["value"] = modifiedVariables["label"]
+		// 	// modifiedVariables["vulnerability"] = arrayItem
+		// 	// console.log(variables)
+		// 	const mVariables = {
+		// 		"value": variables["label"].toLowerCase(),
+		// 		"label": variables["label"],
+		// 		"version": variables["version"],
+		// 		"vulnerability": arrayItem
+		// 	}
+		// 	console.log(mVariables)
+		// 	commitMutation(
+		// 		environment,
+		// 		{
+		// 			mutation,
+		// 			mVariables,
+		// 			onCompleted: (response, errors) => {
+		// 				console.log('Response received from server.')
+		// 			},
+		// 			onError: err => console.error(err),
+		// 		},
+		// 	)
+		// })
 		
 	};
 
@@ -164,7 +176,6 @@ function CreateApplication(props) {
 											value={valuesVulnerability.selectedOptionVulnerability}
 											options={props.vulnerabilitiesList}
 											onChange={handleMultiChangeVulnerability}
-											isMulti
 										/>
 									</Grid>
 									<Grid item xs={12} sm={3}>

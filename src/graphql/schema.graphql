@@ -19,7 +19,7 @@ type ApplicationType implements Node {
   version: String
   dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, id: ID, intent: String, purchases: Int): DummyTypeConnection
   questions(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, id: ID, value: String, scope: ID, solutions: ID): QuestionTypeConnection
-  vulnerabilities(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, id: ID, label: String, type: String, value: String): VulnerabilityTypeConnection
+  vulnerability(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, id: ID, label: String, type: String, value: String): VulnerabilityTypeConnection
 }
 
 type ApplicationTypeConnection {

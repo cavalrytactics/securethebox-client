@@ -1,6 +1,0 @@
-projects:
-  prod:
-    schemaPath: src/graphql/schema.graphql
-    extensions:
-      endpoints:
-        default: http://localhost:5000/graphql
