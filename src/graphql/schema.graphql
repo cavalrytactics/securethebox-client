@@ -11,12 +11,13 @@ input ApplicationInput {
 }
 
 type ApplicationType implements Node {
-  ID: ID
+  Id: ID
+  autoId0: ID
   configuration: ConfigurationType
-  id: ID!
   label: String
   value: String
   version: String
+  id: ID!
   dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, id: ID, intent: String, purchases: Int): DummyTypeConnection
   questions(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, id: ID, value: String, scope: ID, solutions: ID): QuestionTypeConnection
   vulnerability(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, id: ID, label: String, type: String, value: String): VulnerabilityTypeConnection
@@ -616,7 +617,7 @@ type PageInfo {
 
 type Query {
   node(id: ID!): Node
-  applications(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, value: String, version: String, configuration: ID): ApplicationTypeConnection
+  applications(before: String, after: String, first: Int, last: Int, Id: ID, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
   categories(before: String, after: String, first: Int, last: Int, ID: ID, color: String, id: ID, label: String, value: String): CategoryTypeConnection
   clusters(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, status: String, value: String): ClusterTypeConnection
   companies(before: String, after: String, first: Int, last: Int, ID: ID, id: ID): CompanyTypeConnection
@@ -773,7 +774,7 @@ input ServiceInput {
 
 type ServiceType implements Node {
   ID: ID
-  applications(before: String, after: String, first: Int, last: Int, ID: ID, id: ID, label: String, value: String, version: String, configuration: ID): ApplicationTypeConnection
+  applications(before: String, after: String, first: Int, last: Int, Id: ID, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
   id: ID!
   label: String
   type: String

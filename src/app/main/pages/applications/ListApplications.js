@@ -1,10 +1,11 @@
 import React from 'react';
-import { QueryRenderer } from 'react-relay';
+import { QueryRenderer, commitMutation } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import environment from 'graphql/consts/environment'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -26,6 +27,33 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
+const mutation = graphql`
+	mutation ListApplicationsMutation(
+		$id: ID!
+		) {
+			deleteApplication(id:$id) {
+				success
+		}
+	}  
+`;
+
+function commitMutationRequest(environment, mutation, variables) {
+	const mVariables = variables
+	const jVariables = { "id": mVariables }
+	console.log("jVariables:",jVariables)
+	commitMutation(
+		environment,
+		{
+			mutation,
+			jVariables,
+			onCompleted: (response, errors) => {
+				console.log('Response received from server.')
+			},
+			onError: err => console.error(err),
+		},
+	)
+}
+
 export default function ListApplications() {
 	const classes = useStyles();
 	return (
@@ -35,7 +63,7 @@ export default function ListApplications() {
 				query={graphql`
 				query ListApplicationsQuery {
 						applicationsList {
-							id
+							Id
 							value
 							label
 							version
@@ -54,6 +82,7 @@ export default function ListApplications() {
 					}
 					// If received data
 					if (props) {
+						console.log(props)
 						return (
 							<TableContainer component={Paper}>
 								<Table className={classes.table} aria-label="simple table">
@@ -61,16 +90,20 @@ export default function ListApplications() {
 										<TableRow>
 											<TableCell>Label</TableCell>
 											<TableCell>Version</TableCell>
+											<TableCell>Actions</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
 										{props.applicationsList.map(row => (
-											<TableRow key={row.id}>
+											<TableRow key={row.Id}>
 												<TableCell component="th" scope="row">
 													{row.label}
 												</TableCell>
 												<TableCell component="th" scope="row">
-													{row.version}
+													{row.version} {row.Id}
+												</TableCell>
+												<TableCell component="th" scope="row">
+													<Button onClick={() => commitMutationRequest(environment, mutation, row.Id)}>Delete</Button>
 												</TableCell>
 											</TableRow>
 										))}

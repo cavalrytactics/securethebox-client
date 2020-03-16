@@ -13,7 +13,6 @@ import Button from '@material-ui/core/Button';
 import Select from "react-select"
 import environment from 'graphql/consts/environment';
 
-
 // Style Control
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -27,7 +26,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 // Graphql Mutation to create Course
-
 const mutation = graphql`
 	mutation CreateApplicationMutation(
 		$value: String!, 
@@ -52,6 +50,20 @@ const mutation = graphql`
 	} 
 `;
 
+function commitMutationRequest(environment, mutation, variables){
+	commitMutation(
+		environment,
+		{
+			mutation,
+			variables,
+			onCompleted: (response, errors) => {
+				console.log('Response received from server.')
+			},
+			onError: err => console.error(err),
+		},
+	)
+}
+
 // Wizard form
 function CreateApplication(props) {
 	// styling
@@ -64,43 +76,12 @@ function CreateApplication(props) {
 		// javascript is wierd... 'data' has some type issues
 		const variables = data
 		variables["value"] = variables["label"]
-		commitMutation(
-			environment,
-			{
-				mutation,
-				variables,
-				onCompleted: (response, errors) => {
-					console.log('Response received from server.')
-				},
-				onError: err => console.error(err),
-			},
+		variables["vulnerability"].map((arrayItem) => {
+			const mVulnerability = arrayItem // All objects need to be set to const
+			variables["vulnerability"] = mVulnerability
+			commitMutationRequest(environment, mutation, variables)
+			}
 		)
-		
-		// variables["vulnerability"].forEach(function (arrayItem) {
-		// 	// const modifiedVariables = variables
-		// 	// modifiedVariables["value"] = modifiedVariables["label"]
-		// 	// modifiedVariables["vulnerability"] = arrayItem
-		// 	// console.log(variables)
-		// 	const mVariables = {
-		// 		"value": variables["label"].toLowerCase(),
-		// 		"label": variables["label"],
-		// 		"version": variables["version"],
-		// 		"vulnerability": arrayItem
-		// 	}
-		// 	console.log(mVariables)
-		// 	commitMutation(
-		// 		environment,
-		// 		{
-		// 			mutation,
-		// 			mVariables,
-		// 			onCompleted: (response, errors) => {
-		// 				console.log('Response received from server.')
-		// 			},
-		// 			onError: err => console.error(err),
-		// 		},
-		// 	)
-		// })
-		
 	};
 
 	// local state management 
@@ -176,6 +157,7 @@ function CreateApplication(props) {
 											value={valuesVulnerability.selectedOptionVulnerability}
 											options={props.vulnerabilitiesList}
 											onChange={handleMultiChangeVulnerability}
+											isMulti
 										/>
 									</Grid>
 									<Grid item xs={12} sm={3}>
