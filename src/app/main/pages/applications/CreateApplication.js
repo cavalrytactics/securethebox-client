@@ -80,6 +80,7 @@ function CreateApplication(props) {
 			const mVulnerability = arrayItem // All objects need to be set to const
 			variables["vulnerability"] = mVulnerability
 			commitMutationRequest(environment, mutation, variables)
+			return null
 			}
 		)
 	};

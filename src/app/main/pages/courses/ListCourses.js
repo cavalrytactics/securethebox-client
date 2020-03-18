@@ -66,6 +66,7 @@ export default function ListCourses() {
 					}
 					// If received data
 					if (props) {
+						console.log(props)
 						return (
 							<TableContainer component={Paper}>
 								<Table className={classes.table} aria-label="simple table">

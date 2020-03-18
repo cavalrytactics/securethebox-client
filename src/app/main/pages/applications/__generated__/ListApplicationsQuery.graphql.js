@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 5e613c55c837d88d482aabcfce032735
+ * @relayHash 018546d0275136bdc4e6dea77965f883
  */
 
 /* eslint-disable */
@@ -12,7 +12,7 @@ import type { ConcreteRequest } from 'relay-runtime';
 export type ListApplicationsQueryVariables = {||};
 export type ListApplicationsQueryResponse = {|
   +applicationsList: ?$ReadOnlyArray<?{|
-    +Id: ?string,
+    +ID: string,
     +value: ?string,
     +label: ?string,
     +version: ?string,
@@ -28,7 +28,7 @@ export type ListApplicationsQuery = {|
 /*
 query ListApplicationsQuery {
   applicationsList {
-    Id
+    ID
     value
     label
     version
@@ -41,7 +41,7 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "Id",
+  "name": "ID",
   "args": null,
   "storageKey": null
 },
@@ -125,12 +125,12 @@ return {
     "operationKind": "query",
     "name": "ListApplicationsQuery",
     "id": null,
-    "text": "query ListApplicationsQuery {\n  applicationsList {\n    Id\n    value\n    label\n    version\n    id\n  }\n}\n",
+    "text": "query ListApplicationsQuery {\n  applicationsList {\n    ID\n    value\n    label\n    version\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '6865feb9a91f3f34e963b5d6e7d006b4';
+(node/*: any*/).hash = '5e581a0e345c9eb508a8dda753670725';
 
 module.exports = node;
