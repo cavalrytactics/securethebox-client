@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 06a01ee0c2164adb9b1e85ecfa2c792b
+ * @relayHash 0e863ce2ccca954531b42b4fb0cee919
  */
 
 /* eslint-disable */
@@ -10,7 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type ListApplicationsMutationVariables = {|
-  id: string
+  ID: string
 |};
 export type ListApplicationsMutationResponse = {|
   +deleteApplication: ?{|
@@ -26,9 +26,9 @@ export type ListApplicationsMutation = {|
 
 /*
 mutation ListApplicationsMutation(
-  $id: ID!
+  $ID: ID!
 ) {
-  deleteApplication(id: $id) {
+  deleteApplication(ID: $ID) {
     success
   }
 }
@@ -38,7 +38,7 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "id",
+    "name": "ID",
     "type": "ID!",
     "defaultValue": null
   }
@@ -52,8 +52,8 @@ v1 = [
     "args": [
       {
         "kind": "Variable",
-        "name": "id",
-        "variableName": "id"
+        "name": "ID",
+        "variableName": "ID"
       }
     ],
     "concreteType": "DeleteApplicationMutation",
@@ -89,12 +89,12 @@ return {
     "operationKind": "mutation",
     "name": "ListApplicationsMutation",
     "id": null,
-    "text": "mutation ListApplicationsMutation(\n  $id: ID!\n) {\n  deleteApplication(id: $id) {\n    success\n  }\n}\n",
+    "text": "mutation ListApplicationsMutation(\n  $ID: ID!\n) {\n  deleteApplication(ID: $ID) {\n    success\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '40a31fd0f318525063af364113b984cb';
+(node/*: any*/).hash = '84593e77cab82ad9175d95b78d11d82c';
 
 module.exports = node;

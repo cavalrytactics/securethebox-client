@@ -29,24 +29,21 @@ const useStyles = makeStyles(theme => ({
 
 const mutation = graphql`
 	mutation ListApplicationsMutation(
-		$id: ID!
+		$ID: ID!
 		) {
-			deleteApplication(id:$id) {
+			deleteApplication(ID:$ID) {
 				success
 		}
 	}  
 `;
 
-function commitMutationRequest(environment, mutation, variables) {
-	console.log("variables", variables)
-	const mVariables = variables
-	const jVariables = { "id": mVariables }
-	console.log("jVariables:", jVariables)
+function commitMutationRequest(environment, mutation, ID) {
+	const variables = { ID, }
 	commitMutation(
 		environment,
 		{
 			mutation,
-			jVariables,
+			variables,
 			onCompleted: (response, errors) => {
 				console.log('Response received from server.')
 			},
@@ -56,17 +53,17 @@ function commitMutationRequest(environment, mutation, variables) {
 }
 
 function renderRows(applicationsList) {
-	return applicationsList.map((app) => {
+	return applicationsList.map((row) => {
 		return (
-			<TableRow key={app.id}>
-				<TableCell component="th" scope="app">
-					{app.label}
+			<TableRow key={row.ID}>
+				<TableCell component="th" scope="row">
+					{row.label}
 				</TableCell>
-				<TableCell component="th" scope="app">
-					{app.version} {app.id}
+				<TableCell component="th" scope="row">
+					{row.version} {row.id}
 				</TableCell>
-				<TableCell component="th" scope="app">
-					<Button onClick={() => commitMutationRequest(environment, mutation, app.id)}>Delete</Button>
+				<TableCell component="th" scope="row">
+					<Button onClick={() => commitMutationRequest(environment, mutation, row.ID)}>Delete</Button>
 				</TableCell>
 			</TableRow>
 		)
@@ -113,22 +110,7 @@ export default function ListApplications() {
 										</TableRow>
 									</TableHead>
 									<TableBody>
-									{
-											props.applicationsList.map((row) => {
-												return (
-													<TableRow key={row.ID}>
-														<TableCell component="th" scope="row">
-															{row.label}
-														</TableCell>
-														<TableCell component="th" scope="row">
-															{row.version} {row.id}
-														</TableCell>
-														<TableCell component="th" scope="row">
-															<Button onClick={() => commitMutationRequest(environment, mutation, row.ID)}>Delete</Button>
-														</TableCell>
-													</TableRow>
-												)
-											})}
+										{renderRows(props.applicationsList)}
 									</TableBody>
 								</Table>
 							</TableContainer>

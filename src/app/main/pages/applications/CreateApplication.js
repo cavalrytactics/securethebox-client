@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import withReducer from 'app/store/withReducer';
 import connect from 'react-redux/es/connect/connect';
+import withReducer from 'app/store/withReducer';
 import reducer from 'app/auth/store/reducers';
 import { QueryRenderer, commitMutation } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
@@ -12,6 +12,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from "react-select"
 import environment from 'graphql/consts/environment';
+
 
 // Style Control
 const useStyles = makeStyles(theme => ({
@@ -50,7 +51,7 @@ const mutation = graphql`
 	} 
 `;
 
-function commitMutationRequest(environment, mutation, variables){
+function commitMutationRequest(environment, mutation, variables) {
 	commitMutation(
 		environment,
 		{
@@ -71,17 +72,18 @@ function CreateApplication(props) {
 	const { register, handleSubmit, errors, setValue } = useForm(); // initialise the hook
 
 	// react-hook-form local state
-	// Submit request to Grapqhl Server
+	// Submit request to Graphql Server
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
 		const variables = data
 		variables["value"] = variables["label"]
+		console.log(variables) 
 		variables["vulnerability"].map((arrayItem) => {
 			const mVulnerability = arrayItem // All objects need to be set to const
 			variables["vulnerability"] = mVulnerability
 			commitMutationRequest(environment, mutation, variables)
 			return null
-			}
+		}
 		)
 	};
 
@@ -146,8 +148,8 @@ function CreateApplication(props) {
 											{errors.label && 'Label is required.'}
 										</p>
 									</Grid>
+									<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Version" name="version" />
 									<Grid item xs={12}>
-										<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Version" name="version" />
 										<p>
 											{errors.version && 'Version is required.'}
 										</p>

@@ -4,14 +4,14 @@ schema {
 }
 
 input ApplicationInput {
-  id: ID
+  ID: ID
   value: String
   label: String
   version: String
 }
 
 type ApplicationType implements Node {
-  ID: String!
+  ID: ID!
   configuration: ConfigurationType
   label: String
   value: String
@@ -576,7 +576,7 @@ type Mutations {
   updateUniversity(universityData: UniversityInput!): UpdateUniversityMutation
   updateUser(userData: UserInput!): UpdateUserMutation
   updateVulnerability(vulnerabilityData: VulnerabilityInput!): UpdateVulnerabilityMutation
-  deleteApplication(id: ID): DeleteApplicationMutation
+  deleteApplication(ID: ID): DeleteApplicationMutation
   deleteCategory(id: ID!): DeleteCategoryMutation
   deleteCluster(id: ID!): DeleteClusterMutation
   deleteCompany(id: ID!): DeleteCompanyMutation
@@ -616,7 +616,7 @@ type PageInfo {
 
 type Query {
   node(id: ID!): Node
-  applications(before: String, after: String, first: Int, last: Int, ID: String, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
+  applications(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
   categories(before: String, after: String, first: Int, last: Int, ID: String, color: String, label: String, value: String, id: ID): CategoryTypeConnection
   clusters(before: String, after: String, first: Int, last: Int, ID: String, label: String, status: String, value: String, id: ID): ClusterTypeConnection
   companies(before: String, after: String, first: Int, last: Int, ID: String, id: ID): CompanyTypeConnection
@@ -773,7 +773,7 @@ input ServiceInput {
 
 type ServiceType implements Node {
   ID: String!
-  applications(before: String, after: String, first: Int, last: Int, ID: String, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
+  applications(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
   label: String
   type: String
   value: String
