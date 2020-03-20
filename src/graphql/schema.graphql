@@ -17,9 +17,9 @@ type ApplicationType implements Node {
   value: String
   version: String
   id: ID!
-  dummies(before: String, after: String, first: Int, last: Int, ID: String, active: Boolean, intent: String, purchases: Int, id: ID): DummyTypeConnection
-  questions(before: String, after: String, first: Int, last: Int, ID: String, attempts: Int, value: String, id: ID, scope: ID, solutions: ID): QuestionTypeConnection
-  vulnerability(before: String, after: String, first: Int, last: Int, ID: String, exploitDbUrl: String, label: String, type: String, value: String, id: ID): VulnerabilityTypeConnection
+  dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, intent: String, purchases: Int, id: ID): DummyTypeConnection
+  problems(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, label: String, value: String, id: ID, scope: ID, solutions: ID): ProblemTypeConnection
+  vulnerability(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, label: String, type: String, value: String, id: ID): VulnerabilityTypeConnection
 }
 
 type ApplicationTypeConnection {
@@ -40,7 +40,7 @@ input CategoryInput {
 }
 
 type CategoryType implements Node {
-  ID: String!
+  ID: ID!
   color: String
   label: String
   value: String
@@ -65,12 +65,12 @@ input ClusterInput {
 }
 
 type ClusterType implements Node {
-  ID: String!
+  ID: ID!
   label: String
   status: String
   value: String
   id: ID!
-  containers(before: String, after: String, first: Int, last: Int, ID: String, status: String, id: ID): ContainerTypeConnection
+  containers(before: String, after: String, first: Int, last: Int, ID: ID, status: String, id: ID): ContainerTypeConnection
 }
 
 type ClusterTypeConnection {
@@ -90,10 +90,10 @@ input CompanyInput {
 }
 
 type CompanyType implements Node {
-  ID: String!
+  ID: ID!
   id: ID!
-  jobs(before: String, after: String, first: Int, last: Int, ID: String, applyEmail: String, applyLink: String, description: String, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String, id: ID): JobTypeConnection
-  managers(before: String, after: String, first: Int, last: Int, ID: String, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  jobs(before: String, after: String, first: Int, last: Int, ID: ID, applyEmail: String, applyLink: String, description: String, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String, id: ID): JobTypeConnection
+  managers(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
 }
 
 type CompanyTypeConnection {
@@ -113,7 +113,7 @@ input CompetencyInput {
 }
 
 type CompetencyType implements Node {
-  ID: String!
+  ID: ID!
   label: String
   value: String
   id: ID!
@@ -136,7 +136,7 @@ input ConfigurationInput {
 }
 
 type ConfigurationType implements Node {
-  ID: String!
+  ID: ID!
   credentals: CredentialType
   port: Int
   url: String
@@ -160,10 +160,10 @@ input ContainerInput {
 }
 
 type ContainerType implements Node {
-  ID: String!
+  ID: ID!
   status: String
   id: ID!
-  services(before: String, after: String, first: Int, last: Int, ID: String, label: String, type: String, value: String, id: ID): ServiceTypeConnection
+  services(before: String, after: String, first: Int, last: Int, ID: ID, label: String, type: String, value: String, id: ID): ServiceTypeConnection
 }
 
 type ContainerTypeConnection {
@@ -177,7 +177,7 @@ type ContainerTypeEdge {
 }
 
 input CourseInput {
-  id: ID
+  ID: ID
   title: String
   description: String
   activeStep: Int
@@ -189,7 +189,7 @@ input CourseInput {
 }
 
 type CourseType implements Node {
-  ID: String!
+  ID: ID!
   activeStep: Int
   category: CategoryType
   cluster: ClusterType
@@ -200,7 +200,7 @@ type CourseType implements Node {
   title: String
   totalSteps: Int
   id: ID!
-  steps(before: String, after: String, first: Int, last: Int, ID: String, content: String, title: String, id: ID): StepTypeConnection
+  steps(before: String, after: String, first: Int, last: Int, ID: ID, content: String, title: String, id: ID): StepTypeConnection
 }
 
 type CourseTypeConnection {
@@ -264,8 +264,8 @@ type CreateMetricMutation {
   metric: MetricType
 }
 
-type CreateQuestionMutation {
-  question: QuestionType
+type CreateProblemMutation {
+  problem: ProblemType
 }
 
 type CreateRankMutation {
@@ -324,7 +324,7 @@ input CredentialInput {
 }
 
 type CredentialType implements Node {
-  ID: String!
+  ID: ID!
   password: String
   privateKey: String
   publicKey: String
@@ -392,7 +392,7 @@ type DeleteMetricMutation {
   success: Boolean
 }
 
-type DeleteQuestionMutation {
+type DeleteProblemMutation {
   success: Boolean
 }
 
@@ -451,7 +451,7 @@ input DummyInput {
 }
 
 type DummyType implements Node {
-  ID: String!
+  ID: ID!
   active: Boolean
   intent: String
   purchases: Int
@@ -475,7 +475,7 @@ input JobInput {
 }
 
 type JobType implements Node {
-  ID: String!
+  ID: ID!
   applyEmail: String
   applyLink: String
   description: String
@@ -484,7 +484,7 @@ type JobType implements Node {
   qualifications: String
   responsibilities: String
   id: ID!
-  qualified(before: String, after: String, first: Int, last: Int, ID: String, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  qualified(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
 }
 
 type JobTypeConnection {
@@ -504,7 +504,7 @@ input MetricInput {
 }
 
 type MetricType implements Node {
-  ID: String!
+  ID: ID!
   activeUsers: Int
   downtime: DateTime
   purchases: Int
@@ -536,7 +536,7 @@ type Mutations {
   createDummy(dummyData: DummyInput!): CreateDummyMutation
   createJob(jobData: JobInput!): CreateJobMutation
   createMetric(metricData: MetricInput!): CreateMetricMutation
-  createQuestion(questionData: QuestionInput!): CreateQuestionMutation
+  createProblem(problemData: ProblemInput!): CreateProblemMutation
   createRank(rankData: RankInput!): CreateRankMutation
   createReport(reportData: ReportInput!): CreateReportMutation
   createScope(scopeData: ScopeInput!): CreateScopeMutation
@@ -561,7 +561,7 @@ type Mutations {
   updateDummy(dummyData: DummyInput!): UpdateDummyMutation
   updateJob(jobData: JobInput!): UpdateJobMutation
   updateMetric(metricData: MetricInput!): UpdateMetricMutation
-  updateQuestion(questionData: QuestionInput!): UpdateQuestionMutation
+  updateProblem(problemData: ProblemInput!): UpdateProblemMutation
   updateRank(rankData: RankInput!): UpdateRankMutation
   updateReport(reportData: ReportInput!): UpdateReportMutation
   updateScope(scopeData: ScopeInput!): UpdateScopeMutation
@@ -583,12 +583,12 @@ type Mutations {
   deleteCompetency(id: ID!): DeleteCompetencyMutation
   deleteConfiguration(id: ID!): DeleteConfigurationMutation
   deleteContainer(id: ID!): DeleteContainerMutation
-  deleteCourse(id: ID!): DeleteCourseMutation
+  deleteCourse(ID: ID): DeleteCourseMutation
   deleteCredential(id: ID!): DeleteCredentialMutation
   deleteDummy(id: ID!): DeleteDummyMutation
   deleteJob(id: ID!): DeleteJobMutation
   deleteMetric(id: ID!): DeleteMetricMutation
-  deleteQuestion(id: ID!): DeleteQuestionMutation
+  deleteProblem(ID: ID!): DeleteProblemMutation
   deleteRank(id: ID!): DeleteRankMutation
   deleteReport(id: ID!): DeleteReportMutation
   deleteScope(id: ID!): DeleteScopeMutation
@@ -614,33 +614,59 @@ type PageInfo {
   endCursor: String
 }
 
+input ProblemInput {
+  ID: ID
+  label: String
+  value: String
+}
+
+type ProblemType implements Node {
+  ID: ID!
+  attempts: Int
+  label: String
+  scope: ScopeType
+  solutions: SolutionType
+  value: String
+  id: ID!
+}
+
+type ProblemTypeConnection {
+  pageInfo: PageInfo!
+  edges: [ProblemTypeEdge]!
+}
+
+type ProblemTypeEdge {
+  node: ProblemType
+  cursor: String!
+}
+
 type Query {
   node(id: ID!): Node
   applications(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
-  categories(before: String, after: String, first: Int, last: Int, ID: String, color: String, label: String, value: String, id: ID): CategoryTypeConnection
-  clusters(before: String, after: String, first: Int, last: Int, ID: String, label: String, status: String, value: String, id: ID): ClusterTypeConnection
-  companies(before: String, after: String, first: Int, last: Int, ID: String, id: ID): CompanyTypeConnection
-  competencies(before: String, after: String, first: Int, last: Int, ID: String, label: String, value: String, id: ID): CompetencyTypeConnection
-  configurations(before: String, after: String, first: Int, last: Int, ID: String, port: Int, url: String, id: ID, credentals: ID): ConfigurationTypeConnection
-  containers(before: String, after: String, first: Int, last: Int, ID: String, status: String, id: ID): ContainerTypeConnection
-  courses(before: String, after: String, first: Int, last: Int, ID: String, activeStep: Int, description: String, length: Int, slug: String, title: String, totalSteps: Int, id: ID, category: ID, cluster: ID, report: ID): CourseTypeConnection
-  credentials(before: String, after: String, first: Int, last: Int, ID: String, password: String, privateKey: String, publicKey: String, username: String, id: ID): CredentialTypeConnection
-  dummies(before: String, after: String, first: Int, last: Int, ID: String, active: Boolean, intent: String, purchases: Int, id: ID): DummyTypeConnection
-  jobs(before: String, after: String, first: Int, last: Int, ID: String, applyEmail: String, applyLink: String, description: String, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String, id: ID): JobTypeConnection
-  metrics(before: String, after: String, first: Int, last: Int, ID: String, activeUsers: Int, downtime: DateTime, purchases: Int, revenue: Float, uptime: DateTime, id: ID): MetricTypeConnection
-  questions(before: String, after: String, first: Int, last: Int, ID: String, attempts: Int, value: String, id: ID, scope: ID, solutions: ID): QuestionTypeConnection
-  ranks(before: String, after: String, first: Int, last: Int, ID: String, coursesComplete: Int, flagsObtained: Int, position: Int, id: ID): RankTypeConnection
-  reports(before: String, after: String, first: Int, last: Int, ID: String, score: Int, id: ID): ReportTypeConnection
-  scopes(before: String, after: String, first: Int, last: Int, ID: String, label: String, value: String, id: ID, topic: ID): ScopeTypeConnection
-  services(before: String, after: String, first: Int, last: Int, ID: String, label: String, type: String, value: String, id: ID): ServiceTypeConnection
-  solutions(before: String, after: String, first: Int, last: Int, ID: String, value: String, id: ID): SolutionTypeConnection
-  steps(before: String, after: String, first: Int, last: Int, ID: String, content: String, title: String, id: ID): StepTypeConnection
-  subscriptions(before: String, after: String, first: Int, last: Int, ID: String, active: Boolean, stripeCustomerId: String, stripeCustomerPlan: String, stripeCustomerSubscriptionId: String, id: ID): SubscriptionTypeConnection
-  teams(before: String, after: String, first: Int, last: Int, ID: String, id: ID): TeamTypeConnection
-  topics(before: String, after: String, first: Int, last: Int, ID: String, label: String, value: String, id: ID, competency: ID): TopicTypeConnection
-  universities(before: String, after: String, first: Int, last: Int, ID: String, domain: String, id: ID, team: ID): UniversityTypeConnection
-  users(before: String, after: String, first: Int, last: Int, ID: String, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
-  vulnerabilities(before: String, after: String, first: Int, last: Int, ID: String, exploitDbUrl: String, label: String, type: String, value: String, id: ID): VulnerabilityTypeConnection
+  categories(before: String, after: String, first: Int, last: Int, ID: ID, color: String, label: String, value: String, id: ID): CategoryTypeConnection
+  clusters(before: String, after: String, first: Int, last: Int, ID: ID, label: String, status: String, value: String, id: ID): ClusterTypeConnection
+  companies(before: String, after: String, first: Int, last: Int, ID: ID, id: ID): CompanyTypeConnection
+  competencies(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID): CompetencyTypeConnection
+  configurations(before: String, after: String, first: Int, last: Int, ID: ID, port: Int, url: String, id: ID, credentals: ID): ConfigurationTypeConnection
+  containers(before: String, after: String, first: Int, last: Int, ID: ID, status: String, id: ID): ContainerTypeConnection
+  courses(before: String, after: String, first: Int, last: Int, ID: ID, activeStep: Int, description: String, length: Int, slug: String, title: String, totalSteps: Int, id: ID, category: ID, cluster: ID, report: ID): CourseTypeConnection
+  credentials(before: String, after: String, first: Int, last: Int, ID: ID, password: String, privateKey: String, publicKey: String, username: String, id: ID): CredentialTypeConnection
+  dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, intent: String, purchases: Int, id: ID): DummyTypeConnection
+  jobs(before: String, after: String, first: Int, last: Int, ID: ID, applyEmail: String, applyLink: String, description: String, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String, id: ID): JobTypeConnection
+  metrics(before: String, after: String, first: Int, last: Int, ID: ID, activeUsers: Int, downtime: DateTime, purchases: Int, revenue: Float, uptime: DateTime, id: ID): MetricTypeConnection
+  problems(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, label: String, value: String, id: ID, scope: ID, solutions: ID): ProblemTypeConnection
+  ranks(before: String, after: String, first: Int, last: Int, ID: ID, coursesComplete: Int, flagsObtained: Int, position: Int, id: ID): RankTypeConnection
+  reports(before: String, after: String, first: Int, last: Int, ID: ID, score: Int, id: ID): ReportTypeConnection
+  scopes(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID, topic: ID): ScopeTypeConnection
+  services(before: String, after: String, first: Int, last: Int, ID: ID, label: String, type: String, value: String, id: ID): ServiceTypeConnection
+  solutions(before: String, after: String, first: Int, last: Int, ID: ID, value: String, id: ID): SolutionTypeConnection
+  steps(before: String, after: String, first: Int, last: Int, ID: ID, content: String, title: String, id: ID): StepTypeConnection
+  subscriptions(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, stripeCustomerId: String, stripeCustomerPlan: String, stripeCustomerSubscriptionId: String, id: ID): SubscriptionTypeConnection
+  teams(before: String, after: String, first: Int, last: Int, ID: ID, id: ID): TeamTypeConnection
+  topics(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID, competency: ID): TopicTypeConnection
+  universities(before: String, after: String, first: Int, last: Int, ID: ID, domain: String, id: ID, team: ID): UniversityTypeConnection
+  users(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  vulnerabilities(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, label: String, type: String, value: String, id: ID): VulnerabilityTypeConnection
   applicationsList: [ApplicationType]
   clustersList: [ClusterType]
   companiesList: [CompanyType]
@@ -653,7 +679,7 @@ type Query {
   dummiesList: [DummyType]
   jobsList: [JobType]
   metricsList: [MetricType]
-  questionsList: [QuestionType]
+  problemsList: [ProblemType]
   ranksList: [RankType]
   reportsList: [ReportType]
   scopesList: [ScopeType]
@@ -668,31 +694,6 @@ type Query {
   vulnerabilitiesList: [VulnerabilityType]
 }
 
-input QuestionInput {
-  id: ID
-  name: String
-  value: String
-}
-
-type QuestionType implements Node {
-  ID: String!
-  attempts: Int
-  scope: ScopeType
-  solutions: SolutionType
-  value: String
-  id: ID!
-}
-
-type QuestionTypeConnection {
-  pageInfo: PageInfo!
-  edges: [QuestionTypeEdge]!
-}
-
-type QuestionTypeEdge {
-  node: QuestionType
-  cursor: String!
-}
-
 input RankInput {
   id: ID
   coursesComplete: Int
@@ -701,7 +702,7 @@ input RankInput {
 }
 
 type RankType implements Node {
-  ID: String!
+  ID: ID!
   coursesComplete: Int
   flagsObtained: Int
   position: Int
@@ -725,7 +726,7 @@ input ReportInput {
 }
 
 type ReportType implements Node {
-  ID: String!
+  ID: ID!
   score: Int
   id: ID!
 }
@@ -747,7 +748,7 @@ input ScopeInput {
 }
 
 type ScopeType implements Node {
-  ID: String!
+  ID: ID!
   label: String
   topic: TopicType
   value: String
@@ -772,7 +773,7 @@ input ServiceInput {
 }
 
 type ServiceType implements Node {
-  ID: String!
+  ID: ID!
   applications(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
   label: String
   type: String
@@ -797,7 +798,7 @@ input SolutionInput {
 }
 
 type SolutionType implements Node {
-  ID: String!
+  ID: ID!
   value: String
   id: ID!
 }
@@ -819,7 +820,7 @@ input StepInput {
 }
 
 type StepType implements Node {
-  ID: String!
+  ID: ID!
   content: String
   title: String
   id: ID!
@@ -842,7 +843,7 @@ input SubscriptionInput {
 }
 
 type SubscriptionType implements Node {
-  ID: String!
+  ID: ID!
   active: Boolean
   stripeCustomerId: String
   stripeCustomerPlan: String
@@ -867,9 +868,9 @@ input TeamInput {
 }
 
 type TeamType implements Node {
-  ID: String!
+  ID: ID!
   id: ID!
-  members(before: String, after: String, first: Int, last: Int, ID: String, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  members(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
 }
 
 type TeamTypeConnection {
@@ -889,7 +890,7 @@ input TopicInput {
 }
 
 type TopicType implements Node {
-  ID: String!
+  ID: ID!
   competency: CompetencyType
   label: String
   value: String
@@ -913,7 +914,7 @@ input UniversityInput {
 }
 
 type UniversityType implements Node {
-  ID: String!
+  ID: ID!
   domain: String
   team: TeamType
   id: ID!
@@ -980,8 +981,8 @@ type UpdateMetricMutation {
   metric: MetricType
 }
 
-type UpdateQuestionMutation {
-  question: QuestionType
+type UpdateProblemMutation {
+  problem: ProblemType
 }
 
 type UpdateRankMutation {
@@ -1050,7 +1051,7 @@ input UserInput {
 }
 
 type UserType implements Node {
-  ID: String!
+  ID: ID!
   admin: Boolean
   email: String
   level: Int
@@ -1081,7 +1082,7 @@ input VulnerabilityInput {
 }
 
 type VulnerabilityType implements Node {
-  ID: String!
+  ID: ID!
   exploitDbUrl: String
   label: String
   type: String

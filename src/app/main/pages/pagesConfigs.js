@@ -5,7 +5,8 @@ import CreateCoursePageConfig from './courses/CreateCoursePageConfig';
 import ListCoursesPageConfig from './courses/ListCoursesPageConfig';
 import CreateApplicationPageConfig from './applications/CreateApplicationPageConfig';
 import ListApplicationsPageConfig from './applications/ListApplicationsPageConfig';
-
+import CreateProblemPageConfig from './problems/CreateProblemPageConfig';
+import ListProblemPageConfig from './problems/ListProblemsPageConfig';
 const pagesConfigs = [
 	LandingPageConfig,
 	LoginPageConfig,
@@ -13,7 +14,9 @@ const pagesConfigs = [
 	CreateCoursePageConfig,
 	ListCoursesPageConfig,
 	CreateApplicationPageConfig,
-	ListApplicationsPageConfig
+	ListApplicationsPageConfig,
+	CreateProblemPageConfig,
+	ListProblemPageConfig
 ];
 
 export default pagesConfigs;

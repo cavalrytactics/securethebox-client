@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2bbb7c90394cbb0af857facefeabbc6d
+ * @relayHash 1c276d5b0fe8e352887688bbc8a7fdc5
  */
 
 /* eslint-disable */
@@ -12,7 +12,7 @@ import type { ConcreteRequest } from 'relay-runtime';
 export type ListCoursesQueryVariables = {||};
 export type ListCoursesQueryResponse = {|
   +coursesList: ?$ReadOnlyArray<?{|
-    +id: string,
+    +ID: string,
     +activeStep: ?number,
     +cluster: ?{|
       +label: ?string,
@@ -39,7 +39,7 @@ export type ListCoursesQuery = {|
 /*
 query ListCoursesQuery {
   coursesList {
-    id
+    ID
     activeStep
     cluster {
       label
@@ -56,6 +56,7 @@ query ListCoursesQuery {
     length
     title
     totalSteps
+    id
   }
 }
 */
@@ -64,7 +65,7 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "id",
+  "name": "ID",
   "args": null,
   "storageKey": null
 },
@@ -121,6 +122,13 @@ v8 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "totalSteps",
+  "args": null,
+  "storageKey": null
+},
+v9 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
   "args": null,
   "storageKey": null
 };
@@ -207,7 +215,7 @@ return {
               (v2/*: any*/),
               (v3/*: any*/),
               (v4/*: any*/),
-              (v0/*: any*/)
+              (v9/*: any*/)
             ]
           },
           {
@@ -221,13 +229,14 @@ return {
             "selections": [
               (v2/*: any*/),
               (v3/*: any*/),
-              (v0/*: any*/)
+              (v9/*: any*/)
             ]
           },
           (v5/*: any*/),
           (v6/*: any*/),
           (v7/*: any*/),
-          (v8/*: any*/)
+          (v8/*: any*/),
+          (v9/*: any*/)
         ]
       }
     ]
@@ -236,12 +245,12 @@ return {
     "operationKind": "query",
     "name": "ListCoursesQuery",
     "id": null,
-    "text": "query ListCoursesQuery {\n  coursesList {\n    id\n    activeStep\n    cluster {\n      label\n      value\n      status\n      id\n    }\n    category {\n      label\n      value\n      id\n    }\n    slug\n    length\n    title\n    totalSteps\n  }\n}\n",
+    "text": "query ListCoursesQuery {\n  coursesList {\n    ID\n    activeStep\n    cluster {\n      label\n      value\n      status\n      id\n    }\n    category {\n      label\n      value\n      id\n    }\n    slug\n    length\n    title\n    totalSteps\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'd5741ddf0d027773f56e6bf746228363';
+(node/*: any*/).hash = 'c777dc5f072f986b8ec45e128c1c6d16';
 
 module.exports = node;

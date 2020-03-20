@@ -4,8 +4,8 @@ import graphql from 'babel-plugin-relay/macro';
 import environment from 'graphql/consts/environment'
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import Table from '@material-ui/core/Table';
+import Button from '@material-ui/core/Button';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -15,7 +15,7 @@ import TableRow from '@material-ui/core/TableRow';
 // Style Control
 const useStyles = makeStyles(theme => ({
 	root: {
-		flexGrow: 1,
+		flexGap: 1,
 	},
 	paper: {
 		padding: theme.spacing(2),
@@ -28,10 +28,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const mutation = graphql`
-	mutation ListCoursesMutation(
+	mutation ListProblemsMutation(
 		$ID: ID!
 		) {
-			deleteCourse(ID:$ID) {
+			deleteProblem(ID:$ID) {
 				success
 		}
 	}  
@@ -52,30 +52,36 @@ function commitMutationRequest(environment, mutation, ID) {
 	)
 }
 
-export default function ListCourses() {
+function renderRows(problemsList) {
+	return problemsList.map((row) => {
+		return (
+			<TableRow key={row.ID}>
+				<TableCell component="th" scope="row">
+					{row.label}
+				</TableCell>
+				<TableCell component="th" scope="row">
+					{row.value}
+				</TableCell>
+				<TableCell component="th" scope="row">
+					<Button onClick={() => commitMutationRequest(environment, mutation, row.ID)}>Delete</Button>
+				</TableCell>
+			</TableRow>
+		)
+	})
+}
+
+export default function ListProblems() {
 	const classes = useStyles();
 	return (
 		<Paper className={classes.paper}>
 			<QueryRenderer
 				environment={environment}
 				query={graphql`
-				query ListCoursesQuery {
-						coursesList {
+				query ListProblemsQuery {
+						problemsList {
 							ID
-							activeStep
-							cluster {
-								label
-								value
-								status
-							}
-							category{
-								label
-								value
-							}
-							slug
-							length
-							title
-							totalSteps
+							value
+							label
 					} 
 				}
 				`}
@@ -97,35 +103,12 @@ export default function ListCourses() {
 								<Table className={classes.table} aria-label="simple table">
 									<TableHead>
 										<TableRow>
-											<TableCell>Category</TableCell>
-											<TableCell>Title</TableCell>
-											<TableCell>Length</TableCell>
-											<TableCell>Actions</TableCell>
+											<TableCell>Label</TableCell>
+											<TableCell>Value</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{props.coursesList.map(row => {
-											var minutes = ("0" + Math.floor((row.length / 60000) % 60)).slice(-2)
-											var hours = ("0" + Math.floor((row.length / 3600000) % 60)).slice(-2)
-											return (
-												<TableRow key={row.ID}>
-													<TableCell component="th" scope="row">
-														{row.category.label}
-													</TableCell>
-													<TableCell component="th" scope="row">
-														{row.title}
-													</TableCell>
-													<TableCell component="th" scope="row">
-														{hours}:{minutes}
-													</TableCell>
-													<TableCell component="th" scope="row">
-														<Button>
-															start
-														</Button>
-														<Button onClick={() => commitMutationRequest(environment, mutation, row.ID)}>Delete</Button>
-													</TableCell>
-												</TableRow>)
-										})}
+										{renderRows(props.problemsList)}
 									</TableBody>
 								</Table>
 							</TableContainer>

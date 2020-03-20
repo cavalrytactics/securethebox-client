@@ -28,24 +28,19 @@ const useStyles = makeStyles(theme => ({
 
 // Graphql Mutation to create Course
 const mutation = graphql`
-	mutation CreateApplicationMutation(
+	mutation CreateProblemMutation(
 		$value: String!, 
 		$label: String!, 
-		$version: String,
-		$vulnerability: VulnerabilityInput!
 		) {
-		createApplication(
-			applicationData: {
+		createProblem(
+			problemData: {
 				value: $value,
 				label: $label,
-				version: $version,
 				},
-            vulnerabilityData: $vulnerability
 			) {
-			application {
+			problem {
 				value
 				label
-				version
 			}
 		}
 	} 
@@ -66,7 +61,7 @@ function commitMutationRequest(environment, mutation, variables) {
 }
 
 // Wizard form
-function CreateApplication(props) {
+function CreateProblem(props) {
 	// styling
 	const classes = useStyles();
 	const { register, handleSubmit, errors, setValue } = useForm(); // initialise the hook
@@ -97,14 +92,6 @@ function CreateApplication(props) {
 
 	// React state management for FORM
 	React.useEffect(() => {
-		register({ name: "vulnerability" }); // USE key = 'name' for react-select 
-	}, [register])
-
-	React.useEffect(() => {
-		register({ value: "version" }); // USE key = 'name' for INPUT values
-	}, [register])
-
-	React.useEffect(() => {
 		register({ value: "label" }); // USE key = 'name' for INPUT values
 	}, [register])
 
@@ -118,7 +105,7 @@ function CreateApplication(props) {
 			<QueryRenderer
 				environment={environment}
 				query={graphql`
-				query CreateApplicationQuery{
+				query CreateProblemQuery{
 					vulnerabilitiesList{
 						value
 						label
@@ -149,9 +136,9 @@ function CreateApplication(props) {
 										</p>
 									</Grid>
 									<Grid item xs={12}>
-										<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Version" name="version" />
+										<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Value" name="value" />
 										<p>
-											{errors.version && 'Version is required.'}
+											{errors.value && 'Value is required.'}
 										</p>
 									</Grid>
 									<Grid item xs={12}>
@@ -164,7 +151,7 @@ function CreateApplication(props) {
 										/>
 									</Grid>
 									<Grid item xs={12} sm={3}>
-										<Button onClick={handleSubmit(onSubmit)}>Create Application</Button>
+										<Button onClick={handleSubmit(onSubmit)}>Create Problem</Button>
 									</Grid>
 								</Grid>
 							</form>
@@ -182,4 +169,4 @@ function mapStateToProps({ auth }) {
 	}
 }
 
-export default withReducer('auth', reducer)((connect(mapStateToProps)(CreateApplication)));
+export default withReducer('auth', reducer)((connect(mapStateToProps)(CreateProblem)));
