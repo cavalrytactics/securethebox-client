@@ -7,6 +7,9 @@ import CreateApplicationPageConfig from './applications/CreateApplicationPageCon
 import ListApplicationsPageConfig from './applications/ListApplicationsPageConfig';
 import CreateProblemPageConfig from './problems/CreateProblemPageConfig';
 import ListProblemPageConfig from './problems/ListProblemsPageConfig';
+import CreateSolutionPageConfig from './solutions/CreateSolutionPageConfig';
+import ListSolutionPageConfig from './solutions/ListSolutionsPageConfig';
+
 const pagesConfigs = [
 	LandingPageConfig,
 	LoginPageConfig,
@@ -16,7 +19,9 @@ const pagesConfigs = [
 	CreateApplicationPageConfig,
 	ListApplicationsPageConfig,
 	CreateProblemPageConfig,
-	ListProblemPageConfig
+	ListProblemPageConfig,
+	CreateSolutionPageConfig,
+	ListSolutionPageConfig
 ];
 
 export default pagesConfigs;

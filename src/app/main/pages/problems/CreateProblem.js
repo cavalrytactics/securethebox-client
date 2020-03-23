@@ -8,34 +8,63 @@ import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Select from "react-select"
+import TextField from '@material-ui/core/TextField';
+import { DateTimePicker } from "@material-ui/pickers";
 import environment from 'graphql/consts/environment';
+import ReactMde from "react-mde";
+import * as Showdown from "showdown";
+import "react-mde/lib/styles/css/react-mde-all.css";
+import "./styles.css";
 
+const converter = new Showdown.Converter({
+	tables: true,
+	simplifiedAutoLink: true,
+	strikethrough: true,
+	tasklists: true
+});
 
-// Style Control
+// Styles only works with Material-UI components 
 const useStyles = makeStyles(theme => ({
 	root: {
 		flexGrow: 1,
 	},
 	paper: {
+		fontSize: 14,
 		padding: theme.spacing(2),
-		textAlign: 'center',
 		color: theme.palette.text.secondary,
 	},
+	instructions: {
+		fontSize: 14,
+		textAlign: "left"
+	},
+	button: {
+		fontSize: 14
+	}
 }));
 
-// Graphql Mutation to create Course
+// Graphql Mutation 
 const mutation = graphql`
 	mutation CreateProblemMutation(
 		$value: String!, 
 		$label: String!, 
+		$instructions: String!,
+		$points: Int!,
+		$number: Int!,
+		$startDate: String!,
+		$dueDate: String!,
+		$rejectDate: String!,
 		) {
 		createProblem(
 			problemData: {
 				value: $value,
 				label: $label,
+				instructions: $instructions,
+				points: $points,
+				number: $number,
+				startDate: $startDate,
+				dueDate: $dueDate,
+				rejectDate: $rejectDate
 				},
 			) {
 			problem {
@@ -46,6 +75,7 @@ const mutation = graphql`
 	} 
 `;
 
+// Relay payload
 function commitMutationRequest(environment, mutation, variables) {
 	commitMutation(
 		environment,
@@ -60,44 +90,58 @@ function commitMutationRequest(environment, mutation, variables) {
 	)
 }
 
+
 // Wizard form
 function CreateProblem(props) {
 	// styling
 	const classes = useStyles();
-	const { register, handleSubmit, errors, setValue } = useForm(); // initialise the hook
+	const { register, handleSubmit, errors } = useForm(); // initialise the hook
+	
+	// local state management 
+	const [selectedDateStart, handleDateChangeStart] = useState(new Date());
+	const [selectedDateDue, handleDateChangeDue] = useState(new Date());
+	const [selectedDateReject, handleDateChangeReject] = useState(new Date());
+	
+	const [values, setValues] = useState({
+		points: '',
+		number: '',
+		instructions: `
+<!-- Please provide a clear and concise instructions -->
 
+## Deliverables 
+- some item
+
+<!-- code example: \`some code\`->
+
+<!-- link example: [some link](https://www.securethebox.us) -->
+`
+	});
+	
+	const [selectedTab, setSelectedTab] = React.useState("write");
+	
+	const handleChange = name => event => {
+		setValues({ ...values, [name]: event.target.value });
+	};
+	
+	function handleChangeInstructions(value) {
+		setValues({ ...values, "instructions": value });
+	}
+	
+	// React state management for FORM
+	React.useEffect(() => {
+		register({ value: "label" }); // USE key = 'name' for INPUT values
+	}, [register])
+	
 	// react-hook-form local state
 	// Submit request to Graphql Server
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
 		const variables = data
 		variables["value"] = variables["label"]
-		console.log(variables) 
-		variables["vulnerability"].map((arrayItem) => {
-			const mVulnerability = arrayItem // All objects need to be set to const
-			variables["vulnerability"] = mVulnerability
-			commitMutationRequest(environment, mutation, variables)
-			return null
-		}
-		)
+		variables["instructions"] = values.instructions
+		console.log("Variables:", variables)
+		commitMutationRequest(environment, mutation, variables)
 	};
-
-	// local state management 
-	const [valuesVulnerability, setReactSelectValueVulnerability] = useState({ selectedOptionVulnerability: [] });
-
-	const handleMultiChangeVulnerability = selectedOptionVulnerability => {
-		setValue("vulnerability", selectedOptionVulnerability);
-		setReactSelectValueVulnerability({ selectedOptionVulnerability });
-	}
-
-	// React state management for FORM
-	React.useEffect(() => {
-		register({ value: "label" }); // USE key = 'name' for INPUT values
-	}, [register])
-
-	React.useEffect(() => {
-		register({ name: "value" }); // USE key = 'name' for INPUT values
-	}, [register])
 
 	return (
 		<Paper className={classes.paper}>
@@ -128,30 +172,109 @@ function CreateProblem(props) {
 					if (props) {
 						return (
 							<form>
-								< Grid container spacing={3} >
-									<Grid item xs={12}>
-										<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Label" name="label" />
+								<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
+									<Grid item xs={10} sm={2}>
+										<TextField
+											label="Problem Number"
+											name="number"
+											value={values.number}
+											onChange={handleChange('number')}
+											type="number"
+											inputRef={register({ required: true })}
+											InputLabelProps={{
+												shrink: true,
+											}}
+											variant="outlined"
+										/>
 										<p>
-											{errors.label && 'Label is required.'}
+											{errors.number && 'Number is required.'}
 										</p>
 									</Grid>
-									<Grid item xs={12}>
-										<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Value" name="value" />
+									<Grid item xs={12} sm={8}>
+										<TextField
+											inputRef={register({ required: true })}
+											fullWidth
+											variant="outlined"
+											label="Title"
+											name="label" />
+
 										<p>
-											{errors.value && 'Value is required.'}
+											{errors.label && 'Title is required.'}
 										</p>
 									</Grid>
-									<Grid item xs={12}>
-										<span>Select Vulnerabilities</span>
-										<Select
-											value={valuesVulnerability.selectedOptionVulnerability}
-											options={props.vulnerabilitiesList}
-											onChange={handleMultiChangeVulnerability}
-											isMulti
+									<Grid item xs={10} sm={3}>
+										<DateTimePicker
+											label="Start Date and Time"
+											name="startDate"
+											format="YYYY-MM-DDTHH:mm"
+											inputVariant="outlined"
+											inputRef={register({ required: true })}
+											value={selectedDateStart}
+											onChange={handleDateChangeStart}
+											disablePast
+											showTodayButton
 										/>
 									</Grid>
+									<Grid item xs={10} sm={3}>
+										<DateTimePicker
+											label="Due Date and Time"
+											name="dueDate"
+											format="YYYY-MM-DDTHH:mm"
+											inputVariant="outlined"
+											inputRef={register({ required: true })}
+											value={selectedDateDue}
+											onChange={handleDateChangeDue}
+											disablePast
+											showTodayButton
+										/>
+									</Grid>
+									<Grid item xs={10} sm={3}>
+										<DateTimePicker
+											label="Reject Date and Time"
+											name="rejectDate"
+											format="YYYY-MM-DDTHH:mm"
+											inputVariant="outlined"
+											inputRef={register({ required: true })}
+											value={selectedDateReject}
+											onChange={handleDateChangeReject}
+											disablePast
+											showTodayButton
+										/>
+									</Grid>
+									<Grid item xs={10}>
+										<ReactMde
+											style={{ textAlign: "left" }}
+											value={values.instructions}
+											name="instructions"
+											inputRef={register}
+											onChange={handleChangeInstructions}
+											selectedTab={selectedTab}
+											onTabChange={setSelectedTab}
+											generateMarkdownPreview={markdown =>
+												Promise.resolve(converter.makeHtml(markdown))
+											}
+										/>
+										<a href="https://guides.github.com/features/mastering-markdown/">This supports Markdown</a>
+									</Grid>
 									<Grid item xs={12} sm={3}>
-										<Button onClick={handleSubmit(onSubmit)}>Create Problem</Button>
+										<TextField
+											label="Max Points Possible value"
+											value={values.points}
+											name="points"
+											onChange={handleChange('points')}
+											type="number"
+											inputRef={register({ required: true })}
+											InputLabelProps={{
+												shrink: true,
+											}}
+											variant="outlined"
+										/>
+										<p>
+											{errors.points && 'Points is required.'}
+										</p>
+									</Grid>
+									<Grid item xs={12} sm={3}>
+										<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Create Problem</Button>
 									</Grid>
 								</Grid>
 							</form>

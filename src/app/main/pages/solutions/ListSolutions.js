@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { QueryRenderer, commitMutation } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import environment from 'graphql/consts/environment'
@@ -11,10 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Moment from 'react-moment';
-import CountdownTimer from './CountdownTimer'
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
+
 // Style Control
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -31,10 +28,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const mutation = graphql`
-	mutation ListProblemsMutation(
+	mutation ListSolutionsMutation(
 		$ID: ID!
 		) {
-			deleteProblem(ID:$ID) {
+			deleteSolution(ID:$ID) {
 				success
 		}
 	}  
@@ -55,60 +52,36 @@ function commitMutationRequest(environment, mutation, ID) {
 	)
 }
 
-function renderRows(problemsList) {
-	return problemsList.map((row) => {
+function renderRows(solutionsList) {
+	return solutionsList.map((row) => {
 		return (
 			<TableRow key={row.ID}>
 				<TableCell component="th" scope="row">
 					{row.label}
 				</TableCell>
 				<TableCell component="th" scope="row">
-					{row.points}
+					{row.value}
 				</TableCell>
 				<TableCell component="th" scope="row">
-					<Moment format="MM/DD HH:mm">
-					{row.startDate}
-            		</Moment>
-				</TableCell>
-				<TableCell component="th" scope="row">
-					<Moment format="MM/DD HH:mm">
-					{row.dueDate}
-            		</Moment>
-				</TableCell>
-				<TableCell component="th" scope="row">
-					<Moment format="MM/DD HH:mm">
-					{row.rejectDate}
-            		</Moment>
-				</TableCell>
-				<TableCell component="th" scope="row">
-					<CountdownTimer dueTime={row.dueDate}/>
-				</TableCell>
-				<TableCell component="th" scope="row">
-					<IconButton onClick={() => commitMutationRequest(environment, mutation, row.ID)}><DeleteIcon fontSize="small" /></IconButton>
+					<Button onClick={() => commitMutationRequest(environment, mutation, row.ID)}>Delete</Button>
 				</TableCell>
 			</TableRow>
 		)
 	})
 }
 
-export default function ListProblems() {
+export default function ListSolutions() {
 	const classes = useStyles();
-	
 	return (
 		<Paper className={classes.paper}>
 			<QueryRenderer
 				environment={environment}
 				query={graphql`
-				query ListProblemsQuery {
-						problemsList {
+				query ListSolutionsQuery {
+						solutionsList {
 							ID
 							value
 							label
-							number
-							points
-							startDate
-							dueDate
-							rejectDate
 					} 
 				}
 				`}
@@ -127,20 +100,15 @@ export default function ListProblems() {
 						console.log(props)
 						return (
 							<TableContainer component={Paper}>
-								<Table className={classes.table} size="small" aria-label="simple table">
+								<Table className={classes.table} aria-label="simple table">
 									<TableHead>
 										<TableRow>
-											<TableCell>Title</TableCell>
-											<TableCell>Points</TableCell>
-											<TableCell>Start</TableCell>
-											<TableCell>Due</TableCell>
-											<TableCell>Reject</TableCell>
-											<TableCell>Remaining</TableCell>
-											<TableCell>Actions</TableCell>
+											<TableCell>Label</TableCell>
+											<TableCell>Value</TableCell>
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{renderRows(props.problemsList)}
+										{renderRows(props.solutionsList)}
 									</TableBody>
 								</Table>
 							</TableContainer>

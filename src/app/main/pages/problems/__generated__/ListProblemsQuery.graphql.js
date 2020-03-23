@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash eb101e1107b571cbf1c536cb165657b4
+ * @relayHash 8bc3213901e065d7bb08e756204d8c8e
  */
 
 /* eslint-disable */
@@ -15,6 +15,11 @@ export type ListProblemsQueryResponse = {|
     +ID: string,
     +value: ?string,
     +label: ?string,
+    +number: ?number,
+    +points: ?number,
+    +startDate: ?string,
+    +dueDate: ?string,
+    +rejectDate: ?string,
   |}>
 |};
 export type ListProblemsQuery = {|
@@ -30,6 +35,11 @@ query ListProblemsQuery {
     ID
     value
     label
+    number
+    points
+    startDate
+    dueDate
+    rejectDate
     id
   }
 }
@@ -56,6 +66,41 @@ v2 = {
   "name": "label",
   "args": null,
   "storageKey": null
+},
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "number",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "points",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "startDate",
+  "args": null,
+  "storageKey": null
+},
+v6 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "dueDate",
+  "args": null,
+  "storageKey": null
+},
+v7 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "rejectDate",
+  "args": null,
+  "storageKey": null
 };
 return {
   "kind": "Request",
@@ -77,7 +122,12 @@ return {
         "selections": [
           (v0/*: any*/),
           (v1/*: any*/),
-          (v2/*: any*/)
+          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/),
+          (v7/*: any*/)
         ]
       }
     ]
@@ -99,6 +149,11 @@ return {
           (v0/*: any*/),
           (v1/*: any*/),
           (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/),
+          (v7/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -114,12 +169,12 @@ return {
     "operationKind": "query",
     "name": "ListProblemsQuery",
     "id": null,
-    "text": "query ListProblemsQuery {\n  problemsList {\n    ID\n    value\n    label\n    id\n  }\n}\n",
+    "text": "query ListProblemsQuery {\n  problemsList {\n    ID\n    value\n    label\n    number\n    points\n    startDate\n    dueDate\n    rejectDate\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a3a52ed7888362630f00e48455768e2a';
+(node/*: any*/).hash = 'c6fedc5b2c99657c48fcc46f2f9c5f48';
 
 module.exports = node;

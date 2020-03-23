@@ -65,7 +65,65 @@ const navigationConfig = [
 	{
 		'type': 'divider',
 		'id': 'divider-2'
-	}
+	},
+	{
+		'id': 'problems',
+		'title': 'Problems',
+		'translate': 'Problems',
+		'type': 'group',
+		'icon': 'apps',
+		'children': [
+			{
+				'id': 'problems-add',
+				'title': 'Create',
+				'translate': 'CREATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/problems/create'
+			},
+			{
+				'id': 'problems-list',
+				'title': 'List',
+				'translate': 'LIST',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/problems/list'
+			}
+		]
+	},
+	{
+		'type': 'divider',
+		'id': 'divider-3'
+	},
+	{
+		'id': 'solutions',
+		'title': 'Solutions',
+		'translate': 'Solutions',
+		'icon': 'apps',
+		'type': 'group',
+		'children': [
+			{
+				'id': 'solutions-add',
+				'title': 'Create',
+				'translate': 'CREATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/solutions/create'
+			},
+			{
+				'id': 'solutions-list',
+				'title': 'List',
+				'translate': 'LIST',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/solutions/list'
+			}
+		]
+	},
+	{
+		'type': 'divider',
+		'id': 'divider-4'
+	},
 ];
 
 export default navigationConfig;
