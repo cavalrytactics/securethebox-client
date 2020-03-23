@@ -73,7 +73,7 @@ function CreateCourse(props) {
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
 		const variables = data
-		variables["slug"] = variables["title"].split(/\s/).join('-');
+		variables["slug"] = variables["title"].split(/\s/).join('-').toLowerCase();
 		variables["totalSteps"] = 0
 		commitMutation(
 			environment,

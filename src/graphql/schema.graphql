@@ -704,6 +704,31 @@ type Query {
   universitiesList: [UniversityType]
   usersList: [UserType]
   vulnerabilitiesList: [VulnerabilityType]
+  application(ID: ID!): ApplicationType
+  cluster(ID: ID!): ClusterType
+  company(ID: ID!): CompanyType
+  container(ID: ID!): ContainerType
+  configuration(ID: ID!): ConfigurationType
+  credential(ID: ID!): CredentialType
+  category(ID: ID!): CategoryType
+  competency(ID: ID!): CompetencyType
+  course(ID: ID!): CourseType
+  dummy(ID: ID!): DummyType
+  job(ID: ID!): JobType
+  metric(ID: ID!): MetricType
+  problem(ID: ID!): ProblemType
+  rank(ID: ID!): RankType
+  report(ID: ID!): ReportType
+  scope(ID: ID!): ScopeType
+  service(ID: ID!): ServiceType
+  solution(ID: ID!): SolutionType
+  step(ID: ID!): StepType
+  subscription(ID: ID!): SubscriptionType
+  team(ID: ID!): TeamType
+  topic(ID: ID!): TopicType
+  university(ID: ID!): UniversityType
+  user(ID: ID!): UserType
+  vulnerability(ID: ID!): VulnerabilityType
 }
 
 input RankInput {

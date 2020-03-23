@@ -1,7 +1,7 @@
 import React from 'react';
 import { authRoles } from 'app/auth';
 
-const CreateProblemPageConfig = {
+const UpdateProblemPageConfig = {
 	settings: {
         layout: {
 			style: 'layout1',
@@ -37,10 +37,10 @@ const CreateProblemPageConfig = {
     auth: authRoles.user,
 	routes: [
 		{
-			path: '/problems/create',
-			component: React.lazy(() => import('./CreateProblem'))
+			path: '/problems/update',
+			component: React.lazy(() => import('./UpdateProblem'))
 		}
 	]
 };
 
-export default CreateProblemPageConfig;
+export default UpdateProblemPageConfig;
