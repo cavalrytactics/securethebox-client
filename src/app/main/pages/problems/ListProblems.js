@@ -54,6 +54,13 @@ export default function ListProblems() {
 			state: { ID: ID }
 		})
 	}
+	function viewProblem(ID) {
+		history.push({
+			pathname: '/problems/view',
+			search: '?ID=' + ID,
+			state: { ID: ID }
+		})
+	}
 
 	const [values, setValues] = useState([]);
 
@@ -118,7 +125,7 @@ export default function ListProblems() {
 										{row.number}
 									</TableCell>
 									<TableCell component="th" scope="row">
-										{row.label}
+										<button onClick={() => viewProblem(row.ID)}>{row.label}</button>
 									</TableCell>
 									<TableCell component="th" scope="row">
 										{row.points}

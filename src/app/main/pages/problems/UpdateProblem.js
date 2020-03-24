@@ -97,13 +97,17 @@ function commitMutationRequest(environment, mutation, variables) {
 }
 
 
-// Wizard form
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
+
 function UpdateProblem(props) {
 	const location = useLocation();
-	// styling
-	const classes = useStyles();
+	let history = useHistory();
+	const query = useQuery();
+	const classes = useStyles(); //styling
 	const { register, handleSubmit, errors } = useForm(); // initialise the hook
-	
+
 	// local state management 
 	const [values, setValues] = useState({
 		value: '',
@@ -115,7 +119,7 @@ function UpdateProblem(props) {
 		number: 0,
 		ID: '',
 		instructions: `
-		<!-- Please prtovide a clear and concise instructions -->
+			<!-- Please prtovide a clear and concise instructions -->
 		
 		## Deliverables 
 		- some item
@@ -125,13 +129,13 @@ function UpdateProblem(props) {
 		<!-- link example: [some link](https://www.securethebox.us) -->
 		`
 	});
-	
+
 	const [selectedTab, setSelectedTab] = React.useState("write");
-	
+
 	const handleChange = name => event => {
 		setValues({ ...values, [name]: event.target.value });
 	};
-	
+
 	function handleChangeInstructions(value) {
 		setValues({ ...values, "instructions": value });
 	}
@@ -144,12 +148,12 @@ function UpdateProblem(props) {
 	function handleChangeRejectDate(value) {
 		setValues({ ...values, "rejectDate": value })
 	}
-	
+
 	// react-hook-form local state
 	// Submit request to Graphql Server
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
-		const variables = values 
+		const variables = values
 		variables["value"] = variables["label"].split(/\s/).join('-').toLowerCase()
 		variables["instructions"] = values.instructions
 		console.log("Variables:", variables)
@@ -167,146 +171,167 @@ function UpdateProblem(props) {
 				startDate
 				dueDate
 				rejectDate
+			}
 		}
+	`
+
+	if (values.ID !== '' && location.state.ID !== '' && location.state.ID !== undefined && location.state.ID !== null && query.get("ID") !== null) {
+		const queryVariables = { "ID": location.state.ID }
+		// This will only make the request to load state once ; this is important
+		if (values.ID === '') {
+			fetchQuery(environment, queryNow, queryVariables)
+				.then(data => {
+					setValues(data.problem)
+				});
 		}
-	` 
-	const queryVariables = { "ID": location.state.ID }
-	// This will only make the request to load state once ; this is important
-	if (values.ID === ''){
-		fetchQuery(environment, queryNow, queryVariables)
-		.then(data => {
-			setValues(data.problem)
-		});
+	} else {
+		// check if ID is valid
+		const queryVariables = { "ID": query.get("ID") }
+		// This will only make the request to load state once ; this is important
+		if (values.ID === '' && query.get("ID") !== null) {
+			fetchQuery(environment, queryNow, queryVariables)
+				.then(data => {
+					setValues(data.problem)
+				});
+		}
 	}
-	let history = useHistory();
+
 	function cancelProblem(ID) {
 		history.push({
 			pathname: '/problems/list'
 		})
 	}
 
-	return (
-		<Paper className={classes.paper}>
-			<form>
-				<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
-					<Grid item xs={10} sm={2}>
-					<Hidden xsUp>
-						<TextField
-							label="ID"
-							name="ID"
-							value={values.ID}
-							onChange={handleChange('ID')}
-							inputRef={register({ required: true })}
-						/>
-					</Hidden>
-						<TextField
-							label="Problem Number"
-							name="number"
-							value={values.number}
-							onChange={handleChange('number')}
-							type="number"
-							inputRef={register({ required: true })}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							variant="outlined"
-						/>
-						<p>
-							{errors.number && 'Number is required.'}
-						</p>
-					</Grid>
-					<Grid item xs={12} sm={8}>
-						<TextField
-							inputRef={register({ required: true })}
-							fullWidth
-							onChange={handleChange('label')}
-							variant="outlined"
-							label="Title"
-							value={values.label}
-							name="label" />
+	if (values.ID !== '' && location.state.ID !== '' && location.state.ID !== undefined && location.state.ID !== null && query.get("ID") !== null) {
+		return (
+			<Paper className={classes.paper}>
+				<form>
+					<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
+						<Grid item xs={10} sm={2}>
+							<Hidden xsUp>
+								<TextField
+									label="ID"
+									name="ID"
+									value={values.ID}
+									onChange={handleChange('ID')}
+									inputRef={register({ required: true })}
+								/>
+							</Hidden>
+							<TextField
+								label="Problem Number"
+								name="number"
+								value={values.number}
+								onChange={handleChange('number')}
+								type="number"
+								inputRef={register({ required: true })}
+								InputLabelProps={{
+									shrink: true,
+								}}
+								variant="outlined"
+							/>
+							<p>
+								{errors.number && 'Number is required.'}
+							</p>
+						</Grid>
+						<Grid item xs={12} sm={8}>
+							<TextField
+								inputRef={register({ required: true })}
+								fullWidth
+								onChange={handleChange('label')}
+								variant="outlined"
+								label="Title"
+								value={values.label}
+								name="label" />
 
-						<p>
-							{errors.label && 'Title is required.'}
-						</p>
+							<p>
+								{errors.label && 'Title is required.'}
+							</p>
+						</Grid>
+						<Grid item xs={10} sm={3}>
+							<DateTimePicker
+								label="Start Date and Time"
+								name="startDate"
+								format="YYYY-MM-DDTHH:mm"
+								inputVariant="outlined"
+								inputRef={register({ required: true })}
+								value={values.startDate}
+								onChange={handleChangeStartDate}
+								showTodayButton
+							/>
+						</Grid>
+						<Grid item xs={10} sm={3}>
+							<DateTimePicker
+								label="Due Date and Time"
+								name="dueDate"
+								format="YYYY-MM-DDTHH:mm"
+								inputVariant="outlined"
+								inputRef={register({ required: true })}
+								value={values.dueDate}
+								onChange={handleChangeDueDate}
+								showTodayButton
+							/>
+						</Grid>
+						<Grid item xs={10} sm={3}>
+							<DateTimePicker
+								label="Reject Date and Time"
+								name="rejectDate"
+								format="YYYY-MM-DDTHH:mm"
+								inputVariant="outlined"
+								inputRef={register({ required: true })}
+								value={values.rejectDate}
+								onChange={handleChangeRejectDate}
+								showTodayButton
+							/>
+						</Grid>
+						<Grid item xs={10}>
+							<ReactMde
+								style={{ textAlign: "left" }}
+								value={values.instructions}
+								name="instructions"
+								inputRef={register}
+								onChange={handleChangeInstructions}
+								selectedTab={selectedTab}
+								onTabChange={setSelectedTab}
+								generateMarkdownPreview={markdown =>
+									Promise.resolve(converter.makeHtml(markdown))
+								}
+							/>
+							<a href="https://guides.github.com/features/mastering-markdown/">This supports Markdown</a>
+						</Grid>
+						<Grid item xs={12} sm={3}>
+							<TextField
+								label="Max Points Possible value"
+								value={values.points}
+								name="points"
+								onChange={handleChange('points')}
+								type="number"
+								inputRef={register({ required: true })}
+								InputLabelProps={{
+									shrink: true,
+								}}
+								variant="outlined"
+							/>
+							<p>
+								{errors.points && 'Points is required.'}
+							</p>
+						</Grid>
+						<Grid item xs={12} sm={3}>
+							<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Update Problem</Button>
+						</Grid>
+						<Grid item xs={12} sm={3}>
+							<Button className={classes.button} onClick={() => cancelProblem()}>Cancel</Button>
+						</Grid>
 					</Grid>
-					<Grid item xs={10} sm={3}>
-						<DateTimePicker
-							label="Start Date and Time"
-							name="startDate"
-							format="YYYY-MM-DDTHH:mm"
-							inputVariant="outlined"
-							inputRef={register({ required: true })}
-							value={values.startDate}
-							onChange={handleChangeStartDate}
-							showTodayButton
-						/>
-					</Grid>
-					<Grid item xs={10} sm={3}>
-						<DateTimePicker
-							label="Due Date and Time"
-							name="dueDate"
-							format="YYYY-MM-DDTHH:mm"
-							inputVariant="outlined"
-							inputRef={register({ required: true })}
-							value={values.dueDate}
-							onChange={handleChangeDueDate}
-							showTodayButton
-						/>
-					</Grid>
-					<Grid item xs={10} sm={3}>
-						<DateTimePicker
-							label="Reject Date and Time"
-							name="rejectDate"
-							format="YYYY-MM-DDTHH:mm"
-							inputVariant="outlined"
-							inputRef={register({ required: true })}
-							value={values.rejectDate}
-							onChange={handleChangeRejectDate}
-							showTodayButton
-						/>
-					</Grid>
-					<Grid item xs={10}>
-						<ReactMde
-							style={{ textAlign: "left" }}
-							value={values.instructions}
-							name="instructions"
-							inputRef={register}
-							onChange={handleChangeInstructions}
-							selectedTab={selectedTab}
-							onTabChange={setSelectedTab}
-							generateMarkdownPreview={markdown =>
-								Promise.resolve(converter.makeHtml(markdown))
-							}
-						/>
-						<a href="https://guides.github.com/features/mastering-markdown/">This supports Markdown</a>
-					</Grid>
-					<Grid item xs={12} sm={3}>
-						<TextField
-							label="Max Points Possible value"
-							value={values.points}
-							name="points"
-							onChange={handleChange('points')}
-							type="number"
-							inputRef={register({ required: true })}
-							InputLabelProps={{
-								shrink: true,
-							}}
-							variant="outlined"
-						/>
-						<p>
-							{errors.points && 'Points is required.'}
-						</p>
-					</Grid>
-					<Grid item xs={12} sm={3}>
-						<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Update Problem</Button>
-					</Grid>
-					<Grid item xs={12} sm={3}>
-						<Button className={classes.button} onClick={() => cancelProblem()}>Cancel</Button>
-					</Grid>
-				</Grid>
-			</form>
-		</Paper>
-	);
+				</form>
+			</Paper>
+		)
+	} else {
+		return (
+			<Paper className={classes.paper}>
+				Not a valid ID
+			</Paper>
+		)
+	}
 }
 
 function mapStateToProps({ auth }) {

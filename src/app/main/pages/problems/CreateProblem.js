@@ -21,7 +21,7 @@ const converter = new Showdown.Converter({
 	tables: true,
 	simplifiedAutoLink: true,
 	strikethrough: true,
-	tasklists: true
+	tasklists: true,
 });
 
 // Styles only works with Material-UI components 
@@ -108,14 +108,14 @@ function CreateProblem(props) {
 		number: '',
 		ID: '',
 		instructions: `
-		<!-- Please prtovide a clear and concise instructions -->
-		
-		## Deliverables 
-		- some item
-		
-		<!-- code example: \`some code\`->
-		
-		<!-- link example: [some link](https://www.securethebox.us) -->
+<!-- Please prtovide a clear and concise instructions -->
+
+## Deliverables 
+- some item
+
+<!-- code example: \`some code\`->
+
+<!-- link example: [some link](https://www.securethebox.us) -->
 		`
 	});
 	const [selectedTab, setSelectedTab] = React.useState("write");

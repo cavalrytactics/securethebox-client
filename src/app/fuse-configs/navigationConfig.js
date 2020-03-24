@@ -34,6 +34,47 @@ const navigationConfig = [
 		]
 	},
 	{
+		'id': 'problems',
+		'title': 'Problems',
+		'translate': 'Problems',
+		'type': 'group',
+		'icon': 'apps',
+		'children': [
+			{
+				'id': 'problems-add',
+				'title': 'Create',
+				'translate': 'CREATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/problems/create'
+			},
+			{
+				'id': 'problems-list',
+				'title': 'List',
+				'translate': 'LIST',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/problems/list'
+			},
+			{
+				'id': 'problems-update',
+				'title': 'Update',
+				'translate': 'UPDATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/problems/update'
+			},
+			{
+				'id': 'problems-view',
+				'title': 'View',
+				'translate': 'VIEW',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/problems/view'
+			}
+		]
+	},
+	{
 		'type': 'divider',
 		'id': 'divider-1'
 	},
@@ -65,31 +106,6 @@ const navigationConfig = [
 	{
 		'type': 'divider',
 		'id': 'divider-2'
-	},
-	{
-		'id': 'problems',
-		'title': 'Problems',
-		'translate': 'Problems',
-		'type': 'group',
-		'icon': 'apps',
-		'children': [
-			{
-				'id': 'problems-add',
-				'title': 'Create',
-				'translate': 'CREATE',
-				'type': 'item',
-				'icon': 'whatshot',
-				'url': '/problems/create'
-			},
-			{
-				'id': 'problems-list',
-				'title': 'List',
-				'translate': 'LIST',
-				'type': 'item',
-				'icon': 'whatshot',
-				'url': '/problems/list'
-			}
-		]
 	},
 	{
 		'type': 'divider',

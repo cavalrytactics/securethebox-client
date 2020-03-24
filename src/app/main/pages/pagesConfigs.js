@@ -8,6 +8,7 @@ import ListApplicationsPageConfig from './applications/ListApplicationsPageConfi
 import CreateProblemPageConfig from './problems/CreateProblemPageConfig';
 import ListProblemPageConfig from './problems/ListProblemsPageConfig';
 import UpdateProblemPageConfig from './problems/UpdateProblemPageConfig';
+import ViewProblemPageConfig from './problems/ViewProblemPageConfig';
 import CreateSolutionPageConfig from './solutions/CreateSolutionPageConfig';
 import ListSolutionPageConfig from './solutions/ListSolutionsPageConfig';
 const pagesConfigs = [
@@ -21,6 +22,7 @@ const pagesConfigs = [
 	CreateProblemPageConfig,
 	ListProblemPageConfig,
 	UpdateProblemPageConfig,
+	ViewProblemPageConfig,
 	CreateSolutionPageConfig,
 	ListSolutionPageConfig
 ];
