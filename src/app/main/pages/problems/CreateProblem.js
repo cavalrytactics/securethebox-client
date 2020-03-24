@@ -90,7 +90,6 @@ function commitMutationRequest(environment, mutation, variables) {
 	)
 }
 
-
 // Wizard form
 function CreateProblem(props) {
 	// styling
