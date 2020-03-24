@@ -257,17 +257,12 @@ function LandingPage() {
 							<Grid item xs={6} >
 								<div variant="h4" style={{ letterSpacing: '-0.5px', fontSize: '25px', fontWeight: 350, fontFamily: "Menlo,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\"" }}>
 									Join Now
-							</div>
+								</div>
 								<br />
 								<div variant="h4" style={{ letterSpacing: '-0.5px', fontSize: '14px', fontWeight: 350, fontFamily: "Menlo,-apple-system,BlinkMacSystemFont,\"Segoe UI\",Helvetica,\"Apple Color Emoji\",\"Segoe UI Emoji\",\"Segoe UI Symbol\"" }}>
-									<ul>
-										<li>
-											Join Secure The Box with an Invite Code
-										</li>
-										<li style={{ paddingTop: 20 }}>
-											<InviteButton />
-										</li>
-									</ul>
+									Join Secure The Box with an Invite Code
+									<br /><br />
+									<InviteButton />
 								</div>
 							</Grid>
 							<Grid item xs>{}</Grid>
