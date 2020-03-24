@@ -138,16 +138,6 @@ function CreateProblem(props) {
 	function handleChangeRejectDate(value) {
 		setValues({ ...values, "rejectDate": value })
 	}
-
-	// React state management for FORM
-	React.useEffect(() => { setValues({ "ID": props.ID}) }, [props.ID])
-	React.useEffect(() => { setValues({ "number": props.number}) }, [props.number])
-	React.useEffect(() => { setValues({ "label": props.label}) }, [props.label])
-	React.useEffect(() => { setValues({ "points": props.points}) }, [props.points])
-	React.useEffect(() => { setValues({ "instructions": props.instructions}) }, [props.instructions])
-	React.useEffect(() => { setValues({ "startDate": props.startDate}) }, [props.startDate])
-	React.useEffect(() => { setValues({ "dueDate": props.dueDate}) }, [props.dueDate])
-	React.useEffect(() => { setValues({ "rejectDate": props.rejectDate}) }, [props.rejectDate])
 	
 	// react-hook-form local state
 	// Submit request to Graphql Server
@@ -156,7 +146,6 @@ function CreateProblem(props) {
 		const variables = data
 		variables["value"] = variables["label"].split(/\s/).join('-').toLowerCase()
 		variables["instructions"] = values.instructions
-		console.log("Variables:", variables)
 		commitMutationRequest(environment, mutation, variables)
 	};
 

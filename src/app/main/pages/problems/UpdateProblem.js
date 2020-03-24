@@ -19,6 +19,7 @@ import "react-mde/lib/styles/css/react-mde-all.css";
 import "./styles.css";
 import { useLocation } from "react-router-dom";
 import Hidden from '@material-ui/core/Hidden';
+import { useHistory } from "react-router-dom";
 
 const converter = new Showdown.Converter({
 	tables: true,
@@ -110,8 +111,8 @@ function UpdateProblem(props) {
 		dueDate: new Date(),
 		startDate: new Date(),
 		rejectDate: new Date(),
-		points: '',
-		number: '',
+		points: 0,
+		number: 0,
 		ID: '',
 		instructions: `
 		<!-- Please prtovide a clear and concise instructions -->
@@ -143,15 +144,6 @@ function UpdateProblem(props) {
 	function handleChangeRejectDate(value) {
 		setValues({ ...values, "rejectDate": value })
 	}
-	// React state management for FORM
-	React.useEffect(() => { setValues({ "ID": props.ID}) }, [props.ID])
-	React.useEffect(() => { setValues({ "number": props.number}) }, [props.number])
-	React.useEffect(() => { setValues({ "label": props.label}) }, [props.label])
-	React.useEffect(() => { setValues({ "points": props.points}) }, [props.points])
-	React.useEffect(() => { setValues({ "instructions": props.instructions}) }, [props.instructions])
-	React.useEffect(() => { setValues({ "startDate": props.startDate}) }, [props.startDate])
-	React.useEffect(() => { setValues({ "dueDate": props.dueDate}) }, [props.dueDate])
-	React.useEffect(() => { setValues({ "rejectDate": props.rejectDate}) }, [props.rejectDate])
 	
 	// react-hook-form local state
 	// Submit request to Graphql Server
@@ -185,6 +177,12 @@ function UpdateProblem(props) {
 		.then(data => {
 			setValues(data.problem)
 		});
+	}
+	let history = useHistory();
+	function cancelProblem(ID) {
+		history.push({
+			pathname: '/problems/list'
+		})
 	}
 
 	return (
@@ -301,6 +299,9 @@ function UpdateProblem(props) {
 					</Grid>
 					<Grid item xs={12} sm={3}>
 						<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Update Problem</Button>
+					</Grid>
+					<Grid item xs={12} sm={3}>
+						<Button className={classes.button} onClick={() => cancelProblem()}>Cancel</Button>
 					</Grid>
 				</Grid>
 			</form>

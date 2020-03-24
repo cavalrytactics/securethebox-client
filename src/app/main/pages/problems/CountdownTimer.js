@@ -13,16 +13,17 @@ function CountdownTimer(props) {
         seconds: Math.floor((difference / 1000) % 60)
       };
     }
-
     return timeLeft;
   };
 
   const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
-  useEffect(() => {
-    setTimeout(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+  useEffect(
+    () => {
+      let timeout = setTimeout(() => { setTimeLeft(calculateTimeLeft()); },1000);
+      return () => {
+        clearTimeout(timeout)
+      }
   });
 
   const timerComponents = [];
@@ -33,7 +34,7 @@ function CountdownTimer(props) {
     }
 
     timerComponents.push(
-      <span>
+      <span key={interval}>
         {timeLeft[interval]} {interval}{" "}
       </span>
     );
@@ -45,6 +46,5 @@ function CountdownTimer(props) {
     </div>
   );
 }
-
 
 export default CountdownTimer
