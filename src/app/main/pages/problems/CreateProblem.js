@@ -123,11 +123,9 @@ function CreateProblem(props) {
 	const handleChange = name => event => {
 		setValues({ ...values, [name]: event.target.value });
 	};
-	
 	function handleChangeInstructions(value) {
 		setValues({ ...values, "instructions": value });
 	}
-	
 	function handleChangeStartDate(value) {
 		setValues({ ...values, "startDate": value })
 	}
@@ -156,6 +154,7 @@ function CreateProblem(props) {
 				query={graphql`
 				query CreateProblemQuery{
 					vulnerabilitiesList{
+						ID
 						value
 						label
 						type

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import withReducer from 'app/store/withReducer';
 import connect from 'react-redux/es/connect/connect';
 import reducer from 'app/auth/store/reducers';
@@ -11,9 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Select from "react-select";
-import ArrowUpward from '@material-ui/icons/ArrowUpward';
-import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import environment from 'graphql/consts/environment';
+import { DateTimePicker } from "@material-ui/pickers";
 
 // Style Control
 const useStyles = makeStyles(theme => ({
@@ -32,31 +31,30 @@ const mutation = graphql`
 	mutation CreateCourseMutation(
 		$title: String!, 
 		$description: String!, 
-		$length: Int!, 
-		$slug: String!, 
-		$totalSteps: Int!,
 		$category: CategoryInput!,
 		$cluster: ClusterInput!
+		$startDate: String!
+		$dueDate: String!
+		$destroyDate: String!
 		) {
 		createCourse(
 			courseData: {
 				title: $title, 
-				activeStep: 0, 
 				description: $description, 
-				length: $length, 
-				slug: $slug, 
-				totalSteps: $totalSteps
+				startDate: $startDate,
+				dueDate: $dueDate,
+				destroyDate: $destroyDate
 				}, 
 			categoryData: $category, 
 			clusterData: $cluster
 			) {
 			course {
+				ID
 				title
-				activeStep
 				description
-				length
-				slug
-				totalSteps
+				startDate
+				dueDate
+				destroyDate
 			}
 		}
 	}
@@ -66,15 +64,13 @@ const mutation = graphql`
 function CreateCourse(props) {
 	// styling
 	const classes = useStyles();
-	// react-hook-form local state
-	const { register, handleSubmit, errors, setValue } = useForm(); // initialise the hook
+	const { register, handleSubmit, errors } = useForm(); // initialise the hook
 
-	// Submit request to Grapqhl Server
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
-		const variables = data
-		variables["slug"] = variables["title"].split(/\s/).join('-').toLowerCase();
-		variables["totalSteps"] = 0
+		const variables = values
+		variables["cluster"] = values.cluster
+		variables["category"] = values.category
 		commitMutation(
 			environment,
 			{
@@ -89,62 +85,38 @@ function CreateCourse(props) {
 	};
 
 	// local state management 
-	const [valuesCategory, setReactSelectValueCategory] = useState({ selectedOptionCategory: [] });
-	const [valuesCluster, setReactSelectValueCluster] = useState({ selectedOptionCluster: [] });
-	const [timerTime, setTime] = useState(0);
+	const [values, setValues] = useState({
+		title: '',
+		description: '',
+		category: {},
+		cluster: {},
+		startDate: new Date(),
+		dueDate: new Date(),
+		destroyDate: new Date(),
+		user: '',
+		status: ''
 
-	// Used for 'react-select' drop-down component
-	const handleMultiChangeCategory = selectedOptionCategory => {
-		setValue("category", selectedOptionCategory);
-		setReactSelectValueCategory({ selectedOptionCategory });
-	}
-
-	const handleMultiChangeCluster = selectedOptionCluster => {
-		setValue("cluster", selectedOptionCluster);
-		setReactSelectValueCluster({ selectedOptionCluster });
-	}
-
-	function adjustTimer(input) {
-		if (input === "incHours" && timerTime + 3600000 < 216000000) {
-			setTime(timerTime + 3600000)
-		} else if (input === "decHours" && timerTime - 3600000 >= 0) {
-			setTime(timerTime - 3600000)
-		} else if (input === "incMinutes" && timerTime + 300000 < 216000000) {
-			setTime(timerTime + 300000)
-		} else if (input === "decMinutes" && timerTime - 300000 >= 0) {
-			setTime(timerTime - 300000)
-		} else {
-			setTime(timerTime)
-		}
-	}
-
-	var minutes = ("0" + Math.floor((timerTime / 60000) % 60)).slice(-2)
-	var hours = ("0" + Math.floor((timerTime / 3600000) % 60)).slice(-2)
-
-	// React state management for FORM
-	React.useEffect(() => {
-		register({ name: "category" }) // USE key = 'name' for react-select  
-	}, [register])
-
-	React.useEffect(() => {
-		register({ name: "cluster" }); // USE key = 'name' for react-select  
-	}, [register])
-
-	React.useEffect(() => {
-		register({ name: "length" }); // USE key = 'name' INPUT values
-	}, [register])
-
-	React.useEffect(() => {
-		register({ name: "slug" }); // USE key = 'name' for NON-INPUT value
-	}, [register])
-
-	React.useEffect(() => {
-		register({ name: "totalSteps" }); // USE key = 'name' for NON-INPUT value
-	}, [register])
-
-	useEffect(() => {
-		setValue("length", timerTime)
 	})
+
+	const handleMultiChangeCategory = value => {
+		setValues({...values, "category": value});
+	}
+	const handleMultiChangeCluster = value => {
+		setValues({...values, "cluster": value});
+	}
+	const handleChange = name => event => {
+		setValues({ ...values, [name]: event.target.value });
+	}
+	
+	function handleChangeStartDate(value) {
+		setValues({ ...values, "startDate": value })
+	}
+	function handleChangeDueDate(value) {
+		setValues({ ...values, "dueDate": value })
+	}
+	function handleChangeDestroyDate(value) {
+		setValues({ ...values, "destroyDate": value })
+	}
 
 	return (
 		<Paper className={classes.paper}>
@@ -154,11 +126,13 @@ function CreateCourse(props) {
 				query={graphql`
 				query CreateCourseQuery {
 					categoriesList {
+						ID
 						value
 						label
 						color
 					}
 					clustersList {
+						ID
 						value
 						label
 						status
@@ -181,46 +155,87 @@ function CreateCourse(props) {
 							<form>
 								< Grid container spacing={3} >
 									<Grid item xs={12}>
-										<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Title" name="title"/>
+										<TextField 
+											label="Title" 
+											name="title"
+											value={values.title}
+											onChange={handleChange('title')}
+											inputRef={register({ required: true })} 
+											fullWidth 
+											variant="outlined" 
+											/>
 										<p>
 											{errors.title && 'Title is required.'}
 										</p>
 									</Grid>
 									<Grid item xs={12}>
-										<TextField inputRef={register({ required: true })} fullWidth variant="outlined" label="Description" name="description"/>
+										<TextField 
+											label="Description" 
+											name="description"
+											value={values.description}
+											onChange={handleChange('description')}
+											inputRef={register({ required: true })} 
+											fullWidth 
+											variant="outlined" 
+										/>
 										<p>
 											{errors.description && 'Description is required.'}
 										</p>
 									</Grid>
-									<Grid item xs={6} sm={3}>
+									<Grid item xs={12} sm={6}>
 										<span>Select Category</span>
 										<Select
-											value={valuesCategory.selectedOptionCategory}
+											value={values.category}
 											options={props.categoriesList}
 											onChange={handleMultiChangeCategory}
 										/>
 									</Grid>
-									<Grid item xs={6} sm={3}>
+									<Grid item xs={12} sm={6}>
 										<span>Select Cluster</span>
 										<Select
-											value={valuesCluster.selectedOptionCluster}
+											value={values.cluster}
 											options={props.clustersList}
 											onChange={handleMultiChangeCluster}
 										/>
 									</Grid>
-									<Grid item xs={6} sm={3}>
-										<div className="ChallengeLength">
-											<div className="ChallengeLength-header">Challenge Length</div>
-											<div className="ChallengeLength-time">
-												{hours} hour(s) : {minutes} minute(s)
-												</div>
-											<div className="ChallengeLength-display">
-												<Button onClick={() => adjustTimer("incHours")}><ArrowUpward /></Button>
-												<Button onClick={() => adjustTimer("decHours")}><ArrowDownward /></Button>
-												<Button onClick={() => adjustTimer("incMinutes")}><ArrowUpward /></Button>
-												<Button onClick={() => adjustTimer("decMinutes")}><ArrowDownward /></Button>
-											</div>
-										</div>
+									<Grid item xs={10} sm={3}>
+										<DateTimePicker
+											label="Start Date and Time"
+											name="startDate"
+											format="YYYY-MM-DDTHH:mm"
+											inputVariant="outlined"
+											inputRef={register({ required: true })}
+											value={values.startDate}
+											onChange={handleChangeStartDate}
+											disablePast
+											showTodayButton
+										/>
+									</Grid>
+									<Grid item xs={10} sm={3}>
+										<DateTimePicker
+											label="Due Date and Time"
+											name="dueDate"
+											format="YYYY-MM-DDTHH:mm"
+											inputVariant="outlined"
+											inputRef={register({ required: true })}
+											value={values.dueDate}
+											onChange={handleChangeDueDate}
+											disablePast
+											showTodayButton
+										/>
+									</Grid>
+									<Grid item xs={10} sm={3}>
+										<DateTimePicker
+											label="Destroy Date and Time"
+											name="destroyDate"
+											format="YYYY-MM-DDTHH:mm"
+											inputVariant="outlined"
+											inputRef={register({ required: true })}
+											value={values.destroyDate}
+											onChange={handleChangeDestroyDate}
+											disablePast
+											showTodayButton
+										/>
 									</Grid>
 									<Grid item xs={12} sm={3}>
 										<Button onClick={handleSubmit(onSubmit)}>Create Course</Button>

@@ -117,8 +117,8 @@ function ViewProblem(props) {
 								inputRef={register({ required: true })}
 							/>
 						</Hidden>
-						<Grid item xs={12}>
-							<h1><b>{values.number} - {values.label}</b></h1>
+						<Grid item xs={10}>
+							<h1>{values.number} - {values.label}</h1>
 							<br/>
 							<b>Submmission due date:</b> {values.dueDate}
 							<br/>
@@ -133,7 +133,7 @@ function ViewProblem(props) {
 							<ReactMarkdown source={values.instructions}/>
 						</Grid>
 
-						<Grid item xs={12} sm={3}>
+						<Grid item xs={10} sm={3}>
 							<Button className={classes.button} onClick={() => updateProblem(values.ID)}>Edit Problem</Button>
 						</Grid>
 					</Grid>

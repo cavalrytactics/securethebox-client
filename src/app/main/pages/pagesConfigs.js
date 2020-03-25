@@ -11,6 +11,7 @@ import UpdateProblemPageConfig from './problems/UpdateProblemPageConfig';
 import ViewProblemPageConfig from './problems/ViewProblemPageConfig';
 import CreateSolutionPageConfig from './solutions/CreateSolutionPageConfig';
 import ListSolutionPageConfig from './solutions/ListSolutionsPageConfig';
+
 const pagesConfigs = [
 	LandingPageConfig,
 	LoginPageConfig,

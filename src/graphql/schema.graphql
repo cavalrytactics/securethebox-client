@@ -180,27 +180,24 @@ input CourseInput {
   ID: ID
   title: String
   description: String
-  activeStep: Int
-  length: Int
-  totalSteps: Int
-  slug: String
   cluster: String
   category: String
+  startDate: String
+  dueDate: String
+  destroyDate: String
 }
 
 type CourseType implements Node {
   ID: ID!
-  activeStep: Int
   category: CategoryType
   cluster: ClusterType
   description: String
-  length: Int
+  destroyDate: String
+  dueDate: String
   report: ReportType
-  slug: String
+  startDate: String
   title: String
-  totalSteps: Int
   id: ID!
-  steps(before: String, after: String, first: Int, last: Int, ID: ID, content: String, title: String, id: ID): StepTypeConnection
 }
 
 type CourseTypeConnection {
@@ -661,7 +658,7 @@ type Query {
   competencies(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID): CompetencyTypeConnection
   configurations(before: String, after: String, first: Int, last: Int, ID: ID, port: Int, url: String, id: ID, credentals: ID): ConfigurationTypeConnection
   containers(before: String, after: String, first: Int, last: Int, ID: ID, status: String, id: ID): ContainerTypeConnection
-  courses(before: String, after: String, first: Int, last: Int, ID: ID, activeStep: Int, description: String, length: Int, slug: String, title: String, totalSteps: Int, id: ID, category: ID, cluster: ID, report: ID): CourseTypeConnection
+  courses(before: String, after: String, first: Int, last: Int, ID: ID, description: String, destroyDate: String, dueDate: String, startDate: String, title: String, id: ID, category: ID, cluster: ID, report: ID): CourseTypeConnection
   credentials(before: String, after: String, first: Int, last: Int, ID: ID, password: String, privateKey: String, publicKey: String, username: String, id: ID): CredentialTypeConnection
   dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, intent: String, purchases: Int, id: ID): DummyTypeConnection
   jobs(before: String, after: String, first: Int, last: Int, ID: ID, applyEmail: String, applyLink: String, description: String, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String, id: ID): JobTypeConnection
