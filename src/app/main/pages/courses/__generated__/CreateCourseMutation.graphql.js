@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 7d3c41208dca35d5b69e7ab9323831c7
+ * @relayHash 08b7632df3c8390b257dd93bcbe2b67c
  */
 
 /* eslint-disable */
@@ -10,7 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type CategoryInput = {|
-  id?: ?string,
+  ID?: ?string,
   label?: ?string,
   value?: ?string,
   color?: ?string,
@@ -24,21 +24,21 @@ export type ClusterInput = {|
 export type CreateCourseMutationVariables = {|
   title: string,
   description: string,
-  length: number,
-  slug: string,
-  totalSteps: number,
   category: CategoryInput,
   cluster: ClusterInput,
+  startDate: string,
+  dueDate: string,
+  destroyDate: string,
 |};
 export type CreateCourseMutationResponse = {|
   +createCourse: ?{|
     +course: ?{|
+      +ID: string,
       +title: ?string,
-      +activeStep: ?number,
       +description: ?string,
-      +length: ?number,
-      +slug: ?string,
-      +totalSteps: ?number,
+      +startDate: ?string,
+      +dueDate: ?string,
+      +destroyDate: ?string,
     |}
   |}
 |};
@@ -53,20 +53,20 @@ export type CreateCourseMutation = {|
 mutation CreateCourseMutation(
   $title: String!
   $description: String!
-  $length: Int!
-  $slug: String!
-  $totalSteps: Int!
   $category: CategoryInput!
   $cluster: ClusterInput!
+  $startDate: String!
+  $dueDate: String!
+  $destroyDate: String!
 ) {
-  createCourse(courseData: {title: $title, activeStep: 0, description: $description, length: $length, slug: $slug, totalSteps: $totalSteps}, categoryData: $category, clusterData: $cluster) {
+  createCourse(courseData: {title: $title, description: $description, startDate: $startDate, dueDate: $dueDate, destroyDate: $destroyDate}, categoryData: $category, clusterData: $cluster) {
     course {
+      ID
       title
-      activeStep
       description
-      length
-      slug
-      totalSteps
+      startDate
+      dueDate
+      destroyDate
       id
     }
   }
@@ -89,24 +89,6 @@ var v0 = [
   },
   {
     "kind": "LocalArgument",
-    "name": "length",
-    "type": "Int!",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
-    "name": "slug",
-    "type": "String!",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
-    "name": "totalSteps",
-    "type": "Int!",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
     "name": "category",
     "type": "CategoryInput!",
     "defaultValue": null
@@ -115,6 +97,24 @@ var v0 = [
     "kind": "LocalArgument",
     "name": "cluster",
     "type": "ClusterInput!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "startDate",
+    "type": "String!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "dueDate",
+    "type": "String!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "destroyDate",
+    "type": "String!",
     "defaultValue": null
   }
 ],
@@ -134,34 +134,29 @@ v1 = [
     "name": "courseData",
     "fields": [
       {
-        "kind": "Literal",
-        "name": "activeStep",
-        "value": 0
-      },
-      {
         "kind": "Variable",
         "name": "description",
         "variableName": "description"
       },
       {
         "kind": "Variable",
-        "name": "length",
-        "variableName": "length"
+        "name": "destroyDate",
+        "variableName": "destroyDate"
       },
       {
         "kind": "Variable",
-        "name": "slug",
-        "variableName": "slug"
+        "name": "dueDate",
+        "variableName": "dueDate"
+      },
+      {
+        "kind": "Variable",
+        "name": "startDate",
+        "variableName": "startDate"
       },
       {
         "kind": "Variable",
         "name": "title",
         "variableName": "title"
-      },
-      {
-        "kind": "Variable",
-        "name": "totalSteps",
-        "variableName": "totalSteps"
       }
     ]
   }
@@ -169,14 +164,14 @@ v1 = [
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "title",
+  "name": "ID",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "activeStep",
+  "name": "title",
   "args": null,
   "storageKey": null
 },
@@ -190,21 +185,21 @@ v4 = {
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "length",
+  "name": "startDate",
   "args": null,
   "storageKey": null
 },
 v6 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "slug",
+  "name": "dueDate",
   "args": null,
   "storageKey": null
 },
 v7 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "totalSteps",
+  "name": "destroyDate",
   "args": null,
   "storageKey": null
 };
@@ -293,12 +288,12 @@ return {
     "operationKind": "mutation",
     "name": "CreateCourseMutation",
     "id": null,
-    "text": "mutation CreateCourseMutation(\n  $title: String!\n  $description: String!\n  $length: Int!\n  $slug: String!\n  $totalSteps: Int!\n  $category: CategoryInput!\n  $cluster: ClusterInput!\n) {\n  createCourse(courseData: {title: $title, activeStep: 0, description: $description, length: $length, slug: $slug, totalSteps: $totalSteps}, categoryData: $category, clusterData: $cluster) {\n    course {\n      title\n      activeStep\n      description\n      length\n      slug\n      totalSteps\n      id\n    }\n  }\n}\n",
+    "text": "mutation CreateCourseMutation(\n  $title: String!\n  $description: String!\n  $category: CategoryInput!\n  $cluster: ClusterInput!\n  $startDate: String!\n  $dueDate: String!\n  $destroyDate: String!\n) {\n  createCourse(courseData: {title: $title, description: $description, startDate: $startDate, dueDate: $dueDate, destroyDate: $destroyDate}, categoryData: $category, clusterData: $cluster) {\n    course {\n      ID\n      title\n      description\n      startDate\n      dueDate\n      destroyDate\n      id\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'ac2359cdb35bbf8f6437f95e9d1825ad';
+(node/*: any*/).hash = 'fd83aac18427632cfe1beb0c05418a0f';
 
 module.exports = node;

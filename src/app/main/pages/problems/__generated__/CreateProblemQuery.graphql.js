@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash eadab533e5c148c04b576de296b2249a
+ * @relayHash b7e60d78ab6b023868dad680bbdb1107
  */
 
 /* eslint-disable */
@@ -12,6 +12,7 @@ import type { ConcreteRequest } from 'relay-runtime';
 export type CreateProblemQueryVariables = {||};
 export type CreateProblemQueryResponse = {|
   +vulnerabilitiesList: ?$ReadOnlyArray<?{|
+    +ID: string,
     +value: ?string,
     +label: ?string,
     +type: ?string,
@@ -28,6 +29,7 @@ export type CreateProblemQuery = {|
 /*
 query CreateProblemQuery {
   vulnerabilitiesList {
+    ID
     value
     label
     type
@@ -41,25 +43,32 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "value",
+  "name": "ID",
   "args": null,
   "storageKey": null
 },
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "label",
+  "name": "value",
   "args": null,
   "storageKey": null
 },
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "type",
+  "name": "label",
   "args": null,
   "storageKey": null
 },
 v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "type",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "exploitDbUrl",
@@ -87,7 +96,8 @@ return {
           (v0/*: any*/),
           (v1/*: any*/),
           (v2/*: any*/),
-          (v3/*: any*/)
+          (v3/*: any*/),
+          (v4/*: any*/)
         ]
       }
     ]
@@ -110,6 +120,7 @@ return {
           (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -125,12 +136,12 @@ return {
     "operationKind": "query",
     "name": "CreateProblemQuery",
     "id": null,
-    "text": "query CreateProblemQuery {\n  vulnerabilitiesList {\n    value\n    label\n    type\n    exploitDbUrl\n    id\n  }\n}\n",
+    "text": "query CreateProblemQuery {\n  vulnerabilitiesList {\n    ID\n    value\n    label\n    type\n    exploitDbUrl\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'b1644ea24a2f86719c835fea8729a2f7';
+(node/*: any*/).hash = '2f598b98e405b9e5bb9caf9d47a746ee';
 
 module.exports = node;

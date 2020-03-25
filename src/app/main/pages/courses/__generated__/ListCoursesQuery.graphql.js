@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 1c276d5b0fe8e352887688bbc8a7fdc5
+ * @relayHash 286e3a56ca1cbb32f5a3e99262ccae06
  */
 
 /* eslint-disable */
@@ -13,20 +13,23 @@ export type ListCoursesQueryVariables = {||};
 export type ListCoursesQueryResponse = {|
   +coursesList: ?$ReadOnlyArray<?{|
     +ID: string,
-    +activeStep: ?number,
+    +title: ?string,
+    +description: ?string,
+    +startDate: ?string,
+    +dueDate: ?string,
+    +destroyDate: ?string,
+    +category: ?{|
+      +ID: string,
+      +label: ?string,
+      +value: ?string,
+      +color: ?string,
+    |},
     +cluster: ?{|
+      +ID: string,
       +label: ?string,
       +value: ?string,
       +status: ?string,
     |},
-    +category: ?{|
-      +label: ?string,
-      +value: ?string,
-    |},
-    +slug: ?string,
-    +length: ?number,
-    +title: ?string,
-    +totalSteps: ?number,
   |}>
 |};
 export type ListCoursesQuery = {|
@@ -40,22 +43,25 @@ export type ListCoursesQuery = {|
 query ListCoursesQuery {
   coursesList {
     ID
-    activeStep
+    title
+    description
+    startDate
+    dueDate
+    destroyDate
+    category {
+      ID
+      label
+      value
+      color
+      id
+    }
     cluster {
+      ID
       label
       value
       status
       id
     }
-    category {
-      label
-      value
-      id
-    }
-    slug
-    length
-    title
-    totalSteps
     id
   }
 }
@@ -72,60 +78,67 @@ var v0 = {
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "activeStep",
+  "name": "title",
   "args": null,
   "storageKey": null
 },
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "label",
+  "name": "description",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "value",
+  "name": "startDate",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "status",
+  "name": "dueDate",
   "args": null,
   "storageKey": null
 },
 v5 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "slug",
+  "name": "destroyDate",
   "args": null,
   "storageKey": null
 },
 v6 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "length",
+  "name": "label",
   "args": null,
   "storageKey": null
 },
 v7 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "title",
+  "name": "value",
   "args": null,
   "storageKey": null
 },
 v8 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "totalSteps",
+  "name": "color",
   "args": null,
   "storageKey": null
 },
 v9 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "status",
+  "args": null,
+  "storageKey": null
+},
+v10 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
@@ -152,20 +165,10 @@ return {
         "selections": [
           (v0/*: any*/),
           (v1/*: any*/),
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "name": "cluster",
-            "storageKey": null,
-            "args": null,
-            "concreteType": "ClusterType",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/)
-            ]
-          },
+          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -175,14 +178,27 @@ return {
             "concreteType": "CategoryType",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v0/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/)
             ]
           },
-          (v5/*: any*/),
-          (v6/*: any*/),
-          (v7/*: any*/),
-          (v8/*: any*/)
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "cluster",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "ClusterType",
+            "plural": false,
+            "selections": [
+              (v0/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v9/*: any*/)
+            ]
+          }
         ]
       }
     ]
@@ -203,21 +219,10 @@ return {
         "selections": [
           (v0/*: any*/),
           (v1/*: any*/),
-          {
-            "kind": "LinkedField",
-            "alias": null,
-            "name": "cluster",
-            "storageKey": null,
-            "args": null,
-            "concreteType": "ClusterType",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v9/*: any*/)
-            ]
-          },
+          (v2/*: any*/),
+          (v3/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
@@ -227,16 +232,30 @@ return {
             "concreteType": "CategoryType",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v9/*: any*/)
+              (v0/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v10/*: any*/)
             ]
           },
-          (v5/*: any*/),
-          (v6/*: any*/),
-          (v7/*: any*/),
-          (v8/*: any*/),
-          (v9/*: any*/)
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "cluster",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "ClusterType",
+            "plural": false,
+            "selections": [
+              (v0/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v9/*: any*/),
+              (v10/*: any*/)
+            ]
+          },
+          (v10/*: any*/)
         ]
       }
     ]
@@ -245,12 +264,12 @@ return {
     "operationKind": "query",
     "name": "ListCoursesQuery",
     "id": null,
-    "text": "query ListCoursesQuery {\n  coursesList {\n    ID\n    activeStep\n    cluster {\n      label\n      value\n      status\n      id\n    }\n    category {\n      label\n      value\n      id\n    }\n    slug\n    length\n    title\n    totalSteps\n    id\n  }\n}\n",
+    "text": "query ListCoursesQuery {\n  coursesList {\n    ID\n    title\n    description\n    startDate\n    dueDate\n    destroyDate\n    category {\n      ID\n      label\n      value\n      color\n      id\n    }\n    cluster {\n      ID\n      label\n      value\n      status\n      id\n    }\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'c777dc5f072f986b8ec45e128c1c6d16';
+(node/*: any*/).hash = 'b514797c3a3a84433881039996b7f1cf';
 
 module.exports = node;

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 87df0bd14f2716f57d65d84fa205596f
+ * @relayHash d1b5bee88272bb53e369c13385e21611
  */
 
 /* eslint-disable */
@@ -12,11 +12,13 @@ import type { ConcreteRequest } from 'relay-runtime';
 export type CreateCourseQueryVariables = {||};
 export type CreateCourseQueryResponse = {|
   +categoriesList: ?$ReadOnlyArray<?{|
+    +ID: string,
     +value: ?string,
     +label: ?string,
     +color: ?string,
   |}>,
   +clustersList: ?$ReadOnlyArray<?{|
+    +ID: string,
     +value: ?string,
     +label: ?string,
     +status: ?string,
@@ -32,12 +34,14 @@ export type CreateCourseQuery = {|
 /*
 query CreateCourseQuery {
   categoriesList {
+    ID
     value
     label
     color
     id
   }
   clustersList {
+    ID
     value
     label
     status
@@ -50,32 +54,39 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "value",
+  "name": "ID",
   "args": null,
   "storageKey": null
 },
 v1 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "label",
+  "name": "value",
   "args": null,
   "storageKey": null
 },
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "color",
+  "name": "label",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "status",
+  "name": "color",
   "args": null,
   "storageKey": null
 },
 v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "status",
+  "args": null,
+  "storageKey": null
+},
+v5 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
@@ -102,7 +113,8 @@ return {
         "selections": [
           (v0/*: any*/),
           (v1/*: any*/),
-          (v2/*: any*/)
+          (v2/*: any*/),
+          (v3/*: any*/)
         ]
       },
       {
@@ -116,7 +128,8 @@ return {
         "selections": [
           (v0/*: any*/),
           (v1/*: any*/),
-          (v3/*: any*/)
+          (v2/*: any*/),
+          (v4/*: any*/)
         ]
       }
     ]
@@ -138,7 +151,8 @@ return {
           (v0/*: any*/),
           (v1/*: any*/),
           (v2/*: any*/),
-          (v4/*: any*/)
+          (v3/*: any*/),
+          (v5/*: any*/)
         ]
       },
       {
@@ -152,8 +166,9 @@ return {
         "selections": [
           (v0/*: any*/),
           (v1/*: any*/),
-          (v3/*: any*/),
-          (v4/*: any*/)
+          (v2/*: any*/),
+          (v4/*: any*/),
+          (v5/*: any*/)
         ]
       }
     ]
@@ -162,12 +177,12 @@ return {
     "operationKind": "query",
     "name": "CreateCourseQuery",
     "id": null,
-    "text": "query CreateCourseQuery {\n  categoriesList {\n    value\n    label\n    color\n    id\n  }\n  clustersList {\n    value\n    label\n    status\n    id\n  }\n}\n",
+    "text": "query CreateCourseQuery {\n  categoriesList {\n    ID\n    value\n    label\n    color\n    id\n  }\n  clustersList {\n    ID\n    value\n    label\n    status\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '8f4814405e7c86019ceab08302bdb4d0';
+(node/*: any*/).hash = 'defc72dfa5ec7d734d31a2d53d9f6b3b';
 
 module.exports = node;

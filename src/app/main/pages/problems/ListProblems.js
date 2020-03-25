@@ -1,4 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
+import withReducer from 'app/store/withReducer';
+import connect from 'react-redux/es/connect/connect';
+import reducer from 'app/auth/store/reducers';
 import { commitMutation } from 'react-relay';
 import { fetchQuery } from 'relay-runtime';
 import graphql from 'babel-plugin-relay/macro';
@@ -44,9 +47,10 @@ const mutation = graphql`
 `;
 
 
-export default function ListProblems() {
+function ListProblems() {
 	const classes = useStyles();
-	let history = useHistory();
+	const history = useHistory();
+
 	function updateProblem(ID) {
 		history.push({
 			pathname: '/problems/update',
@@ -62,7 +66,7 @@ export default function ListProblems() {
 		})
 	}
 
-	const [values, setValues] = useState([]);
+	const [values, setValues] = React.useState([]);
 
 	const queryNow = graphql`
 		query ListProblemsQuery {
@@ -161,3 +165,11 @@ export default function ListProblems() {
 		</Paper>
 	)
 }
+
+function mapStateToProps({ auth }) {
+	return {
+		user: auth.user
+	}
+}
+
+export default withReducer('auth', reducer)((connect(mapStateToProps)(ListProblems)));

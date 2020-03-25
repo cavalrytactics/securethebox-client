@@ -33,7 +33,7 @@ type ApplicationTypeEdge {
 }
 
 input CategoryInput {
-  id: ID
+  ID: ID
   label: String
   value: String
   color: String
@@ -58,7 +58,7 @@ type CategoryTypeEdge {
 }
 
 input ClusterInput {
-  id: ID
+  ID: ID
   value: String
   label: String
   status: String
@@ -84,7 +84,7 @@ type ClusterTypeEdge {
 }
 
 input CompanyInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -107,7 +107,7 @@ type CompanyTypeEdge {
 }
 
 input CompetencyInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -130,7 +130,7 @@ type CompetencyTypeEdge {
 }
 
 input ConfigurationInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -154,7 +154,7 @@ type ConfigurationTypeEdge {
 }
 
 input ContainerInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -315,7 +315,7 @@ type CreateVulnerabilityMutation {
 }
 
 input CredentialInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -442,7 +442,7 @@ type DeleteVulnerabilityMutation {
 }
 
 input DummyInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -466,7 +466,7 @@ type DummyTypeEdge {
 }
 
 input JobInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -495,7 +495,7 @@ type JobTypeEdge {
 }
 
 input MetricInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -574,30 +574,30 @@ type Mutations {
   updateUser(userData: UserInput!): UpdateUserMutation
   updateVulnerability(vulnerabilityData: VulnerabilityInput!): UpdateVulnerabilityMutation
   deleteApplication(ID: ID): DeleteApplicationMutation
-  deleteCategory(id: ID!): DeleteCategoryMutation
-  deleteCluster(id: ID!): DeleteClusterMutation
-  deleteCompany(id: ID!): DeleteCompanyMutation
-  deleteCompetency(id: ID!): DeleteCompetencyMutation
-  deleteConfiguration(id: ID!): DeleteConfigurationMutation
-  deleteContainer(id: ID!): DeleteContainerMutation
+  deleteCategory(ID: ID!): DeleteCategoryMutation
+  deleteCluster(ID: ID!): DeleteClusterMutation
+  deleteCompany(ID: ID!): DeleteCompanyMutation
+  deleteCompetency(ID: ID!): DeleteCompetencyMutation
+  deleteConfiguration(ID: ID!): DeleteConfigurationMutation
+  deleteContainer(ID: ID!): DeleteContainerMutation
   deleteCourse(ID: ID): DeleteCourseMutation
-  deleteCredential(id: ID!): DeleteCredentialMutation
-  deleteDummy(id: ID!): DeleteDummyMutation
-  deleteJob(id: ID!): DeleteJobMutation
-  deleteMetric(id: ID!): DeleteMetricMutation
+  deleteCredential(ID: ID!): DeleteCredentialMutation
+  deleteDummy(ID: ID!): DeleteDummyMutation
+  deleteJob(ID: ID!): DeleteJobMutation
+  deleteMetric(ID: ID!): DeleteMetricMutation
   deleteProblem(ID: ID!): DeleteProblemMutation
-  deleteRank(id: ID!): DeleteRankMutation
-  deleteReport(id: ID!): DeleteReportMutation
-  deleteScope(id: ID!): DeleteScopeMutation
-  deleteService(id: ID!): DeleteServiceMutation
+  deleteRank(ID: ID!): DeleteRankMutation
+  deleteReport(ID: ID!): DeleteReportMutation
+  deleteScope(ID: ID!): DeleteScopeMutation
+  deleteService(ID: ID!): DeleteServiceMutation
   deleteSolution(ID: ID): DeleteSolutionMutation
-  deleteStep(id: ID!): DeleteStepMutation
-  deleteSubscription(id: ID!): DeleteSubscriptionMutation
-  deleteTeam(id: ID!): DeleteTeamMutation
-  deleteTopic(id: ID!): DeleteTopicMutation
-  deleteUniversity(id: ID!): DeleteUniversityMutation
-  deleteUser(id: ID!): DeleteUserMutation
-  deleteVulnerability(id: ID!): DeleteVulnerabilityMutation
+  deleteStep(ID: ID!): DeleteStepMutation
+  deleteSubscription(ID: ID!): DeleteSubscriptionMutation
+  deleteTeam(ID: ID!): DeleteTeamMutation
+  deleteTopic(ID: ID!): DeleteTopicMutation
+  deleteUniversity(ID: ID!): DeleteUniversityMutation
+  deleteUser(ID: ID!): DeleteUserMutation
+  deleteVulnerability(ID: ID!): DeleteVulnerabilityMutation
 }
 
 interface Node {
@@ -729,7 +729,7 @@ type Query {
 }
 
 input RankInput {
-  id: ID
+  ID: ID
   coursesComplete: Int
   flagsObtained: Int
   position: Int
@@ -754,7 +754,7 @@ type RankTypeEdge {
 }
 
 input ReportInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -776,7 +776,7 @@ type ReportTypeEdge {
 }
 
 input ScopeInput {
-  id: ID
+  ID: ID
   label: String
   value: String
 }
@@ -800,7 +800,7 @@ type ScopeTypeEdge {
 }
 
 input ServiceInput {
-  id: ID
+  ID: ID
   label: String
   value: String
   type: String
@@ -849,7 +849,7 @@ type SolutionTypeEdge {
 }
 
 input StepInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -872,7 +872,7 @@ type StepTypeEdge {
 }
 
 input SubscriptionInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -897,7 +897,7 @@ type SubscriptionTypeEdge {
 }
 
 input TeamInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -919,7 +919,7 @@ type TeamTypeEdge {
 }
 
 input TopicInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -943,7 +943,7 @@ type TopicTypeEdge {
 }
 
 input UniversityInput {
-  id: ID
+  ID: ID
   team: ID
   domain: String
 }
@@ -1080,7 +1080,7 @@ type UpdateVulnerabilityMutation {
 }
 
 input UserInput {
-  id: ID
+  ID: ID
   name: String
   value: String
 }
@@ -1109,7 +1109,7 @@ type UserTypeEdge {
 }
 
 input VulnerabilityInput {
-  id: ID
+  ID: ID
   value: String
   label: String
   type: String
