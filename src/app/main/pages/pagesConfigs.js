@@ -1,31 +1,51 @@
 import LandingPageConfig from './landing/LandingPageConfig';
 import LoginPageConfig from './login/LoginPageConfig';
 import InvitePageConfig from './invite/InvitePageConfig';
-import CreateCoursePageConfig from './courses/CreateCoursePageConfig';
-import ListCoursesPageConfig from './courses/ListCoursesPageConfig';
-import CreateApplicationPageConfig from './applications/CreateApplicationPageConfig';
-import ListApplicationsPageConfig from './applications/ListApplicationsPageConfig';
+
 import CreateProblemPageConfig from './problems/CreateProblemPageConfig';
-import ListProblemPageConfig from './problems/ListProblemsPageConfig';
-import UpdateProblemPageConfig from './problems/UpdateProblemPageConfig';
-import ViewProblemPageConfig from './problems/ViewProblemPageConfig';
+import CreateCoursePageConfig from './courses/CreateCoursePageConfig';
+import CreateApplicationPageConfig from './applications/CreateApplicationPageConfig';
 import CreateSolutionPageConfig from './solutions/CreateSolutionPageConfig';
+import CreateSubmissionPageConfig from './submissions/CreateSubmissionPageConfig';
+
+import ListProblemPageConfig from './problems/ListProblemsPageConfig';
+import ListCoursesPageConfig from './courses/ListCoursesPageConfig';
+import ListApplicationsPageConfig from './applications/ListApplicationsPageConfig';
 import ListSolutionPageConfig from './solutions/ListSolutionsPageConfig';
+import ListSubmissionsPageConfig from './submissions/ListSubmissionsPageConfig';
+
+import UpdateProblemPageConfig from './problems/UpdateProblemPageConfig';
+import UpdateCoursePageConfig from './courses/UpdateCoursePageConfig';
+import UpdateSubmissionPageConfig from './submissions/UpdateSubmissionPageConfig';
+
+import ViewProblemPageConfig from './problems/ViewProblemPageConfig';
+import ViewCoursePageConfig from './courses/ViewCoursePageConfig';
+import ViewSubmissionPageConfig from './submissions/ViewSubmissionPageConfig';
 
 const pagesConfigs = [
 	LandingPageConfig,
 	LoginPageConfig,
 	InvitePageConfig,
-	CreateCoursePageConfig,
-	ListCoursesPageConfig,
-	CreateApplicationPageConfig,
-	ListApplicationsPageConfig,
+
 	CreateProblemPageConfig,
-	ListProblemPageConfig,
-	UpdateProblemPageConfig,
-	ViewProblemPageConfig,
+	CreateCoursePageConfig,
+	CreateApplicationPageConfig,
 	CreateSolutionPageConfig,
-	ListSolutionPageConfig
+	CreateSubmissionPageConfig,
+
+	ListProblemPageConfig,
+	ListCoursesPageConfig,
+	ListApplicationsPageConfig,
+	ListSolutionPageConfig,
+	ListSubmissionsPageConfig,
+
+	UpdateProblemPageConfig,
+	UpdateCoursePageConfig,
+	UpdateSubmissionPageConfig,
+
+	ViewProblemPageConfig,
+	ViewCoursePageConfig,
+	ViewSubmissionPageConfig,
 ];
 
 export default pagesConfigs;

@@ -15,7 +15,6 @@ import environment from 'graphql/consts/environment';
 import ReactMde from "react-mde";
 import * as Showdown from "showdown";
 import "react-mde/lib/styles/css/react-mde-all.css";
-import "./styles.css";
 
 const converter = new Showdown.Converter({
 	tables: true,
@@ -99,6 +98,7 @@ function CreateProblem(props) {
 	// local state management 
 	
 	const [values, setValues] = useState({
+		ID: '',
 		value: '',
 		label: '',
 		dueDate: new Date(),
@@ -106,9 +106,8 @@ function CreateProblem(props) {
 		rejectDate: new Date(),
 		points: '',
 		number: '',
-		ID: '',
 		instructions: `
-<!-- Please prtovide a clear and concise instructions -->
+<!-- Please provide a clear and concise instructions -->
 
 ## Deliverables 
 - some item

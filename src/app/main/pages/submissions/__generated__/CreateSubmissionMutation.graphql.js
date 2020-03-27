@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 6b0c31c89d6bb0bef3b6f822c2d53ada
+ * @relayHash fc8622b08248b4c4cf0d9c1f135804f4
  */
 
 /* eslint-disable */
@@ -9,47 +9,38 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
-export type VulnerabilityInput = {|
-  ID?: ?string,
-  value?: ?string,
-  label?: ?string,
-  type?: ?string,
-  exploitDbUrl?: ?string,
+export type CreateSubmissionMutationVariables = {|
+  author: string,
+  creationTime: string,
+  content: string,
 |};
-export type CreateApplicationMutationVariables = {|
-  value: string,
-  label: string,
-  version?: ?string,
-  vulnerability: VulnerabilityInput,
-|};
-export type CreateApplicationMutationResponse = {|
-  +createApplication: ?{|
-    +application: ?{|
-      +value: ?string,
-      +label: ?string,
-      +version: ?string,
+export type CreateSubmissionMutationResponse = {|
+  +createSubmission: ?{|
+    +submission: ?{|
+      +author: ?string,
+      +creationTime: ?string,
+      +content: ?string,
     |}
   |}
 |};
-export type CreateApplicationMutation = {|
-  variables: CreateApplicationMutationVariables,
-  response: CreateApplicationMutationResponse,
+export type CreateSubmissionMutation = {|
+  variables: CreateSubmissionMutationVariables,
+  response: CreateSubmissionMutationResponse,
 |};
 */
 
 
 /*
-mutation CreateApplicationMutation(
-  $value: String!
-  $label: String!
-  $version: String
-  $vulnerability: VulnerabilityInput!
+mutation CreateSubmissionMutation(
+  $author: String!
+  $creationTime: String!
+  $content: String!
 ) {
-  createApplication(applicationData: {value: $value, label: $label, version: $version}, vulnerabilityData: $vulnerability) {
-    application {
-      value
-      label
-      version
+  createSubmission(submissionData: {author: $author, creationTime: $creationTime, content: $content}) {
+    submission {
+      author
+      creationTime
+      content
       id
     }
   }
@@ -60,75 +51,64 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
-    "name": "value",
+    "name": "author",
     "type": "String!",
     "defaultValue": null
   },
   {
     "kind": "LocalArgument",
-    "name": "label",
+    "name": "creationTime",
     "type": "String!",
     "defaultValue": null
   },
   {
     "kind": "LocalArgument",
-    "name": "version",
-    "type": "String",
-    "defaultValue": null
-  },
-  {
-    "kind": "LocalArgument",
-    "name": "vulnerability",
-    "type": "VulnerabilityInput!",
+    "name": "content",
+    "type": "String!",
     "defaultValue": null
   }
 ],
 v1 = [
   {
     "kind": "ObjectValue",
-    "name": "applicationData",
+    "name": "submissionData",
     "fields": [
       {
         "kind": "Variable",
-        "name": "label",
-        "variableName": "label"
+        "name": "author",
+        "variableName": "author"
       },
       {
         "kind": "Variable",
-        "name": "value",
-        "variableName": "value"
+        "name": "content",
+        "variableName": "content"
       },
       {
         "kind": "Variable",
-        "name": "version",
-        "variableName": "version"
+        "name": "creationTime",
+        "variableName": "creationTime"
       }
     ]
-  },
-  {
-    "kind": "Variable",
-    "name": "vulnerabilityData",
-    "variableName": "vulnerability"
   }
 ],
 v2 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "value",
+  "name": "author",
   "args": null,
   "storageKey": null
 },
 v3 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "label",
+  "name": "creationTime",
   "args": null,
   "storageKey": null
 },
 v4 = {
   "kind": "ScalarField",
   "alias": null,
-  "name": "version",
+  "name": "content",
   "args": null,
   "storageKey": null
 };
@@ -136,7 +116,7 @@ return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "CreateApplicationMutation",
+    "name": "CreateSubmissionMutation",
     "type": "Mutations",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -144,19 +124,19 @@ return {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "createApplication",
+        "name": "createSubmission",
         "storageKey": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateApplicationMutation",
+        "concreteType": "CreateSubmissionMutation",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "application",
+            "name": "submission",
             "storageKey": null,
             "args": null,
-            "concreteType": "ApplicationType",
+            "concreteType": "SubmissionType",
             "plural": false,
             "selections": [
               (v2/*: any*/),
@@ -170,25 +150,25 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "CreateApplicationMutation",
+    "name": "CreateSubmissionMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "createApplication",
+        "name": "createSubmission",
         "storageKey": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateApplicationMutation",
+        "concreteType": "CreateSubmissionMutation",
         "plural": false,
         "selections": [
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "application",
+            "name": "submission",
             "storageKey": null,
             "args": null,
-            "concreteType": "ApplicationType",
+            "concreteType": "SubmissionType",
             "plural": false,
             "selections": [
               (v2/*: any*/),
@@ -209,14 +189,14 @@ return {
   },
   "params": {
     "operationKind": "mutation",
-    "name": "CreateApplicationMutation",
+    "name": "CreateSubmissionMutation",
     "id": null,
-    "text": "mutation CreateApplicationMutation(\n  $value: String!\n  $label: String!\n  $version: String\n  $vulnerability: VulnerabilityInput!\n) {\n  createApplication(applicationData: {value: $value, label: $label, version: $version}, vulnerabilityData: $vulnerability) {\n    application {\n      value\n      label\n      version\n      id\n    }\n  }\n}\n",
+    "text": "mutation CreateSubmissionMutation(\n  $author: String!\n  $creationTime: String!\n  $content: String!\n) {\n  createSubmission(submissionData: {author: $author, creationTime: $creationTime, content: $content}) {\n    submission {\n      author\n      creationTime\n      content\n      id\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '1a9b0c028335a4de487f54b3e90ab54a';
+(node/*: any*/).hash = '5bf931f54db1d7d0e9dc1babde806131';
 
 module.exports = node;

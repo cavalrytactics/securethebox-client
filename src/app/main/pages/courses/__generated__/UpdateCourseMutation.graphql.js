@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash f57425083cd449d467a6f86b7c2ad6f7
+ * @relayHash 13d6649b789e9df63ff257b5dab63af0
  */
 
 /* eslint-disable */
@@ -21,7 +21,8 @@ export type ClusterInput = {|
   label?: ?string,
   status?: ?string,
 |};
-export type CreateCourseMutationVariables = {|
+export type UpdateCourseMutationVariables = {|
+  ID: string,
   title: string,
   description: string,
   category: CategoryInput,
@@ -30,27 +31,23 @@ export type CreateCourseMutationVariables = {|
   dueDate: string,
   destroyDate: string,
 |};
-export type CreateCourseMutationResponse = {|
-  +createCourse: ?{|
+export type UpdateCourseMutationResponse = {|
+  +updateCourse: ?{|
     +course: ?{|
-      +ID: string,
-      +title: ?string,
-      +description: ?string,
-      +startDate: ?string,
-      +dueDate: ?string,
-      +destroyDate: ?string,
+      +ID: string
     |}
   |}
 |};
-export type CreateCourseMutation = {|
-  variables: CreateCourseMutationVariables,
-  response: CreateCourseMutationResponse,
+export type UpdateCourseMutation = {|
+  variables: UpdateCourseMutationVariables,
+  response: UpdateCourseMutationResponse,
 |};
 */
 
 
 /*
-mutation CreateCourseMutation(
+mutation UpdateCourseMutation(
+  $ID: ID!
   $title: String!
   $description: String!
   $category: CategoryInput!
@@ -59,14 +56,9 @@ mutation CreateCourseMutation(
   $dueDate: String!
   $destroyDate: String!
 ) {
-  createCourse(courseData: {title: $title, description: $description, startDate: $startDate, dueDate: $dueDate, destroyDate: $destroyDate}, categoryData: $category, clusterData: $cluster) {
+  updateCourse(courseData: {ID: $ID, title: $title, description: $description, startDate: $startDate, dueDate: $dueDate, destroyDate: $destroyDate}, categoryData: $category, clusterData: $cluster) {
     course {
       ID
-      title
-      description
-      startDate
-      dueDate
-      destroyDate
       id
     }
   }
@@ -75,6 +67,12 @@ mutation CreateCourseMutation(
 
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
+  {
+    "kind": "LocalArgument",
+    "name": "ID",
+    "type": "ID!",
+    "defaultValue": null
+  },
   {
     "kind": "LocalArgument",
     "name": "title",
@@ -135,6 +133,11 @@ v1 = [
     "fields": [
       {
         "kind": "Variable",
+        "name": "ID",
+        "variableName": "ID"
+      },
+      {
+        "kind": "Variable",
         "name": "description",
         "variableName": "description"
       },
@@ -167,47 +170,12 @@ v2 = {
   "name": "ID",
   "args": null,
   "storageKey": null
-},
-v3 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "title",
-  "args": null,
-  "storageKey": null
-},
-v4 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "description",
-  "args": null,
-  "storageKey": null
-},
-v5 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "startDate",
-  "args": null,
-  "storageKey": null
-},
-v6 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "dueDate",
-  "args": null,
-  "storageKey": null
-},
-v7 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "destroyDate",
-  "args": null,
-  "storageKey": null
 };
 return {
   "kind": "Request",
   "fragment": {
     "kind": "Fragment",
-    "name": "CreateCourseMutation",
+    "name": "UpdateCourseMutation",
     "type": "Mutations",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
@@ -215,10 +183,10 @@ return {
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "createCourse",
+        "name": "updateCourse",
         "storageKey": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateCourseMutation",
+        "concreteType": "UpdateCourseMutation",
         "plural": false,
         "selections": [
           {
@@ -230,12 +198,7 @@ return {
             "concreteType": "CourseType",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/)
+              (v2/*: any*/)
             ]
           }
         ]
@@ -244,16 +207,16 @@ return {
   },
   "operation": {
     "kind": "Operation",
-    "name": "CreateCourseMutation",
+    "name": "UpdateCourseMutation",
     "argumentDefinitions": (v0/*: any*/),
     "selections": [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "createCourse",
+        "name": "updateCourse",
         "storageKey": null,
         "args": (v1/*: any*/),
-        "concreteType": "CreateCourseMutation",
+        "concreteType": "UpdateCourseMutation",
         "plural": false,
         "selections": [
           {
@@ -266,11 +229,6 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
-              (v5/*: any*/),
-              (v6/*: any*/),
-              (v7/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -286,14 +244,14 @@ return {
   },
   "params": {
     "operationKind": "mutation",
-    "name": "CreateCourseMutation",
+    "name": "UpdateCourseMutation",
     "id": null,
-    "text": "mutation CreateCourseMutation(\n  $title: String!\n  $description: String!\n  $category: CategoryInput!\n  $cluster: ClusterInput!\n  $startDate: String!\n  $dueDate: String!\n  $destroyDate: String!\n) {\n  createCourse(courseData: {title: $title, description: $description, startDate: $startDate, dueDate: $dueDate, destroyDate: $destroyDate}, categoryData: $category, clusterData: $cluster) {\n    course {\n      ID\n      title\n      description\n      startDate\n      dueDate\n      destroyDate\n      id\n    }\n  }\n}\n",
+    "text": "mutation UpdateCourseMutation(\n  $ID: ID!\n  $title: String!\n  $description: String!\n  $category: CategoryInput!\n  $cluster: ClusterInput!\n  $startDate: String!\n  $dueDate: String!\n  $destroyDate: String!\n) {\n  updateCourse(courseData: {ID: $ID, title: $title, description: $description, startDate: $startDate, dueDate: $dueDate, destroyDate: $destroyDate}, categoryData: $category, clusterData: $cluster) {\n    course {\n      ID\n      id\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'fd83aac18427632cfe1beb0c05418a0f';
+(node/*: any*/).hash = '27e227a3f8326a5a125ed5c0fc1d304b';
 
 module.exports = node;

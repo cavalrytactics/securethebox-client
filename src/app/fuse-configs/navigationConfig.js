@@ -30,8 +30,28 @@ const navigationConfig = [
 				'type': 'item',
 				'icon': 'whatshot',
 				'url': '/courses/list'
-			}
+			},
+			{
+				'id': 'courses-update',
+				'title': 'Update',
+				'translate': 'UPDATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/courses/update'
+			},
+			{
+				'id': 'courses-view',
+				'title': 'View',
+				'translate': 'VIEW',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/courses/view'
+			},
 		]
+	},
+	{
+		'type': 'divider',
+		'id': 'divider-1'
 	},
 	{
 		'id': 'problems',
@@ -76,7 +96,52 @@ const navigationConfig = [
 	},
 	{
 		'type': 'divider',
-		'id': 'divider-1'
+		'id': 'divider-2'
+	},
+	{
+		'id': 'submissions',
+		'title': 'Submissions',
+		'translate': 'Submissions',
+		'type': 'group',
+		'icon': 'apps',
+		'children': [
+			{
+				'id': 'submissions-add',
+				'title': 'Create',
+				'translate': 'CREATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/submissions/create'
+			},
+			{
+				'id': 'submissions-list',
+				'title': 'List',
+				'translate': 'LIST',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/submissions/list'
+			},
+			{
+				'id': 'submissions-update',
+				'title': 'Update',
+				'translate': 'UPDATE',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/submissions/update'
+			},
+			{
+				'id': 'submissions-view',
+				'title': 'View',
+				'translate': 'VIEW',
+				'type': 'item',
+				'icon': 'whatshot',
+				'url': '/submissions/view'
+			}
+		]
+	},
+	{
+		'type': 'divider',
+		'id': 'divider-3'
 	},
 	{
 		'id': 'applications',
@@ -105,11 +170,7 @@ const navigationConfig = [
 	},
 	{
 		'type': 'divider',
-		'id': 'divider-2'
-	},
-	{
-		'type': 'divider',
-		'id': 'divider-3'
+		'id': 'divider-4'
 	},
 	{
 		'id': 'solutions',
@@ -138,7 +199,7 @@ const navigationConfig = [
 	},
 	{
 		'type': 'divider',
-		'id': 'divider-4'
+		'id': 'divider-5'
 	},
 ];
 

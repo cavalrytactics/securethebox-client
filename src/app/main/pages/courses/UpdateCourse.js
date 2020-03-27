@@ -13,19 +13,9 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { DateTimePicker } from "@material-ui/pickers";
 import environment from 'graphql/consts/environment';
-import ReactMde from "react-mde";
-import * as Showdown from "showdown";
-import "react-mde/lib/styles/css/react-mde-all.css";
+import Select from "react-select";
 import { useLocation } from "react-router-dom";
-import Hidden from '@material-ui/core/Hidden';
 import { useHistory } from "react-router-dom";
-
-const converter = new Showdown.Converter({
-	tables: true,
-	simplifiedAutoLink: true,
-	strikethrough: true,
-	tasklists: true
-});
 
 // Styles only works with Material-UI components 
 const useStyles = makeStyles(theme => ({
@@ -48,33 +38,30 @@ const useStyles = makeStyles(theme => ({
 
 // Graphql Mutation 
 const mutation = graphql`
-	mutation UpdateProblemMutation(
-		$ID: ID!
-		$value: String!, 
-		$label: String!, 
-		$instructions: String!,
-		$points: Int!,
-		$number: Int!,
+	mutation UpdateCourseMutation(
+		$ID: ID!,
+		$title: String!,
+		$description: String!,
+		$category: CategoryInput!,
+		$cluster: ClusterInput!
 		$startDate: String!,
 		$dueDate: String!,
-		$rejectDate: String!,
+		$destroyDate: String!,
 		) {
-		updateProblem(
-			problemData: {
+		updateCourse(
+			courseData: {
 				ID: $ID,
-				value: $value,
-				label: $label,
-				instructions: $instructions,
-				points: $points,
-				number: $number,
+				title: $title,
+				description: $description,
 				startDate: $startDate,
 				dueDate: $dueDate,
-				rejectDate: $rejectDate
+				destroyDate: $destroyDate
 				},
+			categoryData: $category,
+			clusterData: $cluster
 			) {
-			problem {
-				value
-				label
+			course {
+				ID
 			}
 		}
 	} 
@@ -95,12 +82,11 @@ function commitMutationRequest(environment, mutation, variables) {
 	)
 }
 
-
 function useQuery() {
 	return new URLSearchParams(useLocation().search);
 }
 
-function UpdateProblem(props) {
+function UpdateCourse(props) {
 	const location = useLocation();
 	let history = useHistory();
 	const query = useQuery();
@@ -109,34 +95,24 @@ function UpdateProblem(props) {
 
 	// local state management 
 	const [values, setValues] = useState({
-		value: '',
-		label: '',
+		ID: '',
+		title: '',
+		description: '',
 		dueDate: new Date(),
 		startDate: new Date(),
 		rejectDate: new Date(),
-		points: 0,
-		number: 0,
-		ID: '',
-		instructions: `
-			<!-- Please prtovide a clear and concise instructions -->
-		
-		## Deliverables 
-		- some item
-		
-		<!-- code example: \`some code\`->
-		
-		<!-- link example: [some link](https://www.securethebox.us) -->
-		`
+		category: {},
+		cluster: {}
 	});
 
-	const [selectedTab, setSelectedTab] = React.useState("write");
-
+	const handleMultiChangeCategory = value => {
+		setValues({...values, "category": value});
+	}
+	const handleMultiChangeCluster = value => {
+		setValues({...values, "cluster": value});
+	}
 	const handleChange = name => event => {
 		setValues({ ...values, [name]: event.target.value });
-	};
-
-	function handleChangeInstructions(value) {
-		setValues({ ...values, "instructions": value });
 	}
 	function handleChangeStartDate(value) {
 		setValues({ ...values, "startDate": value })
@@ -144,8 +120,8 @@ function UpdateProblem(props) {
 	function handleChangeDueDate(value) {
 		setValues({ ...values, "dueDate": value })
 	}
-	function handleChangeRejectDate(value) {
-		setValues({ ...values, "rejectDate": value })
+	function handleChangeDestroyDate(value) {
+		setValues({ ...values, "destroyDate": value })
 	}
 
 	// react-hook-form local state
@@ -153,23 +129,29 @@ function UpdateProblem(props) {
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
 		const variables = values
-		variables["value"] = variables["label"].split(/\s/).join('-').toLowerCase()
-		variables["instructions"] = values.instructions
-		console.log("Variables:", variables)
+		variables["cluster"] = values.cluster 
+		variables["category"] = values.category
 		commitMutationRequest(environment, mutation, variables)
 	};
 	const queryNow = graphql`
-	query UpdateProblemQuery($ID: ID!){
-		problem(ID: $ID){
+	query UpdateCourseQuery($ID: ID!){
+		course(ID: $ID){
 				ID
-				number
-				label
-				value
-				points
-				instructions
+				title
+				description
 				startDate
 				dueDate
-				rejectDate
+				destroyDate
+				category {
+					ID
+					label
+					value
+				}
+				cluster {
+					ID
+					label
+					value
+				}
 			}
 		}
 	`
@@ -180,7 +162,7 @@ function UpdateProblem(props) {
 		if (values.ID === '') {
 			fetchQuery(environment, queryNow, queryVariables)
 				.then(data => {
-					setValues(data.problem)
+					setValues(data.course)
 				});
 		}
 	} else {
@@ -190,14 +172,14 @@ function UpdateProblem(props) {
 		if (values.ID === '' && query.get("ID") !== null) {
 			fetchQuery(environment, queryNow, queryVariables)
 				.then(data => {
-					setValues(data.problem)
+					setValues(data.course)
 				});
 		}
 	}
 
-	function cancelProblem(ID) {
+	function cancelCourse(ID) {
 		history.push({
-			pathname: '/problems/list'
+			pathname: '/courses/list'
 		})
 	}
 
@@ -205,46 +187,50 @@ function UpdateProblem(props) {
 		return (
 			<Paper className={classes.paper}>
 				<form>
-					<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
-						<Grid item xs={10} sm={2}>
-							<Hidden xsUp>
-								<TextField
-									label="ID"
-									name="ID"
-									value={values.ID}
-									onChange={handleChange('ID')}
-									inputRef={register({ required: true })}
-								/>
-							</Hidden>
+					< Grid container spacing={3} >
+						<Grid item xs={12}>
 							<TextField
-								label="Problem Number"
-								name="number"
-								value={values.number}
-								onChange={handleChange('number')}
-								type="number"
+								label="Title"
+								name="title"
+								value={values.title}
+								onChange={handleChange('title')}
 								inputRef={register({ required: true })}
-								InputLabelProps={{
-									shrink: true,
-								}}
+								fullWidth
 								variant="outlined"
 							/>
 							<p>
-								{errors.number && 'Number is required.'}
+								{errors.title && 'Title is required.'}
 							</p>
 						</Grid>
-						<Grid item xs={12} sm={8}>
+						<Grid item xs={12}>
 							<TextField
+								label="Description"
+								name="description"
+								value={values.description}
+								onChange={handleChange('description')}
 								inputRef={register({ required: true })}
 								fullWidth
-								onChange={handleChange('label')}
 								variant="outlined"
-								label="Title"
-								value={values.label}
-								name="label" />
-
+							/>
 							<p>
-								{errors.label && 'Title is required.'}
+								{errors.description && 'Description is required.'}
 							</p>
+						</Grid>
+						<Grid item xs={12} sm={6}>
+							<span>Select Category</span>
+							<Select
+								value={values.category}
+								options={props.categoriesList}
+								onChange={handleMultiChangeCategory}
+							/>
+						</Grid>
+						<Grid item xs={12} sm={6}>
+							<span>Select Cluster</span>
+							<Select
+								value={values.cluster}
+								options={props.clustersList}
+								onChange={handleMultiChangeCluster}
+							/>
 						</Grid>
 						<Grid item xs={10} sm={3}>
 							<DateTimePicker
@@ -255,6 +241,7 @@ function UpdateProblem(props) {
 								inputRef={register({ required: true })}
 								value={values.startDate}
 								onChange={handleChangeStartDate}
+								disablePast
 								showTodayButton
 							/>
 						</Grid>
@@ -267,58 +254,28 @@ function UpdateProblem(props) {
 								inputRef={register({ required: true })}
 								value={values.dueDate}
 								onChange={handleChangeDueDate}
+								disablePast
 								showTodayButton
 							/>
 						</Grid>
 						<Grid item xs={10} sm={3}>
 							<DateTimePicker
-								label="Reject Date and Time"
-								name="rejectDate"
+								label="Destroy Date and Time"
+								name="destroyDate"
 								format="YYYY-MM-DDTHH:mm"
 								inputVariant="outlined"
 								inputRef={register({ required: true })}
-								value={values.rejectDate}
-								onChange={handleChangeRejectDate}
+								value={values.destroyDate}
+								onChange={handleChangeDestroyDate}
+								disablePast
 								showTodayButton
 							/>
 						</Grid>
-						<Grid item xs={10}>
-							<ReactMde
-								style={{ textAlign: "left" }}
-								value={values.instructions}
-								name="instructions"
-								inputRef={register}
-								onChange={handleChangeInstructions}
-								selectedTab={selectedTab}
-								onTabChange={setSelectedTab}
-								generateMarkdownPreview={markdown =>
-									Promise.resolve(converter.makeHtml(markdown))
-								}
-							/>
-							<a href="https://guides.github.com/features/mastering-markdown/">This supports Markdown</a>
+						<Grid item xs={12} sm={3}>
+							<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Update Course</Button>
 						</Grid>
 						<Grid item xs={12} sm={3}>
-							<TextField
-								label="Max Points Possible value"
-								value={values.points}
-								name="points"
-								onChange={handleChange('points')}
-								type="number"
-								inputRef={register({ required: true })}
-								InputLabelProps={{
-									shrink: true,
-								}}
-								variant="outlined"
-							/>
-							<p>
-								{errors.points && 'Points is required.'}
-							</p>
-						</Grid>
-						<Grid item xs={12} sm={3}>
-							<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Update Problem</Button>
-						</Grid>
-						<Grid item xs={12} sm={3}>
-							<Button className={classes.button} onClick={() => cancelProblem()}>Cancel</Button>
+							<Button className={classes.button} onClick={() => cancelCourse()}>Cancel</Button>
 						</Grid>
 					</Grid>
 				</form>
@@ -339,4 +296,4 @@ function mapStateToProps({ auth }) {
 	}
 }
 
-export default withReducer('auth', reducer)((connect(mapStateToProps)(UpdateProblem)));
+export default withReducer('auth', reducer)((connect(mapStateToProps)(UpdateCourse)));

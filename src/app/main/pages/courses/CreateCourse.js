@@ -10,9 +10,12 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Select from "react-select";
 import environment from 'graphql/consts/environment';
 import { DateTimePicker } from "@material-ui/pickers";
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 
 // Style Control
 const useStyles = makeStyles(theme => ({
@@ -23,6 +26,9 @@ const useStyles = makeStyles(theme => ({
 		padding: theme.spacing(2),
 		textAlign: 'center',
 		color: theme.palette.text.secondary,
+	},
+	formControl: {
+		minWidth: 200,
 	},
 }));
 
@@ -98,16 +104,15 @@ function CreateCourse(props) {
 
 	})
 
-	const handleMultiChangeCategory = value => {
-		setValues({...values, "category": value});
+	const handleMultiChangeCategory = event => {
+		setValues({ ...values, "category": event.target.value });
 	}
-	const handleMultiChangeCluster = value => {
-		setValues({...values, "cluster": value});
+	const handleMultiChangeCluster = event => {
+		setValues({ ...values, "cluster": event.target.value });
 	}
 	const handleChange = name => event => {
 		setValues({ ...values, [name]: event.target.value });
 	}
-	
 	function handleChangeStartDate(value) {
 		setValues({ ...values, "startDate": value })
 	}
@@ -153,50 +158,68 @@ function CreateCourse(props) {
 					if (props) {
 						return (
 							<form>
-								< Grid container spacing={3} >
-									<Grid item xs={12}>
-										<TextField 
-											label="Title" 
+								<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
+									<Grid item xs={10}>
+										<TextField
+											label="Title"
 											name="title"
 											value={values.title}
 											onChange={handleChange('title')}
-											inputRef={register({ required: true })} 
-											fullWidth 
-											variant="outlined" 
-											/>
+											inputRef={register({ required: true })}
+											fullWidth
+											variant="outlined"
+										/>
 										<p>
 											{errors.title && 'Title is required.'}
 										</p>
 									</Grid>
-									<Grid item xs={12}>
-										<TextField 
-											label="Description" 
+									<Grid item xs={10}>
+										<TextField
+											label="Description"
 											name="description"
 											value={values.description}
 											onChange={handleChange('description')}
-											inputRef={register({ required: true })} 
-											fullWidth 
-											variant="outlined" 
+											inputRef={register({ required: true })}
+											fullWidth
+											variant="outlined"
 										/>
 										<p>
 											{errors.description && 'Description is required.'}
 										</p>
 									</Grid>
-									<Grid item xs={12} sm={6}>
-										<span>Select Category</span>
-										<Select
-											value={values.category}
-											options={props.categoriesList}
-											onChange={handleMultiChangeCategory}
-										/>
+									<Grid item xs={10} sm={5}>
+										<FormControl variant="outlined" className={classes.formControl}>
+											<InputLabel>Category</InputLabel>
+											<Select
+												value={values.category}
+												onChange={handleMultiChangeCategory}
+												name="category"
+												label="Category"
+											>
+												{props.categoriesList.map((item, index) => {
+													return (
+														<MenuItem value={item}>{item.label}</MenuItem>
+													)
+												})}
+											</Select>
+										</FormControl>
 									</Grid>
-									<Grid item xs={12} sm={6}>
-										<span>Select Cluster</span>
-										<Select
-											value={values.cluster}
-											options={props.clustersList}
-											onChange={handleMultiChangeCluster}
-										/>
+									<Grid item xs={10} sm={5}>
+										<FormControl variant="outlined" className={classes.formControl}>
+											<InputLabel>Cluster</InputLabel>
+											<Select
+												value={values.cluster}
+												onChange={handleMultiChangeCluster}
+												name="cluster"
+												label="Cluster"
+											>
+												{props.clustersList.map((item, index) => {
+													return (
+														<MenuItem value={item}>{item.label}</MenuItem>
+													)
+												})}
+											</Select>
+										</FormControl>
 									</Grid>
 									<Grid item xs={10} sm={3}>
 										<DateTimePicker
@@ -237,7 +260,7 @@ function CreateCourse(props) {
 											showTodayButton
 										/>
 									</Grid>
-									<Grid item xs={12} sm={3}>
+									<Grid item xs={10} sm={5}>
 										<Button onClick={handleSubmit(onSubmit)}>Create Course</Button>
 									</Grid>
 								</Grid>

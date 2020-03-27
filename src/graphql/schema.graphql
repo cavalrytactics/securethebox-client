@@ -18,7 +18,7 @@ type ApplicationType implements Node {
   version: String
   id: ID!
   dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, intent: String, purchases: Int, id: ID): DummyTypeConnection
-  problems(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, dueDate: String, instructions: String, label: String, number: Int, points: Int, rejectDate: String, startDate: String, value: String, id: ID, scope: ID, solutions: ID): ProblemTypeConnection
+  problems(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, dueDate: String, instructions: String, label: String, number: Int, points: Int, rejectDate: String, startDate: String, value: String, id: ID, scope: ID, solutions: ID, submissions: ID): ProblemTypeConnection
   vulnerability(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, label: String, type: String, value: String, id: ID): VulnerabilityTypeConnection
 }
 
@@ -290,6 +290,10 @@ type CreateStepMutation {
   step: StepType
 }
 
+type CreateSubmissionMutation {
+  submission: SubmissionType
+}
+
 type CreateSubscriptionMutation {
   subscription: SubscriptionType
 }
@@ -417,6 +421,10 @@ type DeleteStepMutation {
   success: Boolean
 }
 
+type DeleteSubmissionMutation {
+  success: Boolean
+}
+
 type DeleteSubscriptionMutation {
   success: Boolean
 }
@@ -541,6 +549,7 @@ type Mutations {
   createSolution(solutionData: SolutionInput!): CreateSolutionMutation
   createStep(stepData: StepInput!): CreateStepMutation
   createSubscription(subscriptionData: SubscriptionInput!): CreateSubscriptionMutation
+  createSubmission(submissionData: SubmissionInput!): CreateSubmissionMutation
   createTeam(teamData: TeamInput!): CreateTeamMutation
   createTopic(topicData: TopicInput!): CreateTopicMutation
   createUniversity(universityData: UniversityInput!): CreateUniversityMutation
@@ -568,6 +577,7 @@ type Mutations {
   updateSolution(solutionData: SolutionInput!): UpdateSolutionMutation
   updateStep(stepData: StepInput!): UpdateStepMutation
   updateSubscription(subscriptionData: SubscriptionInput!): UpdateSubscriptionMutation
+  updateSubmission(submissionData: SubmissionInput!): UpdateSubmissionMutation
   updateTeam(teamData: TeamInput!): UpdateTeamMutation
   updateTopic(topicData: TopicInput!): UpdateTopicMutation
   updateUniversity(universityData: UniversityInput!): UpdateUniversityMutation
@@ -593,6 +603,7 @@ type Mutations {
   deleteSolution(ID: ID): DeleteSolutionMutation
   deleteStep(ID: ID!): DeleteStepMutation
   deleteSubscription(ID: ID!): DeleteSubscriptionMutation
+  deleteSubmission(ID: ID!): DeleteSubmissionMutation
   deleteTeam(ID: ID!): DeleteTeamMutation
   deleteTopic(ID: ID!): DeleteTopicMutation
   deleteUniversity(ID: ID!): DeleteUniversityMutation
@@ -635,6 +646,7 @@ type ProblemType implements Node {
   scope: ScopeType
   solutions: SolutionType
   startDate: String
+  submissions: SubmissionType
   value: String
   id: ID!
 }
@@ -663,7 +675,7 @@ type Query {
   dummies(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, intent: String, purchases: Int, id: ID): DummyTypeConnection
   jobs(before: String, after: String, first: Int, last: Int, ID: ID, applyEmail: String, applyLink: String, description: String, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String, id: ID): JobTypeConnection
   metrics(before: String, after: String, first: Int, last: Int, ID: ID, activeUsers: Int, downtime: DateTime, purchases: Int, revenue: Float, uptime: DateTime, id: ID): MetricTypeConnection
-  problems(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, dueDate: String, instructions: String, label: String, number: Int, points: Int, rejectDate: String, startDate: String, value: String, id: ID, scope: ID, solutions: ID): ProblemTypeConnection
+  problems(before: String, after: String, first: Int, last: Int, ID: ID, attempts: Int, dueDate: String, instructions: String, label: String, number: Int, points: Int, rejectDate: String, startDate: String, value: String, id: ID, scope: ID, solutions: ID, submissions: ID): ProblemTypeConnection
   ranks(before: String, after: String, first: Int, last: Int, ID: ID, coursesComplete: Int, flagsObtained: Int, position: Int, id: ID): RankTypeConnection
   reports(before: String, after: String, first: Int, last: Int, ID: ID, score: Int, id: ID): ReportTypeConnection
   scopes(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID, topic: ID): ScopeTypeConnection
@@ -671,6 +683,7 @@ type Query {
   solutions(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID): SolutionTypeConnection
   steps(before: String, after: String, first: Int, last: Int, ID: ID, content: String, title: String, id: ID): StepTypeConnection
   subscriptions(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, stripeCustomerId: String, stripeCustomerPlan: String, stripeCustomerSubscriptionId: String, id: ID): SubscriptionTypeConnection
+  submissions(before: String, after: String, first: Int, last: Int, ID: ID, author: String, content: String, creationTime: String, points: Int, relativeTime: String, verdict: String, id: ID): SubmissionTypeConnection
   teams(before: String, after: String, first: Int, last: Int, ID: ID, id: ID): TeamTypeConnection
   topics(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID, competency: ID): TopicTypeConnection
   universities(before: String, after: String, first: Int, last: Int, ID: ID, domain: String, id: ID, team: ID): UniversityTypeConnection
@@ -696,6 +709,7 @@ type Query {
   solutionsList: [SolutionType]
   stepsList: [StepType]
   subscriptionsList: [SubscriptionType]
+  submissionsList: [SubmissionType]
   teamsList: [TeamType]
   topicsList: [TopicType]
   universitiesList: [UniversityType]
@@ -721,6 +735,7 @@ type Query {
   solution(ID: ID!): SolutionType
   step(ID: ID!): StepType
   subscription(ID: ID!): SubscriptionType
+  submission(ID: ID!): SubmissionType
   team(ID: ID!): TeamType
   topic(ID: ID!): TopicType
   university(ID: ID!): UniversityType
@@ -868,6 +883,37 @@ type StepTypeConnection {
 
 type StepTypeEdge {
   node: StepType
+  cursor: String!
+}
+
+input SubmissionInput {
+  ID: ID
+  author: String
+  verdict: String
+  creationTime: String
+  relativeTime: String
+  points: Int
+  content: String
+}
+
+type SubmissionType implements Node {
+  ID: ID!
+  author: String
+  content: String
+  creationTime: String
+  points: Int
+  relativeTime: String
+  verdict: String
+  id: ID!
+}
+
+type SubmissionTypeConnection {
+  pageInfo: PageInfo!
+  edges: [SubmissionTypeEdge]!
+}
+
+type SubmissionTypeEdge {
+  node: SubmissionType
   cursor: String!
 }
 
@@ -1053,6 +1099,10 @@ type UpdateSolutionMutation {
 
 type UpdateStepMutation {
   step: StepType
+}
+
+type UpdateSubmissionMutation {
+  submission: SubmissionType
 }
 
 type UpdateSubscriptionMutation {
