@@ -94,8 +94,8 @@ function CreateCourse(props) {
 	const [values, setValues] = useState({
 		title: '',
 		description: '',
-		category: {},
-		cluster: {},
+		category: '',
+		cluster: '',
 		startDate: new Date(),
 		dueDate: new Date(),
 		destroyDate: new Date(),
@@ -193,12 +193,11 @@ function CreateCourse(props) {
 											<Select
 												value={values.category}
 												onChange={handleMultiChangeCategory}
-												name="category"
 												label="Category"
 											>
 												{props.categoriesList.map((item, index) => {
 													return (
-														<MenuItem value={item}>{item.label}</MenuItem>
+														<MenuItem key={item.label} value={item}>{item.label}</MenuItem>
 													)
 												})}
 											</Select>
@@ -210,12 +209,11 @@ function CreateCourse(props) {
 											<Select
 												value={values.cluster}
 												onChange={handleMultiChangeCluster}
-												name="cluster"
 												label="Cluster"
 											>
 												{props.clustersList.map((item, index) => {
 													return (
-														<MenuItem value={item}>{item.label}</MenuItem>
+														<MenuItem key={item.label} value={item}>{item.label}</MenuItem>
 													)
 												})}
 											</Select>

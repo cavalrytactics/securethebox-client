@@ -1,6 +1,7 @@
 schema {
   query: Query
   mutation: Mutations
+  subscription: Subscription
 }
 
 input ApplicationInput {
@@ -93,7 +94,7 @@ type CompanyType implements Node {
   ID: ID!
   id: ID!
   jobs(before: String, after: String, first: Int, last: Int, ID: ID, applyEmail: String, applyLink: String, description: String, minimumRank: Int, payRange: String, qualifications: String, responsibilities: String, id: ID): JobTypeConnection
-  managers(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  managers(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID): UserTypeConnection
 }
 
 type CompanyTypeConnection {
@@ -294,10 +295,6 @@ type CreateSubmissionMutation {
   submission: SubmissionType
 }
 
-type CreateSubscriptionMutation {
-  subscription: SubscriptionType
-}
-
 type CreateTeamMutation {
   team: TeamType
 }
@@ -312,6 +309,7 @@ type CreateUniversityMutation {
 
 type CreateUserMutation {
   user: UserType
+  company: CompanyType
 }
 
 type CreateVulnerabilityMutation {
@@ -425,10 +423,6 @@ type DeleteSubmissionMutation {
   success: Boolean
 }
 
-type DeleteSubscriptionMutation {
-  success: Boolean
-}
-
 type DeleteTeamMutation {
   success: Boolean
 }
@@ -489,7 +483,7 @@ type JobType implements Node {
   qualifications: String
   responsibilities: String
   id: ID!
-  qualified(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  qualified(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID): UserTypeConnection
 }
 
 type JobTypeConnection {
@@ -548,12 +542,11 @@ type Mutations {
   createService(applicationData: ApplicationInput, serviceData: ServiceInput!): CreateServiceMutation
   createSolution(solutionData: SolutionInput!): CreateSolutionMutation
   createStep(stepData: StepInput!): CreateStepMutation
-  createSubscription(subscriptionData: SubscriptionInput!): CreateSubscriptionMutation
   createSubmission(submissionData: SubmissionInput!): CreateSubmissionMutation
   createTeam(teamData: TeamInput!): CreateTeamMutation
   createTopic(topicData: TopicInput!): CreateTopicMutation
   createUniversity(universityData: UniversityInput!): CreateUniversityMutation
-  createUser(userData: UserInput!): CreateUserMutation
+  createUser(companyData: CompanyInput!, userData: UserInput!): CreateUserMutation
   createVulnerability(vulnerabilityData: VulnerabilityInput!): CreateVulnerabilityMutation
   updateApplication(applicationData: ApplicationInput!, vulnerabilityData: VulnerabilityInput!): UpdateApplicationMutation
   updateCluster(clusterData: ClusterInput!): UpdateClusterMutation
@@ -576,7 +569,6 @@ type Mutations {
   updateServiceDeleteApplication(applicationData: ApplicationInput, serviceData: ServiceInput!): UpdateServiceDeleteApplicationMutation
   updateSolution(solutionData: SolutionInput!): UpdateSolutionMutation
   updateStep(stepData: StepInput!): UpdateStepMutation
-  updateSubscription(subscriptionData: SubscriptionInput!): UpdateSubscriptionMutation
   updateSubmission(submissionData: SubmissionInput!): UpdateSubmissionMutation
   updateTeam(teamData: TeamInput!): UpdateTeamMutation
   updateTopic(topicData: TopicInput!): UpdateTopicMutation
@@ -602,7 +594,6 @@ type Mutations {
   deleteService(ID: ID!): DeleteServiceMutation
   deleteSolution(ID: ID): DeleteSolutionMutation
   deleteStep(ID: ID!): DeleteStepMutation
-  deleteSubscription(ID: ID!): DeleteSubscriptionMutation
   deleteSubmission(ID: ID!): DeleteSubmissionMutation
   deleteTeam(ID: ID!): DeleteTeamMutation
   deleteTopic(ID: ID!): DeleteTopicMutation
@@ -662,6 +653,7 @@ type ProblemTypeEdge {
 }
 
 type Query {
+  base: String
   node(id: ID!): Node
   applications(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, version: String, id: ID, configuration: ID): ApplicationTypeConnection
   categories(before: String, after: String, first: Int, last: Int, ID: ID, color: String, label: String, value: String, id: ID): CategoryTypeConnection
@@ -682,12 +674,11 @@ type Query {
   services(before: String, after: String, first: Int, last: Int, ID: ID, label: String, type: String, value: String, id: ID): ServiceTypeConnection
   solutions(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID): SolutionTypeConnection
   steps(before: String, after: String, first: Int, last: Int, ID: ID, content: String, title: String, id: ID): StepTypeConnection
-  subscriptions(before: String, after: String, first: Int, last: Int, ID: ID, active: Boolean, stripeCustomerId: String, stripeCustomerPlan: String, stripeCustomerSubscriptionId: String, id: ID): SubscriptionTypeConnection
   submissions(before: String, after: String, first: Int, last: Int, ID: ID, author: String, content: String, creationTime: String, points: Int, relativeTime: String, verdict: String, id: ID): SubmissionTypeConnection
   teams(before: String, after: String, first: Int, last: Int, ID: ID, id: ID): TeamTypeConnection
   topics(before: String, after: String, first: Int, last: Int, ID: ID, label: String, value: String, id: ID, competency: ID): TopicTypeConnection
   universities(before: String, after: String, first: Int, last: Int, ID: ID, domain: String, id: ID, team: ID): UniversityTypeConnection
-  users(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  users(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID): UserTypeConnection
   vulnerabilities(before: String, after: String, first: Int, last: Int, ID: ID, exploitDbUrl: String, label: String, type: String, value: String, id: ID): VulnerabilityTypeConnection
   applicationsList: [ApplicationType]
   clustersList: [ClusterType]
@@ -708,7 +699,6 @@ type Query {
   servicesList: [ServiceType]
   solutionsList: [SolutionType]
   stepsList: [StepType]
-  subscriptionsList: [SubscriptionType]
   submissionsList: [SubmissionType]
   teamsList: [TeamType]
   topicsList: [TopicType]
@@ -734,13 +724,17 @@ type Query {
   service(ID: ID!): ServiceType
   solution(ID: ID!): SolutionType
   step(ID: ID!): StepType
-  subscription(ID: ID!): SubscriptionType
   submission(ID: ID!): SubmissionType
   team(ID: ID!): TeamType
   topic(ID: ID!): TopicType
   university(ID: ID!): UniversityType
   user(ID: ID!): UserType
   vulnerability(ID: ID!): VulnerabilityType
+}
+
+type RandomType {
+  seconds: Int
+  randomInt: Int
 }
 
 input RankInput {
@@ -917,29 +911,9 @@ type SubmissionTypeEdge {
   cursor: String!
 }
 
-input SubscriptionInput {
-  ID: ID
-  name: String
-  value: String
-}
-
-type SubscriptionType implements Node {
-  ID: ID!
-  active: Boolean
-  stripeCustomerId: String
-  stripeCustomerPlan: String
-  stripeCustomerSubscriptionId: String
-  id: ID!
-}
-
-type SubscriptionTypeConnection {
-  pageInfo: PageInfo!
-  edges: [SubscriptionTypeEdge]!
-}
-
-type SubscriptionTypeEdge {
-  node: SubscriptionType
-  cursor: String!
+type Subscription {
+  countSeconds(upTo: Int): Int
+  randomInt: RandomType
 }
 
 input TeamInput {
@@ -951,7 +925,7 @@ input TeamInput {
 type TeamType implements Node {
   ID: ID!
   id: ID!
-  members(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID, subscription: ID): UserTypeConnection
+  members(before: String, after: String, first: Int, last: Int, ID: ID, admin: Boolean, email: String, level: Int, loggedIn: Boolean, manager: Boolean, recruiter: Boolean, id: ID, rank: ID): UserTypeConnection
 }
 
 type TeamTypeConnection {
@@ -1105,10 +1079,6 @@ type UpdateSubmissionMutation {
   submission: SubmissionType
 }
 
-type UpdateSubscriptionMutation {
-  subscription: SubscriptionType
-}
-
 type UpdateTeamMutation {
   team: TeamType
 }
@@ -1123,6 +1093,7 @@ type UpdateUniversityMutation {
 
 type UpdateUserMutation {
   user: UserType
+  company: CompanyType
 }
 
 type UpdateVulnerabilityMutation {
@@ -1131,8 +1102,11 @@ type UpdateVulnerabilityMutation {
 
 input UserInput {
   ID: ID
-  name: String
-  value: String
+  handle: String
+  email: String
+  subscriptionType: Int
+  accessControlRole: String
+  status: String
 }
 
 type UserType implements Node {
@@ -1144,7 +1118,6 @@ type UserType implements Node {
   manager: Boolean
   rank: RankType
   recruiter: Boolean
-  subscription: SubscriptionType
   id: ID!
 }
 

@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 3c3f140f36e83638dc1eb2745a71da73
+ * @relayHash 5940b852de6149fd4ffab0fec81158fa
  */
 
 /* eslint-disable */
@@ -30,7 +30,17 @@ export type UpdateCourseQueryResponse = {|
       +label: ?string,
       +value: ?string,
     |},
-  |}
+  |},
+  +categoriesList: ?$ReadOnlyArray<?{|
+    +ID: string,
+    +label: ?string,
+    +value: ?string,
+  |}>,
+  +clustersList: ?$ReadOnlyArray<?{|
+    +ID: string,
+    +label: ?string,
+    +value: ?string,
+  |}>,
 |};
 export type UpdateCourseQuery = {|
   variables: UpdateCourseQueryVariables,
@@ -62,6 +72,18 @@ query UpdateCourseQuery(
       value
       id
     }
+    id
+  }
+  categoriesList {
+    ID
+    label
+    value
+    id
+  }
+  clustersList {
+    ID
+    label
+    value
     id
   }
 }
@@ -202,6 +224,26 @@ return {
             "selections": (v10/*: any*/)
           }
         ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "categoriesList",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "CategoryType",
+        "plural": true,
+        "selections": (v10/*: any*/)
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "clustersList",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "ClusterType",
+        "plural": true,
+        "selections": (v10/*: any*/)
       }
     ]
   },
@@ -247,6 +289,26 @@ return {
           },
           (v11/*: any*/)
         ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "categoriesList",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "CategoryType",
+        "plural": true,
+        "selections": (v12/*: any*/)
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "clustersList",
+        "storageKey": null,
+        "args": null,
+        "concreteType": "ClusterType",
+        "plural": true,
+        "selections": (v12/*: any*/)
       }
     ]
   },
@@ -254,12 +316,12 @@ return {
     "operationKind": "query",
     "name": "UpdateCourseQuery",
     "id": null,
-    "text": "query UpdateCourseQuery(\n  $ID: ID!\n) {\n  course(ID: $ID) {\n    ID\n    title\n    description\n    startDate\n    dueDate\n    destroyDate\n    category {\n      ID\n      label\n      value\n      id\n    }\n    cluster {\n      ID\n      label\n      value\n      id\n    }\n    id\n  }\n}\n",
+    "text": "query UpdateCourseQuery(\n  $ID: ID!\n) {\n  course(ID: $ID) {\n    ID\n    title\n    description\n    startDate\n    dueDate\n    destroyDate\n    category {\n      ID\n      label\n      value\n      id\n    }\n    cluster {\n      ID\n      label\n      value\n      id\n    }\n    id\n  }\n  categoriesList {\n    ID\n    label\n    value\n    id\n  }\n  clustersList {\n    ID\n    label\n    value\n    id\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '95dbf95de08ba964010430f2cd7aac52';
+(node/*: any*/).hash = '584379a7e26b1aa62db102b96c7e4c97';
 
 module.exports = node;

@@ -13,9 +13,12 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { DateTimePicker } from "@material-ui/pickers";
 import environment from 'graphql/consts/environment';
-import Select from "react-select";
 import { useLocation } from "react-router-dom";
 import { useHistory } from "react-router-dom";
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
 
 // Styles only works with Material-UI components 
 const useStyles = makeStyles(theme => ({
@@ -30,6 +33,9 @@ const useStyles = makeStyles(theme => ({
 	instructions: {
 		fontSize: 14,
 		textAlign: "left"
+	},
+	formControl: {
+		minWidth: '100%',
 	},
 	button: {
 		fontSize: 14
@@ -101,15 +107,20 @@ function UpdateCourse(props) {
 		dueDate: new Date(),
 		startDate: new Date(),
 		rejectDate: new Date(),
-		category: {},
-		cluster: {}
+		category: '',
+		cluster: '' 
 	});
 
-	const handleMultiChangeCategory = value => {
-		setValues({...values, "category": value});
+	const [categories, setCategoriesList] = useState([])
+	const [clusters, setClustersList] = useState([])
+
+	const handleMultiChangeCategory = event => {
+		console.log(values.category)
+		setValues({ ...values, "category": event.target.value });
 	}
-	const handleMultiChangeCluster = value => {
-		setValues({...values, "cluster": value});
+	const handleMultiChangeCluster = event => {
+		console.log(values.cluster)
+		setValues({ ...values, "cluster": event.target.value});
 	}
 	const handleChange = name => event => {
 		setValues({ ...values, [name]: event.target.value });
@@ -129,13 +140,13 @@ function UpdateCourse(props) {
 	const onSubmit = data => {
 		// javascript is wierd... 'data' has some type issues
 		const variables = values
-		variables["cluster"] = values.cluster 
+		variables["cluster"] = values.cluster
 		variables["category"] = values.category
 		commitMutationRequest(environment, mutation, variables)
 	};
 	const queryNow = graphql`
-	query UpdateCourseQuery($ID: ID!){
-		course(ID: $ID){
+		query UpdateCourseQuery($ID: ID!){
+			course(ID: $ID){
 				ID
 				title
 				description
@@ -152,17 +163,30 @@ function UpdateCourse(props) {
 					label
 					value
 				}
+			},
+			categoriesList{
+				ID
+				label
+				value
+			},
+			clustersList{
+				ID
+				label
+				value
 			}
-		}
-	`
+		}`
 
 	if (values.ID !== '' && location.state.ID !== '' && location.state.ID !== undefined && location.state.ID !== null && query.get("ID") !== null) {
 		const queryVariables = { "ID": location.state.ID }
+		console.log(values)
+
 		// This will only make the request to load state once ; this is important
 		if (values.ID === '') {
 			fetchQuery(environment, queryNow, queryVariables)
 				.then(data => {
 					setValues(data.course)
+					setCategoriesList(data.categoriesList)
+					setClustersList(data.clustersList)
 				});
 		}
 	} else {
@@ -173,22 +197,25 @@ function UpdateCourse(props) {
 			fetchQuery(environment, queryNow, queryVariables)
 				.then(data => {
 					setValues(data.course)
+					setCategoriesList(data.categoriesList)
+					setClustersList(data.clustersList)
+					console.log(data)
 				});
+			}
 		}
-	}
+		
+		function cancelCourse(ID) {
+			history.push({
+				pathname: '/courses/list'
+			})
+		}
 
-	function cancelCourse(ID) {
-		history.push({
-			pathname: '/courses/list'
-		})
-	}
-
-	if (values.ID !== '' && location.state.ID !== '' && location.state.ID !== undefined && location.state.ID !== null && query.get("ID") !== null) {
-		return (
-			<Paper className={classes.paper}>
+	if (values.ID !== '' && query.get("ID") !== null && values.category !== "") {
+			return (
+				<Paper className={classes.paper}>
 				<form>
-					< Grid container spacing={3} >
-						<Grid item xs={12}>
+				<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
+						<Grid item xs={10}>
 							<TextField
 								label="Title"
 								name="title"
@@ -197,12 +224,12 @@ function UpdateCourse(props) {
 								inputRef={register({ required: true })}
 								fullWidth
 								variant="outlined"
-							/>
+								/>
 							<p>
 								{errors.title && 'Title is required.'}
 							</p>
 						</Grid>
-						<Grid item xs={12}>
+						<Grid item xs={10}>
 							<TextField
 								label="Description"
 								name="description"
@@ -211,26 +238,42 @@ function UpdateCourse(props) {
 								inputRef={register({ required: true })}
 								fullWidth
 								variant="outlined"
-							/>
+								/>
 							<p>
 								{errors.description && 'Description is required.'}
 							</p>
 						</Grid>
-						<Grid item xs={12} sm={6}>
-							<span>Select Category</span>
-							<Select
-								value={values.category}
-								options={props.categoriesList}
-								onChange={handleMultiChangeCategory}
-							/>
+						<Grid item xs={10} sm={5}>
+							<FormControl variant="outlined" className={classes.formControl}>
+								<InputLabel>Category</InputLabel>
+								<Select
+									value={values.category}
+									onChange={handleMultiChangeCategory}
+									label="Category"
+								>
+									{categories.map((item, index) => {
+										return (
+											<MenuItem key={item.ID} value={values.category}>{item.label}</MenuItem>
+										)
+									})}
+								</Select>
+							</FormControl>
 						</Grid>
-						<Grid item xs={12} sm={6}>
-							<span>Select Cluster</span>
-							<Select
-								value={values.cluster}
-								options={props.clustersList}
-								onChange={handleMultiChangeCluster}
-							/>
+						<Grid item xs={10} sm={5}>
+							<FormControl variant="outlined" className={classes.formControl}>
+								<InputLabel>Cluster</InputLabel>
+								<Select
+									value={values.cluster}
+									onChange={handleMultiChangeCluster}
+									label="Cluster"
+								>
+									{clusters.map((item, index) => {
+										return (
+											<MenuItem key={item.ID} value={values.cluster}>{item.label}</MenuItem>
+										)
+									})}
+								</Select>
+							</FormControl>
 						</Grid>
 						<Grid item xs={10} sm={3}>
 							<DateTimePicker
@@ -271,11 +314,11 @@ function UpdateCourse(props) {
 								showTodayButton
 							/>
 						</Grid>
-						<Grid item xs={12} sm={3}>
-							<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Update Course</Button>
-						</Grid>
-						<Grid item xs={12} sm={3}>
+						<Grid item xs={10} sm={5}>
 							<Button className={classes.button} onClick={() => cancelCourse()}>Cancel</Button>
+						</Grid>
+						<Grid item xs={10} sm={5}>
+							<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Update Course</Button>
 						</Grid>
 					</Grid>
 				</form>

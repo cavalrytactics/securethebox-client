@@ -94,9 +94,8 @@ function CreateProblem(props) {
 	// styling
 	const classes = useStyles();
 	const { register, handleSubmit, errors } = useForm(); // initialise the hook
-	
 	// local state management 
-	
+
 	const [values, setValues] = useState({
 		ID: '',
 		value: '',
@@ -111,7 +110,6 @@ function CreateProblem(props) {
 
 ## Deliverables 
 - some item
-
 <!-- code example: \`some code\`->
 
 <!-- link example: [some link](https://www.securethebox.us) -->

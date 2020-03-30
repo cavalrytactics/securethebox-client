@@ -144,58 +144,25 @@ const navigationConfig = [
 		'id': 'divider-3'
 	},
 	{
-		'id': 'applications',
-		'title': 'Applications',
-		'translate': 'Applications',
+		'id': 'scoring',
+		'title': 'Scoring',
+		'translate': 'Scoring',
 		'type': 'group',
 		'icon': 'apps',
 		'children': [
 			{
-				'id': 'applications-add',
+				'id': 'scoring-add',
 				'title': 'Create',
 				'translate': 'CREATE',
 				'type': 'item',
 				'icon': 'whatshot',
-				'url': '/applications/create'
-			},
-			{
-				'id': 'applications-list',
-				'title': 'List',
-				'translate': 'LIST',
-				'type': 'item',
-				'icon': 'whatshot',
-				'url': '/applications/list'
+				'url': '/scoring/score'
 			}
 		]
 	},
 	{
 		'type': 'divider',
 		'id': 'divider-4'
-	},
-	{
-		'id': 'solutions',
-		'title': 'Solutions',
-		'translate': 'Solutions',
-		'icon': 'apps',
-		'type': 'group',
-		'children': [
-			{
-				'id': 'solutions-add',
-				'title': 'Create',
-				'translate': 'CREATE',
-				'type': 'item',
-				'icon': 'whatshot',
-				'url': '/solutions/create'
-			},
-			{
-				'id': 'solutions-list',
-				'title': 'List',
-				'translate': 'LIST',
-				'type': 'item',
-				'icon': 'whatshot',
-				'url': '/solutions/list'
-			}
-		]
 	},
 	{
 		'type': 'divider',

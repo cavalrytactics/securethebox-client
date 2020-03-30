@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import connect from 'react-redux/es/connect/connect';
 import withReducer from 'app/store/withReducer';
 import reducer from 'app/auth/store/reducers';
-import { QueryRenderer, commitMutation } from 'react-relay';
+import { commitMutation } from 'react-relay';
 import graphql from 'babel-plugin-relay/macro';
 import { useForm } from 'react-hook-form';
 import { makeStyles } from '@material-ui/core/styles';
@@ -121,113 +121,82 @@ function CreateSubmission(props) {
 		// javascript is wierd... 'data' has some type issues
 		const variables = values
 		commitMutationRequest(environment, mutation, variables)
-};
+	};
 
-return (
-	<Paper className={classes.paper}>
-		{/* This is React 'Relay' used to query and render graphql data */}
-		<QueryRenderer
-			environment={environment}
-			query={graphql`
-				query CreateSubmissionQuery{
-					vulnerabilitiesList{
-						ID
-						value
-						label
-						type
-						exploitDbUrl
-					}
-				}
-				`}
-			variables={{}}
-			render={({ error, props }) => {
-				// If Graphql query has error
-				if (error) {
-					return <div>Error Calling Backend!</div>;
-				}
-				// If waiting for data
-				if (!props) {
-					return <div>Loading...</div>;
-				}
-				// If received data
-				if (props) {
-					return (
-						<form>
-							<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
-								<Grid item xs={10} sm={3}>
-									<TextField
-										label="Author"
-										name="author"
-										value={values.author}
-										disabled={true}
-										onChange={handleChange('author')}
-										inputRef={register({ required: true })}
-										InputLabelProps={{
-											shrink: true,
-										}}
-										variant="outlined"
-									/>
-									<p>
-										{errors.author && 'Author is required.'}
-									</p>
-								</Grid>
-								<Grid item xs={10} sm={3}>
-									<TextField
-										label="Points"
-										value={values.points}
-										name="points"
-										onChange={handleChange('points')}
-										type="number"
-										inputRef={register({ required: true })}
-										InputLabelProps={{
-											shrink: true,
-										}}
-										variant="outlined"
-									/>
-									<p>
-										{errors.points && 'Points is required.'}
-									</p>
-								</Grid>
-								<Grid item xs={10} sm={3}>
-									<FormControl variant="outlined" className={classes.formControl}>
-										<InputLabel>Verdict</InputLabel>
-										<Select
-											value={values.verdict}
-											onChange={handleMultiChangeVerdict}
-											name="verdict"
-											label="Verdict"
-										>
-											<MenuItem value="pass">PASS</MenuItem>
-											<MenuItem value="fail">FAIL</MenuItem>
-										</Select>
-									</FormControl>
-								</Grid>
-								<Grid item xs={10}>
-									<ReactMde
-										style={{ textAlign: "left" }}
-										value={values.content}
-										name="content"
-										inputRef={register}
-										onChange={handleChangeContent}
-										selectedTab={selectedTab}
-										onTabChange={setSelectedTab}
-										generateMarkdownPreview={markdown =>
-											Promise.resolve(converter.makeHtml(markdown))
-										}
-									/>
-									<a href="https://guides.github.com/features/mastering-markdown/">This supports Markdown</a>
-								</Grid>
-								<Grid item xs={10} sm={3}>
-									<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Create Submission</Button>
-								</Grid>
-							</Grid>
-						</form>
-					)
-				}
-			}}
-		/>
-	</Paper>
-);
+	return (
+		<Paper className={classes.paper}>
+			<form>
+				<Grid container spacing={3} direction="row" justify="center" alignItems="flex-start" >
+					<Grid item xs={10} sm={3}>
+						<TextField
+							label="Author"
+							name="author"
+							value={values.author}
+							disabled={true}
+							onChange={handleChange('author')}
+							inputRef={register({ required: true })}
+							InputLabelProps={{
+								shrink: true,
+							}}
+							variant="outlined"
+						/>
+						<p>
+							{errors.author && 'Author is required.'}
+						</p>
+					</Grid>
+					<Grid item xs={10} sm={3}>
+						<TextField
+							label="Points"
+							value={values.points}
+							name="points"
+							onChange={handleChange('points')}
+							type="number"
+							inputRef={register({ required: true })}
+							InputLabelProps={{
+								shrink: true,
+							}}
+							variant="outlined"
+						/>
+						<p>
+							{errors.points && 'Points is required.'}
+						</p>
+					</Grid>
+					<Grid item xs={10} sm={3}>
+						<FormControl variant="outlined" className={classes.formControl}>
+							<InputLabel>Verdict</InputLabel>
+							<Select
+								value={values.verdict}
+								onChange={handleMultiChangeVerdict}
+								name="verdict"
+								label="Verdict"
+							>
+								<MenuItem value="pass">PASS</MenuItem>
+								<MenuItem value="fail">FAIL</MenuItem>
+							</Select>
+						</FormControl>
+					</Grid>
+					<Grid item xs={10}>
+						<ReactMde
+							style={{ textAlign: "left" }}
+							value={values.content}
+							name="content"
+							inputRef={register}
+							onChange={handleChangeContent}
+							selectedTab={selectedTab}
+							onTabChange={setSelectedTab}
+							generateMarkdownPreview={markdown =>
+								Promise.resolve(converter.makeHtml(markdown))
+							}
+						/>
+						<a href="https://guides.github.com/features/mastering-markdown/">This supports Markdown</a>
+					</Grid>
+					<Grid item xs={10} sm={3}>
+						<Button className={classes.button} onClick={handleSubmit(onSubmit)}>Create Submission</Button>
+					</Grid>
+				</Grid>
+			</form>
+		</Paper>
+	);
 }
 
 function mapStateToProps({ auth }) {

@@ -22,7 +22,11 @@ import ViewProblemPageConfig from './problems/ViewProblemPageConfig';
 import ViewCoursePageConfig from './courses/ViewCoursePageConfig';
 import ViewSubmissionPageConfig from './submissions/ViewSubmissionPageConfig';
 
+import ScoringPageConfig from './scoring/ScoringPageConfig';
+
 const pagesConfigs = [
+	ScoringPageConfig,
+
 	LandingPageConfig,
 	LoginPageConfig,
 	InvitePageConfig,
