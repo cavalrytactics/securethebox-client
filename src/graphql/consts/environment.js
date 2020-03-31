@@ -6,7 +6,6 @@ import {
 } from 'relay-runtime';
 import fetchQuery from '../functions/fetchQuery'
 import 'regenerator-runtime/runtime';
-import { RelayNetworkLayer } from 'react-relay-network-modern';
 import { SubscriptionClient } from 'subscriptions-transport-ws'
 
 const wsUrl = 'ws://localhost:8000/subscriptions'

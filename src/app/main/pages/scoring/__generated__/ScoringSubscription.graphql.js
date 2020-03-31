@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2d65928d478bba9cf6e097b21f39d953
+ * @relayHash ac7dcef61d5d2883959f8ad23ae2322d
  */
 
 /* eslint-disable */
@@ -22,7 +22,7 @@ export type ScoringSubscription = {|
 
 /*
 subscription ScoringSubscription {
-  countSeconds(upTo: 10)
+  countSeconds(upTo: 200)
 }
 */
 
@@ -36,10 +36,10 @@ var v0 = [
       {
         "kind": "Literal",
         "name": "upTo",
-        "value": 10
+        "value": 200
       }
     ],
-    "storageKey": "countSeconds(upTo:10)"
+    "storageKey": "countSeconds(upTo:200)"
   }
 ];
 return {
@@ -62,12 +62,12 @@ return {
     "operationKind": "subscription",
     "name": "ScoringSubscription",
     "id": null,
-    "text": "subscription ScoringSubscription {\n  countSeconds(upTo: 10)\n}\n",
+    "text": "subscription ScoringSubscription {\n  countSeconds(upTo: 200)\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '4158fe5df67422b1cea15ef7d88549de';
+(node/*: any*/).hash = '9656da9d3b371767a5e6f714b516c3aa';
 
 module.exports = node;
