@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash ac7dcef61d5d2883959f8ad23ae2322d
+ * @relayHash 0a8699bf1a45ba7af70fa107e96d3abe
  */
 
 /* eslint-disable */
@@ -11,7 +11,11 @@
 import type { ConcreteRequest } from 'relay-runtime';
 export type ScoringSubscriptionVariables = {||};
 export type ScoringSubscriptionResponse = {|
-  +countSeconds: ?number
+  +streamTest: ?{|
+    +service: ?string,
+    +timestamp: ?any,
+    +result: ?string,
+  |}
 |};
 export type ScoringSubscription = {|
   variables: ScoringSubscriptionVariables,
@@ -22,24 +26,47 @@ export type ScoringSubscription = {|
 
 /*
 subscription ScoringSubscription {
-  countSeconds(upTo: 200)
+  streamTest {
+    service
+    timestamp
+    result
+  }
 }
 */
 
 const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
-    "kind": "ScalarField",
+    "kind": "LinkedField",
     "alias": null,
-    "name": "countSeconds",
-    "args": [
+    "name": "streamTest",
+    "storageKey": null,
+    "args": null,
+    "concreteType": "ScoringType",
+    "plural": false,
+    "selections": [
       {
-        "kind": "Literal",
-        "name": "upTo",
-        "value": 200
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "service",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "timestamp",
+        "args": null,
+        "storageKey": null
+      },
+      {
+        "kind": "ScalarField",
+        "alias": null,
+        "name": "result",
+        "args": null,
+        "storageKey": null
       }
-    ],
-    "storageKey": "countSeconds(upTo:200)"
+    ]
   }
 ];
 return {
@@ -62,12 +89,12 @@ return {
     "operationKind": "subscription",
     "name": "ScoringSubscription",
     "id": null,
-    "text": "subscription ScoringSubscription {\n  countSeconds(upTo: 200)\n}\n",
+    "text": "subscription ScoringSubscription {\n  streamTest {\n    service\n    timestamp\n    result\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '9656da9d3b371767a5e6f714b516c3aa';
+(node/*: any*/).hash = '173a086923ccbc2389cfb90cc58ec9eb';
 
 module.exports = node;

@@ -808,6 +808,12 @@ type ScopeTypeEdge {
   cursor: String!
 }
 
+type ScoringType {
+  service: String
+  timestamp: String
+  result: String
+}
+
 input ServiceInput {
   ID: ID
   label: String
@@ -914,6 +920,7 @@ type SubmissionTypeEdge {
 type Subscription {
   countSeconds(upTo: Int): Int
   randomInt: RandomType
+  streamTest: ScoringType
 }
 
 input TeamInput {
